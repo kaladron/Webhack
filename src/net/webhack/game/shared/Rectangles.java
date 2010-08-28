@@ -12,9 +12,6 @@ import java.util.Random;
  */
 public class Rectangles {
 	private static int MAX_RECT = 50;
-	private static int XLIM = 4;
-	private static int YLIM = 3;
-
 	private int rectCnt;
 	private Rectangle[] rect = new Rectangle[MAX_RECT];
 
@@ -149,24 +146,24 @@ public class Rectangles {
 			if (intersect(rect[i], r2, r))
 				splitRects(rect[i], r);
 
-		if (r2.ly - old_r.ly - 1 > (old_r.hy < Webhack.ROWNO - 1 ? 2 * YLIM
-				: YLIM + 1) + 4) {
+		if (r2.ly - old_r.ly - 1 > (old_r.hy < Webhack.ROWNO - 1 ? 2 * Webhack.YLIM
+				: Webhack.YLIM + 1) + 4) {
 			r = old_r;
 			r.hy = r2.ly - 2;
 			addRect(r);
 		}
-		if (r2.lx - old_r.lx - 1 > (old_r.hx < Webhack.COLNO - 1 ? 2 * XLIM
-				: XLIM + 1) + 4) {
+		if (r2.lx - old_r.lx - 1 > (old_r.hx < Webhack.COLNO - 1 ? 2 * Webhack.XLIM
+				: Webhack.XLIM + 1) + 4) {
 			r = old_r;
 			r.hx = r2.lx - 2;
 			addRect(r);
 		}
-		if (old_r.hy - r2.hy - 1 > (old_r.ly > 0 ? 2 * YLIM : YLIM + 1) + 4) {
+		if (old_r.hy - r2.hy - 1 > (old_r.ly > 0 ? 2 * Webhack.YLIM : Webhack.YLIM + 1) + 4) {
 			r = old_r;
 			r.ly = r2.hy + 2;
 			addRect(r);
 		}
-		if (old_r.hx - r2.hx - 1 > (old_r.lx > 0 ? 2 * XLIM : XLIM + 1) + 4) {
+		if (old_r.hx - r2.hx - 1 > (old_r.lx > 0 ? 2 * Webhack.XLIM : Webhack.XLIM + 1) + 4) {
 			r = old_r;
 			r.lx = r2.hx + 2;
 			addRect(r);
