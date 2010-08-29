@@ -58,4 +58,9 @@ public class WebhackRandom implements RandomHelper {
 		return 0;
 	}
 
+	public int rn1(int x, int y) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

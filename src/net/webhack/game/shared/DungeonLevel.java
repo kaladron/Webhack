@@ -12,12 +12,6 @@ package net.webhack.game.shared;
  * 
  */
 public class DungeonLevel {
-	/** Number of rooms */
-	private int nroom = 0;
-	Room[] rooms = new Room[Webhack.MAXNROFROOMS];
-
-	private int subroom = 0;
-
 	/** Number of doors */
 	private int doorIndex = 0;
 
@@ -32,6 +26,9 @@ public class DungeonLevel {
 	/** Rectangles for making room. */
 	private final Rectangles rectangles;
 	
+	/** References to Rooms. */
+	private Rooms rooms;
+	
 	public DungeonLevel(final RandomHelper random) {
 		this.random = random;
 		this.rectangles = new Rectangles(random);
@@ -40,41 +37,8 @@ public class DungeonLevel {
 	}
 
 	private void makeLevel() {
-		makeRooms();
+		rooms = new Rooms(rectangles, random);
 	}
 
-	/**
-	 * @param lowx
-	 * @param lowy
-	 * @param hix
-	 * @param hiy
-	 * @param lit
-	 * @param rtype
-	 * @param special
-	 */
-	private void addRoom(Room aRoom) {
-		rooms[nroom] = aRoom;
-		nroom++;
-	}
 
-	private void makeRooms() {
-		boolean tried_vault = false;
-
-		// make rooms until satisfied.
-		// rnd_rect() will return 0 if no more rects are available...
-
-		while (nroom < Webhack.MAXNROFROOMS && (rectangles.rndRect() != null)) {
-			if (nroom >= (Webhack.MAXNROFROOMS / 6) && (random.rn2(2) != 0)
-					&& !tried_vault) {
-				tried_vault = true;
-				// TODO(jeffbailey): Create_vault stuff goes here.
-			} else {
-				addRoom(new Room(rectangles, Room.OROOM));
-				return;
-				// }
-			}
-		}
-		return;
-
-	}
 }

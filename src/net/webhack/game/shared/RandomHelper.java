@@ -10,6 +10,9 @@ package net.webhack.game.shared;
  */
 public interface RandomHelper {
 
+	/** (rn2(x)+(y)) */
+	int rn1(int x, int y);
+	
 	/** 0 <= rn2(x) < x */
 	int rn2(int x);
 
