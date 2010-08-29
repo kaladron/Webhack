@@ -10,48 +10,21 @@ import org.junit.Test;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
- *
+ * 
  */
 public class RectanglesTest {
 
 	/**
-	 * Test method for {@link net.webhack.game.shared.Rectangles#Rectangles(net.webhack.game.shared.RandomHelper)}.
+	 * Test method for
+	 * {@link net.webhack.game.shared.Rectangles#Rectangles(net.webhack.game.shared.Rectangle)}
+	 * .
 	 */
 	@Test
-	public void testRectangles() {
-		new Rectangles(null);
+	public void initialRectangle() {
+		Rectangles rectangles = new Rectangles(new MockRandom());
+		Rectangle r = rectangles.rndRect();
+		// Initial rectangle should be the size of the level.
+		Rectangle s = new Rectangle(0, 0, Webhack.COLNO - 1, Webhack.ROWNO - 1);
+		assertEquals(r, s);
 	}
-
-	/**
-	 * Test method for {@link net.webhack.game.shared.Rectangles#getRectInd(net.webhack.game.shared.Rectangle)}.
-	 */
-	@Test
-	public void testGetRectInd() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link net.webhack.game.shared.Rectangles#getRect(net.webhack.game.shared.Rectangle)}.
-	 */
-	@Test
-	public void testGetRect() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link net.webhack.game.shared.Rectangles#removeRect(net.webhack.game.shared.Rectangle)}.
-	 */
-	@Test
-	public void testRemoveRect() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link net.webhack.game.shared.Rectangles#addRect(net.webhack.game.shared.Rectangle)}.
-	 */
-	@Test
-	public void testAddRect() {
-		fail("Not yet implemented");
-	}
-
 }
