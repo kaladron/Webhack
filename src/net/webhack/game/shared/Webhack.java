@@ -60,6 +60,8 @@ public class Webhack {
 	}
 	
 	private void newGame() {
-		dlevel = new DungeonLevel();
+		RandomHelper random = new WebhackRandom();
+		
+		dlevel = new DungeonLevel(random);
 	}
 }

@@ -4,10 +4,6 @@
 
 package net.webhack.game.shared;
 
-import java.util.Random;
-import java.util.Vector;
-
-import com.google.gwt.user.client.Window;
 
 /**
  * Routines defining a level within a Webhack Dungeon
@@ -31,10 +27,15 @@ public class DungeonLevel {
 	/** Coordinates of up stairs */
 	private Coordinate upstair;
 
+	private final RandomHelper random;
+	
 	/** Rectangles for making room. */
-	private Rectangles rectangles = new Rectangles();
+	private final Rectangles rectangles;
+	
+	public DungeonLevel(final RandomHelper random) {
+		this.random = random;
+		this.rectangles = new Rectangles(random);
 
-	public DungeonLevel() {
 		makeLevel();
 	}
 
@@ -58,13 +59,12 @@ public class DungeonLevel {
 
 	private void makeRooms() {
 		boolean tried_vault = false;
-		Random rand = new Random();
 
 		// make rooms until satisfied.
 		// rnd_rect() will return 0 if no more rects are available...
 
 		while (nroom < Webhack.MAXNROFROOMS && (rectangles.rndRect() != null)) {
-			if (nroom >= (Webhack.MAXNROFROOMS / 6) && (rand.nextInt(2) != 0)
+			if (nroom >= (Webhack.MAXNROFROOMS / 6) && (random.rn2(2) != 0)
 					&& !tried_vault) {
 				tried_vault = true;
 				// TODO(jeffbailey): Create_vault stuff goes here.

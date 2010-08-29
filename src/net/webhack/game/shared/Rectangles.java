@@ -4,8 +4,6 @@
 
 package net.webhack.game.shared;
 
-import java.util.Random;
-
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
@@ -14,8 +12,10 @@ public class Rectangles {
 	private static int MAX_RECT = 50;
 	private int rectCnt;
 	private Rectangle[] rect = new Rectangle[MAX_RECT];
+	private final RandomHelper random;
 
-	public Rectangles() {
+	public Rectangles(RandomHelper random) {
+		this.random = random;
 		// FIXME(jeffbailey): initialize this right
 		rect[0] = new Rectangle();
 		rectCnt = 1;
@@ -65,8 +65,7 @@ public class Rectangles {
 	 * @returns null if no rectangles in list.
 	 */
 	Rectangle rndRect() {
-		Random rand = new Random();
-		return rectCnt > 0 ? rect[rand.nextInt(rectCnt)] : null;
+		return rectCnt > 0 ? rect[random.rn2(rectCnt)] : null;
 	}
 
 	/**
@@ -132,8 +131,10 @@ public class Rectangles {
 	 * and r2 is included in r1. What we want is to allocate r2, that is split
 	 * r1 into smaller rectangles then remove it.
 	 * 
-	 * @param r1 Rectangle already in the Rectangles list
-	 * @param r2 Sub-rectangle to sub split out of r1
+	 * @param r1
+	 *            Rectangle already in the Rectangles list
+	 * @param r2
+	 *            Sub-rectangle to sub split out of r1
 	 */
 	public void splitRects(Rectangle r1, Rectangle r2) {
 		Rectangle r = new Rectangle();
@@ -158,12 +159,14 @@ public class Rectangles {
 			r.hx = r2.lx - 2;
 			addRect(r);
 		}
-		if (old_r.hy - r2.hy - 1 > (old_r.ly > 0 ? 2 * Webhack.YLIM : Webhack.YLIM + 1) + 4) {
+		if (old_r.hy - r2.hy - 1 > (old_r.ly > 0 ? 2 * Webhack.YLIM
+				: Webhack.YLIM + 1) + 4) {
 			r = old_r;
 			r.ly = r2.hy + 2;
 			addRect(r);
 		}
-		if (old_r.hx - r2.hx - 1 > (old_r.lx > 0 ? 2 * Webhack.XLIM : Webhack.XLIM + 1) + 4) {
+		if (old_r.hx - r2.hx - 1 > (old_r.lx > 0 ? 2 * Webhack.XLIM
+				: Webhack.XLIM + 1) + 4) {
 			r = old_r;
 			r.lx = r2.hx + 2;
 			addRect(r);
