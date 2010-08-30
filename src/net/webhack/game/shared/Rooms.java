@@ -55,16 +55,18 @@ public class Rooms {
 	 * @param rlit
 	 *            Is the room lit
 	 */
-	public boolean create_room(int x, int y, int w, int h,
-			int xal, int yal, int rtype, Boolean rlit) {
+	public boolean create_room(int x, int y, int w, int h, int xal, int yal,
+			int rtype, Boolean rlit) {
 		Rectangle r1 = null;
 		Rectangle r2 = null;
 		int trycnt = 0;
 		boolean vault = false;
+		int wtmp;
+		int htmp;
 		int xlim = Webhack.XLIM;
 		int ylim = Webhack.YLIM;
-		int xabs;
-		int yabs;
+		int xabs = -1;
+		int yabs = -1;
 
 		if (rtype == -1) {
 			rtype = Room.OROOM;
@@ -90,8 +92,8 @@ public class Rooms {
 		 * are willing to make several try before we give it up.
 		 */
 		do {
-			int wtmp = w;
-			int htmp = h;
+			wtmp = w;
+			htmp = h;
 			int xtmp = x;
 			int ytmp = y;
 			int xaltmp = xal;
@@ -159,7 +161,8 @@ public class Rooms {
 		rectangles.splitRects(r1, r2);
 
 		if (!vault) {
-
+			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, rtype,
+					false);
 		}
 		return true;
 
@@ -174,14 +177,14 @@ public class Rooms {
 	 * @param rtype
 	 * @param special
 	 */
-	private void addRoom(Rooms aRoom) {
-		rooms[nroom] = aRoom;
-		nroom++;
+	private void addRoom(int lowx, int lowy, int hix, int hiy, boolean lit,
+			int rtype, boolean special) {
+        // do_room_or_subroom(rooms[nroom], lowx, lowy, hix, hiy, lit, rtype, special, true);
 	}
 
 	private void makeRooms() {
 	}
-	
+
 	private boolean check_room(int a, int b, int c, int d, boolean e) {
 		return false;
 	}
