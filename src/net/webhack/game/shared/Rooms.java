@@ -55,7 +55,7 @@ public class Rooms {
 	 * @param rlit
 	 *            Is the room lit
 	 */
-	public boolean create_room(RandomHelper random, int x, int y, int w, int h,
+	public boolean create_room(int x, int y, int w, int h,
 			int xal, int yal, int rtype, Boolean rlit) {
 		Rectangle r1 = null;
 		Rectangle r2 = null;
@@ -182,10 +182,6 @@ public class Rooms {
 	private void makeRooms() {
 	}
 	
-	void ooga() {
-		
-	}
-
 	private boolean check_room(int a, int b, int c, int d, boolean e) {
 		return false;
 	}

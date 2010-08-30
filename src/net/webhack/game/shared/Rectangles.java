@@ -31,7 +31,7 @@ class Rectangles {
 	 *            Rectangle to search for.
 	 * @return Index number or -1 if not found.
 	 */
-	int getRectInd(Rectangle r) {
+	private int getRectInd(Rectangle r) {
 		for (int i = 0; i < rectCnt; i++) {
 			if (r.lx == rect[i].lx && r.ly == rect[i].ly && r.hx == rect[i].hx
 					&& r.hy == rect[i].hy) {
