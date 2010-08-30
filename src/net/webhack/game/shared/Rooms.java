@@ -181,6 +181,10 @@ public class Rooms {
 
 	private void makeRooms() {
 	}
+	
+	void ooga() {
+		
+	}
 
 	private boolean check_room(int a, int b, int c, int d, boolean e) {
 		return false;

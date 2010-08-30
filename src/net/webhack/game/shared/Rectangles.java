@@ -8,13 +8,13 @@ package net.webhack.game.shared;
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
  */
-public class Rectangles {
+class Rectangles {
 	private static int MAX_RECT = 50;
 	private int rectCnt;
 	private Rectangle[] rect = new Rectangle[MAX_RECT];
 	private final RandomHelper random;
 
-	public Rectangles(RandomHelper random) {
+	Rectangles(RandomHelper random) {
 		this.random = random;
 		// FIXME(jeffbailey): initialize this right
 		rect[0] = new Rectangle();
@@ -31,7 +31,7 @@ public class Rectangles {
 	 *            Rectangle to search for.
 	 * @return Index number or -1 if not found.
 	 */
-	public int getRectInd(Rectangle r) {
+	int getRectInd(Rectangle r) {
 		for (int i = 0; i < rectCnt; i++) {
 			if (r.lx == rect[i].lx && r.ly == rect[i].ly && r.hx == rect[i].hx
 					&& r.hy == rect[i].hy) {
@@ -49,7 +49,7 @@ public class Rectangles {
 	 * 
 	 * @return Rectangle or null if not found.
 	 */
-	public Rectangle getRect(Rectangle r) {
+	Rectangle getRect(Rectangle r) {
 		for (int i = 0; i < rectCnt; i++) {
 			if (r.lx >= rect[i].lx && r.ly >= rect[i].ly && r.hx <= rect[i].hx
 					&& r.hy <= rect[i].hy) {
@@ -104,7 +104,7 @@ public class Rectangles {
 	 * @param r
 	 *            Rectangle to remove.
 	 */
-	public void removeRect(Rectangle r) {
+	void removeRect(Rectangle r) {
 		int ind = getRectInd(r);
 		if (ind > 0) {
 			rect[ind] = rect[--rectCnt];
@@ -136,7 +136,7 @@ public class Rectangles {
 	 * @param r2
 	 *            Sub-rectangle to sub split out of r1
 	 */
-	public void splitRects(Rectangle r1, Rectangle r2) {
+	void splitRects(Rectangle r1, Rectangle r2) {
 		Rectangle r = new Rectangle();
 
 		Rectangle old_r = r1;
