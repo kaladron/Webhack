@@ -25,20 +25,18 @@ class Rectangles {
 	}
 
 	/**
-	 * Search Index of one precise Rectangle.
-	 * 
-	 * @param r
-	 *            Rectangle to search for.
-	 * @return Index number or -1 if not found.
+	 * Add a Rectangle to the list.
 	 */
-	private int getRectInd(Rectangle r) {
-		for (int i = 0; i < rectCnt; i++) {
-			if (r.lx == rect[i].lx && r.ly == rect[i].ly && r.hx == rect[i].hx
-					&& r.hy == rect[i].hy) {
-				return i;
-			}
+	void addRect(Rectangle r) {
+		if (rectCnt >= MAX_RECT) {
+			return;
 		}
-		return -1;
+		/* Check that this Rectangle is not included in another one */
+		if (getRect(r) != null) {
+			return;
+		}
+		rect[rectCnt] = r;
+		rectCnt++;
 	}
 
 	/**
@@ -60,45 +58,6 @@ class Rectangles {
 	}
 
 	/**
-	 * Get some random Rectangle from the list.
-	 * 
-	 * @returns null if no rectangles in list.
-	 */
-	Rectangle rndRect() {
-		return rectCnt > 0 ? rect[random.rn2(rectCnt)] : null;
-	}
-
-	/**
-	 * Search intersection between two rectangles (r1 & r2).
-	 * 
-	 * @param r1
-	 *            First comparison rectangle
-	 * @param r2
-	 *            Second comparison rectangle
-	 * @param r3
-	 *            Result rectangle
-	 * 
-	 * @return True if intersection exist and put it in r3. otherwise returns
-	 *         false
-	 */
-	private boolean intersect(Rectangle r1, Rectangle r2, Rectangle r3) {
-		if (r2.lx > r1.hx || r2.ly > r1.hy || r2.hx < r1.lx || r2.hy < r1.ly) {
-			return false;
-		}
-
-		r3.lx = (r2.lx > r1.lx ? r2.lx : r1.lx);
-		r3.ly = (r2.ly > r1.ly ? r2.ly : r1.ly);
-		r3.hx = (r2.hx > r1.hx ? r1.hx : r2.hx);
-		r3.hy = (r2.hy > r1.hy ? r1.hy : r2.hy);
-
-		if (r3.lx > r3.hx || r3.ly > r3.hy) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * Remove a rectangle from the list of free Rectangles.
 	 * 
 	 * @param r
@@ -112,18 +71,12 @@ class Rectangles {
 	}
 
 	/**
-	 * Add a Rectangle to the list.
+	 * Get some random Rectangle from the list.
+	 * 
+	 * @returns null if no rectangles in list.
 	 */
-	void addRect(Rectangle r) {
-		if (rectCnt >= MAX_RECT) {
-			return;
-		}
-		/* Check that this Rectangle is not included in another one */
-		if (getRect(r) != null) {
-			return;
-		}
-		rect[rectCnt] = r;
-		rectCnt++;
+	Rectangle rndRect() {
+		return rectCnt > 0 ? rect[random.rn2(rectCnt)] : null;
 	}
 
 	/**
@@ -174,4 +127,49 @@ class Rectangles {
 		}
 	}
 
+	/**
+	 * Search Index of one precise Rectangle.
+	 * 
+	 * @param r
+	 *            Rectangle to search for.
+	 * @return Index number or -1 if not found.
+	 */
+	private int getRectInd(Rectangle r) {
+		for (int i = 0; i < rectCnt; i++) {
+			if (r.lx == rect[i].lx && r.ly == rect[i].ly && r.hx == rect[i].hx
+					&& r.hy == rect[i].hy) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * Search intersection between two rectangles (r1 & r2).
+	 * 
+	 * @param r1
+	 *            First comparison rectangle
+	 * @param r2
+	 *            Second comparison rectangle
+	 * @param r3
+	 *            Result rectangle
+	 * 
+	 * @return True if intersection exist and put it in r3. otherwise returns
+	 *         false
+	 */
+	private boolean intersect(Rectangle r1, Rectangle r2, Rectangle r3) {
+		if (r2.lx > r1.hx || r2.ly > r1.hy || r2.hx < r1.lx || r2.hy < r1.ly) {
+			return false;
+		}
+
+		r3.lx = (r2.lx > r1.lx ? r2.lx : r1.lx);
+		r3.ly = (r2.ly > r1.ly ? r2.ly : r1.ly);
+		r3.hx = (r2.hx > r1.hx ? r1.hx : r2.hx);
+		r3.hy = (r2.hy > r1.hy ? r1.hy : r2.hy);
+
+		if (r3.lx > r3.hx || r3.ly > r3.hy) {
+			return false;
+		}
+		return true;
+	}
 }
