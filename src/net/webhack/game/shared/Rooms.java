@@ -68,8 +68,6 @@ public class Rooms {
 		int xabs = -1;
 		int yabs = -1;
 
-		System.out.println("1");
-		
 		if (rtype == -1) {
 			rtype = Room.OROOM;
 		}
@@ -89,9 +87,6 @@ public class Rooms {
 			rlit = true;
 		}
 
-		System.out.println("2");
-
-		
 		/*
 		 * Here we will try to create a room. If some parameters are random we
 		 * are willing to make several try before we give it up.
@@ -159,17 +154,12 @@ public class Rooms {
 			} // Only some parameters are random.
 		} while (++trycnt <= 100 && r1 == null);
 
-		System.out.println("3");
-		
 		if (r1 == null) {
 			return false;
 		}
 
 		rectangles.splitRects(r1, r2);
 
-		System.out.println("4");
-
-		
 		if (!vault) {
 			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, rtype,
 					false);
@@ -189,14 +179,6 @@ public class Rooms {
 	 */
 	private void addRoom(int lowx, int lowy, int hix, int hiy, boolean lit,
 			int rtype, boolean special) {
-		System.out.println(lowx);
-		System.out.println(lowy);
-		System.out.println(hix);
-		System.out.println(hiy);
-		System.out.println(lit);
-		System.out.println(rtype);
-		System.out.println(special);
-		
         // do_room_or_subroom(rooms[nroom], lowx, lowy, hix, hiy, lit, rtype, special, true);
 	}
 

@@ -47,5 +47,13 @@ public class Rectangle {
 		Rectangle r = (Rectangle) obj;
 		return (this.lx == r.lx && this.ly == r.ly && this.hx == r.hx && this.hy == r.hy);
 	}
+	
+	public String toString() {
+		String out = "lx: " + lx;
+		out += " ly: " + ly;
+		out += " hx: " + hx;
+		out += " hy: " + hy;
+		return out;
+	}
 
 }

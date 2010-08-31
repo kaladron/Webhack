@@ -65,8 +65,6 @@ class Rectangles {
 	 * @returns null if no rectangles in list.
 	 */
 	Rectangle rndRect() {
-		System.out.println("Rectangles in list");
-		System.out.println(rectCnt);
 		return rectCnt > 0 ? rect[random.rn2(rectCnt)] : null;
 	}
 
@@ -108,7 +106,7 @@ class Rectangles {
 	 */
 	void removeRect(Rectangle r) {
 		int ind = getRectInd(r);
-		if (ind > 0) {
+		if (ind >= 0) {
 			rect[ind] = rect[--rectCnt];
 		}
 	}
@@ -139,15 +137,12 @@ class Rectangles {
 	 *            Sub-rectangle to sub split out of r1
 	 */
 	void splitRects(Rectangle r1, Rectangle r2) {
-		System.out.println("Splitting rectangles");
-		
-		Rectangle r = new Rectangle();
-
 		Rectangle old_r = new Rectangle(r1);
 		removeRect(r1);
 
 		/* Walk down since rect_cnt & rect[] will change... */
 		for (int i = rectCnt - 1; i >= 0; i--) {
+			Rectangle r = new Rectangle();
 			if (intersect(rect[i], r2, r)) {
 				splitRects(rect[i], r);
 			}
@@ -155,25 +150,25 @@ class Rectangles {
 
 		if (r2.ly - old_r.ly - 1 > (old_r.hy < Webhack.ROWNO - 1 ? 2 * Webhack.YLIM
 				: Webhack.YLIM + 1) + 4) {
-			r = new Rectangle(old_r);
+			Rectangle r = new Rectangle(old_r);
 			r.hy = r2.ly - 2;
 			addRect(r);
 		}
 		if (r2.lx - old_r.lx - 1 > (old_r.hx < Webhack.COLNO - 1 ? 2 * Webhack.XLIM
 				: Webhack.XLIM + 1) + 4) {
-			r = new Rectangle(old_r);
+			Rectangle r = new Rectangle(old_r);
 			r.hx = r2.lx - 2;
 			addRect(r);
 		}
 		if (old_r.hy - r2.hy - 1 > (old_r.ly > 0 ? 2 * Webhack.YLIM
 				: Webhack.YLIM + 1) + 4) {
-			r = new Rectangle(old_r);
+			Rectangle r = new Rectangle(old_r);
 			r.ly = r2.hy + 2;
 			addRect(r);
 		}
 		if (old_r.hx - r2.hx - 1 > (old_r.lx > 0 ? 2 * Webhack.XLIM
 				: Webhack.XLIM + 1) + 4) {
-			r = new Rectangle(old_r);
+			Rectangle r = new Rectangle(old_r);
 			r.lx = r2.hx + 2;
 			addRect(r);
 		}
