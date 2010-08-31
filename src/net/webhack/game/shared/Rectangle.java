@@ -18,6 +18,13 @@ public class Rectangle {
 
 	Rectangle() {
 	}
+	
+	Rectangle(Rectangle aRectangle) {
+		this.lx = aRectangle.lx;
+		this.ly = aRectangle.ly;
+		this.hx = aRectangle.hx;
+		this.hy = aRectangle.hy;
+	}
 
 	Rectangle(int lx, int ly, int hx, int hy) {
 		this.lx = lx;

@@ -160,7 +160,6 @@ public class Rooms {
 		} while (++trycnt <= 100 && r1 == null);
 
 		System.out.println("3");
-
 		
 		if (r1 == null) {
 			return false;
@@ -205,6 +204,7 @@ public class Rooms {
 	}
 
 	private boolean checkRoom(int a, int b, int c, int d, boolean e) {
-		return false;
+		// TODO(jeffbailey): Stub
+		return true;
 	}
 }
