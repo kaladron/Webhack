@@ -11,19 +11,29 @@ package net.webhack.game.shared;
 public class Rooms {
 
 	private final Rectangles rectangles;
-	Rooms[] rooms = new Rooms[Webhack.MAXNROFROOMS];
+	Room[] rooms = new Room[Webhack.MAXNROFROOMS];
 
 	/** Number of rooms */
 	private int nroom = 0;
 
 	private int subroom = 0;
+	
+	private int doorindex = 0;
 
-	private RandomHelper random;
+	private final RandomHelper random;
+	
+	private final DungeonLevel dlevel;
 
-	public Rooms(Rectangles rectangles, RandomHelper random) {
+	public Rooms(Rectangles rectangles, RandomHelper random, DungeonLevel dlevel) {
 		this.rectangles = rectangles;
 		this.random = random;
+		this.dlevel = dlevel;
 		boolean tried_vault = false;
+		
+		for (int x = 0; x < Webhack.MAXNROFROOMS; x++) {
+			rooms[x] = new Room();
+		}
+
 
 		// make rooms until satisfied.
 		// rnd_rect() will return 0 if no more rects are available...
@@ -34,8 +44,8 @@ public class Rooms {
 				tried_vault = true;
 				// TODO(jeffbailey): Create_vault stuff goes here.
 			} else {
-                if (!createRoom(-1, -1, -1, -1, -1, -1, Room.OROOM, null)) {
-                    return;
+				if (!createRoom(-1, -1, -1, -1, -1, -1, Room.OROOM, null)) {
+					return;
 				}
 			}
 		}
@@ -179,7 +189,8 @@ public class Rooms {
 	 */
 	private void addRoom(int lowx, int lowy, int hix, int hiy, boolean lit,
 			int rtype, boolean special) {
-        // do_room_or_subroom(rooms[nroom], lowx, lowy, hix, hiy, lit, rtype, special, true);
+		doRoomOrSubroom(rooms[nroom], lowx, lowy, hix, hiy, lit, rtype,
+				special, true);
 	}
 
 	private void makeRooms() {
@@ -188,5 +199,84 @@ public class Rooms {
 	private boolean checkRoom(int a, int b, int c, int d, boolean e) {
 		// TODO(jeffbailey): Stub
 		return true;
+	}
+
+	private void doRoomOrSubroom(Room croom, int lowx, int lowy, int hix,
+			int hiy, boolean lit, int rtype, boolean special, boolean isRoom) {
+		/* locations might bump level edges in wall-less rooms */
+		/* add/subtract 1 to allow for edge locations */
+		if (lowx == 0)
+			lowx++;
+		if (lowy == 0)
+			lowy++;
+		if (hix >= Webhack.COLNO - 1)
+			hix = Webhack.COLNO - 2;
+		if (hiy >= Webhack.ROWNO - 1)
+			hiy = Webhack.ROWNO - 2;
+
+		if (lit) {
+			for (int x = lowx - 1; x <= hix + 1; x++) {
+				for (int y = lowy - 1; y <= hiy + 1; y++) {
+					dlevel.locations[x][y].lit = true;
+				}
+			}
+			croom.rlit = true;
+		} else
+
+			croom.rlit = false;
+
+		croom.lx = lowx;
+		croom.hx = hix;
+		croom.ly = lowy;
+		croom.hy = hiy;
+		croom.rtype = rtype;
+		croom.doorct = 0;
+		/*
+		 * if we're not making a vault, doorindex will still be 0 if we are,
+		 * we'll have problems adding niches to the previous room unless fdoor
+		 * is at least doorindex
+		 */
+		croom.fdoor = doorindex;
+		croom.irregular = false;
+
+		croom.nsubrooms = 0;
+		croom.sbrooms[0] = null;
+		if (!special) {
+			for (int x = lowx - 1; x <= hix + 1; x++) {
+				for (int y = lowy - 1; y <= hiy + 1; y += (hiy - lowy + 2)) {
+					dlevel.locations[x][y].typ = DungeonLevel.HWALL;
+					/*
+					 * For open/secret doors.
+					 */
+					dlevel.locations[x][y].horizontal = true;
+				}
+			}
+
+			for (int x = lowx - 1; x <= hix + 1; x += (hix - lowx + 2)) {
+				for (int y = lowy; y <= hiy; y++) {
+					dlevel.locations[x][y].typ = DungeonLevel.VWALL;
+					/*
+					 * For open/secret doors.
+					 */
+					dlevel.locations[x][y].horizontal = false;
+				}
+			}
+
+			for (int x = lowx; x <= hix; x++) {
+				for (int y = lowy; y <= hiy; y++) {
+					dlevel.locations[x][y].typ = DungeonLevel.ROOM;
+				}
+			}
+
+			if (isRoom) {
+				dlevel.locations[lowx - 1][lowy - 1].typ = DungeonLevel.TLCORNER;
+				dlevel.locations[hix + 1][lowy - 1].typ = DungeonLevel.TRCORNER;
+				dlevel.locations[lowx - 1][hiy + 1].typ = DungeonLevel.BLCORNER;
+				dlevel.locations[hix + 1][hiy + 1].typ = DungeonLevel.BRCORNER;
+			} else { /* a subroom */
+				// wallification(lowx - 1, lowy - 1, hix + 1, hiy + 1);
+			}
+		}
+
 	}
 }

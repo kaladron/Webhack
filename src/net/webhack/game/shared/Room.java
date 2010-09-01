@@ -70,37 +70,16 @@ public class Room {
 	/** maximum valid room type */
 	public static int MAXRTYPE = 24;
 	
-    String name;
-    String parent;
-    int x, y, w, h;
-    int xalign, yalign;
-    int rtype, chance, rlit, filled;
-    int ndoor;
-    // room_door **doors;
-    int ntrap;
-    // trap **traps;
-    int nmonster;
-    // monster **monsters;
-    int nobject;
-    // object **objects;
-    int naltar;
-    // altar **altars;
-    int nstair;
-    // stair **stairs;
-    int ngold;
-    // gold **golds;
-    int nengraving;
-    // engraving **engravings;
-    int nfountain;
-    // fountain **fountains;
-    int nsink;
-    // sink **sinks;
-    int npool;
-    // pool **pools;
-    /* These three fields are only used when loading the level... */
-    // int nsubroom;
-    // struct _room *subrooms[MAX_SUBROOMS];
-    // struct mkroom *mkr;
-
+	
+	
+    int lx,hx,ly,hy;      /* usually xchar, but hx may be -1 */
+    int rtype;            /* type of room (zoo, throne, etc...) */
+    boolean rlit;             /* is the room lit ? */
+    int doorct;           /* door count */
+    int fdoor;            /* index for the first door of the room */
+    int nsubrooms;        /* number of subrooms */
+    boolean irregular;      /* true if room is non-rectangular */
+    Room[] sbrooms = new Room[Webhack.MAX_SUBROOMS];  /* Subrooms pointers */
+    //struct monst *resident; /* priest/shopkeeper/guard for this room */
 
 }
