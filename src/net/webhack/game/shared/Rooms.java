@@ -17,23 +17,27 @@ public class Rooms {
 	private int nroom = 0;
 
 	private int subroom = 0;
-	
+
 	private int doorindex = 0;
 
 	private final RandomHelper random;
-	
+
 	private final LocationMap locMap;
 
 	public Rooms(Rectangles rectangles, RandomHelper random, LocationMap lmap) {
 		this.rectangles = rectangles;
 		this.random = random;
 		this.locMap = lmap;
-		boolean tried_vault = false;
-		
+
 		for (int x = 0; x < Webhack.MAXNROFROOMS; x++) {
 			rooms[x] = new Room();
 		}
+		makeRooms();
+		sortRooms();
+	}
 
+	private void makeRooms() {
+		boolean tried_vault = false;
 
 		// make rooms until satisfied.
 		// rnd_rect() will return 0 if no more rects are available...
@@ -50,6 +54,10 @@ public class Rooms {
 			}
 		}
 		return;
+	}
+	
+	public void sortRooms() {
+		
 	}
 
 	/**
@@ -193,9 +201,6 @@ public class Rooms {
 				special, true);
 	}
 
-	private void makeRooms() {
-	}
-
 	private boolean checkRoom(int a, int b, int c, int d, boolean e) {
 		// TODO(jeffbailey): Stub
 		return true;
@@ -217,7 +222,7 @@ public class Rooms {
 		if (lit) {
 			for (int x = lowx - 1; x <= hix + 1; x++) {
 				for (int y = lowy - 1; y <= hiy + 1; y++) {
-					locMap.getLoc(x,y).lit = true;
+					locMap.getLoc(x, y).lit = true;
 				}
 			}
 			croom.rlit = true;
@@ -244,35 +249,35 @@ public class Rooms {
 		if (!special) {
 			for (int x = lowx - 1; x <= hix + 1; x++) {
 				for (int y = lowy - 1; y <= hiy + 1; y += (hiy - lowy + 2)) {
-					locMap.getLoc(x,y).typ = DungeonLevel.HWALL;
+					locMap.getLoc(x, y).typ = DungeonLevel.HWALL;
 					/*
 					 * For open/secret doors.
 					 */
-					locMap.getLoc(x,y).horizontal = true;
+					locMap.getLoc(x, y).horizontal = true;
 				}
 			}
 
 			for (int x = lowx - 1; x <= hix + 1; x += (hix - lowx + 2)) {
 				for (int y = lowy; y <= hiy; y++) {
-					locMap.getLoc(x,y).typ = DungeonLevel.VWALL;
+					locMap.getLoc(x, y).typ = DungeonLevel.VWALL;
 					/*
 					 * For open/secret doors.
 					 */
-					locMap.getLoc(x,y).horizontal = false;
+					locMap.getLoc(x, y).horizontal = false;
 				}
 			}
 
 			for (int x = lowx; x <= hix; x++) {
 				for (int y = lowy; y <= hiy; y++) {
-					locMap.getLoc(x,y).typ = DungeonLevel.ROOM;
+					locMap.getLoc(x, y).typ = DungeonLevel.ROOM;
 				}
 			}
 
 			if (isRoom) {
-				locMap.getLoc(lowx - 1,lowy - 1).typ = DungeonLevel.TLCORNER;
-				locMap.getLoc(hix + 1,lowy - 1).typ = DungeonLevel.TRCORNER;
-				locMap.getLoc(lowx - 1,hiy + 1).typ = DungeonLevel.BLCORNER;
-				locMap.getLoc(hix + 1,hiy + 1).typ = DungeonLevel.BRCORNER;
+				locMap.getLoc(lowx - 1, lowy - 1).typ = DungeonLevel.TLCORNER;
+				locMap.getLoc(hix + 1, lowy - 1).typ = DungeonLevel.TRCORNER;
+				locMap.getLoc(lowx - 1, hiy + 1).typ = DungeonLevel.BLCORNER;
+				locMap.getLoc(hix + 1, hiy + 1).typ = DungeonLevel.BRCORNER;
 			} else { /* a subroom */
 				// wallification(lowx - 1, lowy - 1, hix + 1, hiy + 1);
 			}
