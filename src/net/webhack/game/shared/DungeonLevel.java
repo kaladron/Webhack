@@ -10,7 +10,7 @@ package net.webhack.game.shared;
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
  */
-public class DungeonLevel {
+public class DungeonLevel implements LocationMap {
 
 	/**
 	 * <pre>
@@ -68,6 +68,12 @@ public class DungeonLevel {
 	static int MAX_TYPE = 36;
 	static int INVALID_TYPE = 127;
 
+	Location[][] locations = new Location[Webhack.COLNO][Webhack.ROWNO];
+	
+	public Location getLoc(int x, int y) {
+		return locations[x][y];
+	}
+	
 	/** Number of doors */
 	private int doorIndex = 0;
 
@@ -85,8 +91,6 @@ public class DungeonLevel {
 	/** References to Rooms. */
 	private Rooms rooms;
 
-	Location[][] locations = new Location[Webhack.COLNO][Webhack.ROWNO];
-
 	public DungeonLevel(final RandomHelper random) {
 		this.random = random;
 		this.rectangles = new Rectangles(random);
@@ -102,6 +106,7 @@ public class DungeonLevel {
 
 	private void makeLevel() {
 		rooms = new Rooms(rectangles, random, this);
+		
 		dumpLevelMap();
 	}
 		
