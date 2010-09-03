@@ -1,7 +1,5 @@
 package net.webhack.game.shared;
 
-import java.util.Vector;
-
 import net.webhack.game.client.WebhackUI;
 
 public class Webhack {

@@ -14,7 +14,10 @@ public class Rooms {
 	Room[] rooms = new Room[Webhack.MAXNROFROOMS];
 
 	/** Number of rooms */
-	private int nroom = 0;
+	int nroom = 0;
+	
+	/** Token to determine if room is part of the mesh. */
+	int[] smeq = new int[Webhack.MAXNROFROOMS];
 
 	private int subroom = 0;
 
@@ -179,6 +182,7 @@ public class Rooms {
 		rectangles.splitRects(r1, r2);
 
 		if (!vault) {
+            smeq[nroom] = nroom;
 			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, rtype,
 					false);
 		}
@@ -199,6 +203,8 @@ public class Rooms {
 			int rtype, boolean special) {
 		doRoomOrSubroom(rooms[nroom], lowx, lowy, hix, hiy, lit, rtype,
 				special, true);
+		rooms[nroom+1].hx = -1;
+		nroom++;
 	}
 
 	private boolean checkRoom(int a, int b, int c, int d, boolean e) {
