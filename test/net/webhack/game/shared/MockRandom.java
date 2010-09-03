@@ -63,4 +63,9 @@ public class MockRandom implements RandomHelper {
 		return 0;
 	}
 
+	public boolean oneIn(int x) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

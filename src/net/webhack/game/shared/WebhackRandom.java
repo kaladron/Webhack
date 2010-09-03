@@ -8,27 +8,42 @@ import java.util.Random;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
- *
+ * 
  */
 public class WebhackRandom implements RandomHelper {
-	
-	private Random random = new Random(); 
-	
-	/* (non-Javadoc)
+
+	private Random random = new Random();
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.webhack.game.shared.RandomHelper#oneIn(int)
+	 */
+	public boolean oneIn(int x) {
+		return rn2(x) == 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rn1(int)
 	 */
 	public int rn1(int x, int y) {
 		return random.nextInt(x) + y;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rn2(int)
 	 */
 	public int rn2(int x) {
-        return random.nextInt(x);
+		return random.nextInt(x);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rnl(int)
 	 */
 	public int rnl(int x) {
@@ -36,7 +51,9 @@ public class WebhackRandom implements RandomHelper {
 		throw new NotImplementedException();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rnd(int)
 	 */
 	public int rnd(int x) {
@@ -44,7 +61,9 @@ public class WebhackRandom implements RandomHelper {
 		throw new NotImplementedException();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.webhack.game.shared.RandomHelper#d(int, int)
 	 */
 	public int d(int n, int x) {
@@ -52,7 +71,9 @@ public class WebhackRandom implements RandomHelper {
 		throw new NotImplementedException();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rne(int)
 	 */
 	public int rne(int x) {
@@ -60,7 +81,9 @@ public class WebhackRandom implements RandomHelper {
 		throw new NotImplementedException();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rnz(int)
 	 */
 	public int rnz(int i) {

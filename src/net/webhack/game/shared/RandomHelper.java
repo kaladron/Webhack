@@ -10,6 +10,9 @@ package net.webhack.game.shared;
  */
 public interface RandomHelper {
 
+	/** True if 1 in x */
+	boolean oneIn(int x);
+	
 	/** (rn2(x)+(y)) */
 	int rn1(int x, int y);
 	
