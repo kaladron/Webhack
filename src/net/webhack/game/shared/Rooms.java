@@ -134,10 +134,10 @@ public class Rooms {
 					System.out.println("No more rects...");
 					return false;
 				}
-				int hx = r1.hx;
-				int hy = r1.hy;
-				int lx = r1.lx;
-				int ly = r1.ly;
+				int hx = r1.highX;
+				int hy = r1.highY;
+				int lx = r1.lowX;
+				int ly = r1.lowY;
 				if (vault) {
 					dx = dy = 1;
 				} else {

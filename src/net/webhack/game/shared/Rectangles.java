@@ -10,20 +10,28 @@ package net.webhack.game.shared;
  */
 class Rectangles {
 	private static int MAX_RECT = 50;
-	private int rectCnt;
-	private Rectangle[] rect = new Rectangle[MAX_RECT];
+	public int rectCnt;
+	public Rectangle[] rect = new Rectangle[MAX_RECT];
 	private final RandomHelper random;
 
 	Rectangles(RandomHelper random) {
 		this.random = random;
-		// FIXME(jeffbailey): initialize this right
 		rect[0] = new Rectangle();
 		rectCnt = 1;
-		rect[0].lx = rect[0].ly = 0;
-		rect[0].hx = Webhack.COLNO - 1;
-		rect[0].hy = Webhack.ROWNO - 1;
+		rect[0].lowX = rect[0].lowY = 0;
+		rect[0].highX = Webhack.COLNO - 1;
+		rect[0].highY = Webhack.ROWNO - 1;
 	}
 
+	@Override
+	public String toString() {
+		String out = "";
+		for (int x = 0; x < rectCnt; x++) {
+			out += rect[x].toString() + "\n";
+		}
+		return out;
+	}
+	
 	/**
 	 * Add a Rectangle to the list.
 	 */
@@ -49,8 +57,8 @@ class Rectangles {
 	 */
 	Rectangle getRect(Rectangle r) {
 		for (int i = 0; i < rectCnt; i++) {
-			if (r.lx >= rect[i].lx && r.ly >= rect[i].ly && r.hx <= rect[i].hx
-					&& r.hy <= rect[i].hy) {
+			if (r.lowX >= rect[i].lowX && r.lowY >= rect[i].lowY && r.highX <= rect[i].highX
+					&& r.highY <= rect[i].highY) {
 				return rect[i];
 			}
 		}
@@ -101,28 +109,28 @@ class Rectangles {
 			}
 		}
 
-		if (r2.ly - old_r.ly - 1 > (old_r.hy < Webhack.ROWNO - 1 ? 2 * Webhack.YLIM
+		if (r2.lowY - old_r.lowY - 1 > (old_r.highY < Webhack.ROWNO - 1 ? 2 * Webhack.YLIM
 				: Webhack.YLIM + 1) + 4) {
 			Rectangle r = new Rectangle(old_r);
-			r.hy = r2.ly - 2;
+			r.highY = r2.lowY - 2;
 			addRect(r);
 		}
-		if (r2.lx - old_r.lx - 1 > (old_r.hx < Webhack.COLNO - 1 ? 2 * Webhack.XLIM
+		if (r2.lowX - old_r.lowX - 1 > (old_r.highX < Webhack.COLNO - 1 ? 2 * Webhack.XLIM
 				: Webhack.XLIM + 1) + 4) {
 			Rectangle r = new Rectangle(old_r);
-			r.hx = r2.lx - 2;
+			r.highX = r2.lowX - 2;
 			addRect(r);
 		}
-		if (old_r.hy - r2.hy - 1 > (old_r.ly > 0 ? 2 * Webhack.YLIM
+		if (old_r.highY - r2.highY - 1 > (old_r.lowY > 0 ? 2 * Webhack.YLIM
 				: Webhack.YLIM + 1) + 4) {
 			Rectangle r = new Rectangle(old_r);
-			r.ly = r2.hy + 2;
+			r.lowY = r2.highY + 2;
 			addRect(r);
 		}
-		if (old_r.hx - r2.hx - 1 > (old_r.lx > 0 ? 2 * Webhack.XLIM
+		if (old_r.highX - r2.highX - 1 > (old_r.lowX > 0 ? 2 * Webhack.XLIM
 				: Webhack.XLIM + 1) + 4) {
 			Rectangle r = new Rectangle(old_r);
-			r.lx = r2.hx + 2;
+			r.lowX = r2.highX + 2;
 			addRect(r);
 		}
 	}
@@ -136,8 +144,8 @@ class Rectangles {
 	 */
 	private int getRectInd(Rectangle r) {
 		for (int i = 0; i < rectCnt; i++) {
-			if (r.lx == rect[i].lx && r.ly == rect[i].ly && r.hx == rect[i].hx
-					&& r.hy == rect[i].hy) {
+			if (r.lowX == rect[i].lowX && r.lowY == rect[i].lowY && r.highX == rect[i].highX
+					&& r.highY == rect[i].highY) {
 				return i;
 			}
 		}
@@ -158,16 +166,16 @@ class Rectangles {
 	 *         false
 	 */
 	private boolean intersect(Rectangle r1, Rectangle r2, Rectangle r3) {
-		if (r2.lx > r1.hx || r2.ly > r1.hy || r2.hx < r1.lx || r2.hy < r1.ly) {
+		if (r2.lowX > r1.highX || r2.lowY > r1.highY || r2.highX < r1.lowX || r2.highY < r1.lowY) {
 			return false;
 		}
 
-		r3.lx = (r2.lx > r1.lx ? r2.lx : r1.lx);
-		r3.ly = (r2.ly > r1.ly ? r2.ly : r1.ly);
-		r3.hx = (r2.hx > r1.hx ? r1.hx : r2.hx);
-		r3.hy = (r2.hy > r1.hy ? r1.hy : r2.hy);
+		r3.lowX = (r2.lowX > r1.lowX ? r2.lowX : r1.lowX);
+		r3.lowY = (r2.lowY > r1.lowY ? r2.lowY : r1.lowY);
+		r3.highX = (r2.highX > r1.highX ? r1.highX : r2.highX);
+		r3.highY = (r2.highY > r1.highY ? r1.highY : r2.highY);
 
-		if (r3.lx > r3.hx || r3.ly > r3.hy) {
+		if (r3.lowX > r3.highX || r3.lowY > r3.highY) {
 			return false;
 		}
 		return true;

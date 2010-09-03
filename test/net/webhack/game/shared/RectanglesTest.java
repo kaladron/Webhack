@@ -59,4 +59,23 @@ public class RectanglesTest {
 		// These should be different objects.
 		assertTrue(r != s);
 	}
+	
+	@Test
+	public void splitRects() {
+		Rectangles rects = new Rectangles(new MockRandom());
+		// Always just the first one here.
+		Rectangle r = rects.rndRect();
+		Rectangle s = new Rectangle(1, 1, 10, 10);
+		rects.splitRects(r, s);
+		System.out.println(rects);
+		assertTrue(rects.getRect(new Rectangle(0,12,79,20)) != null);
+		assertTrue(rects.getRect(new Rectangle(12,0,79,20)) != null);
+		
+	}
+
+	public void hugeTest() {
+		RandomHelper random = new WebhackRandom();
+		
+		DungeonLevel dlevel = new DungeonLevel(random);
+	}
 }

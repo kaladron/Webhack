@@ -11,26 +11,26 @@ package net.webhack.game.shared;
  * 
  */
 public class Rectangle {
-	public int lx;
-	public int ly;
-	public int hx;
-	public int hy;
+	public int lowX;
+	public int lowY;
+	public int highX;
+	public int highY;
 
 	Rectangle() {
 	}
 	
 	Rectangle(int lx, int ly, int hx, int hy) {
-		this.lx = lx;
-		this.ly = ly;
-		this.hx = hx;
-		this.hy = hy;
+		this.lowX = lx;
+		this.lowY = ly;
+		this.highX = hx;
+		this.highY = hy;
 	}
 
 	Rectangle(Rectangle aRectangle) {
-		this.lx = aRectangle.lx;
-		this.ly = aRectangle.ly;
-		this.hx = aRectangle.hx;
-		this.hy = aRectangle.hy;
+		this.lowX = aRectangle.lowX;
+		this.lowY = aRectangle.lowY;
+		this.highX = aRectangle.highX;
+		this.highY = aRectangle.highY;
 	}
 
 	/*
@@ -45,14 +45,14 @@ public class Rectangle {
 			return false;
 		}
 		Rectangle r = (Rectangle) obj;
-		return (this.lx == r.lx && this.ly == r.ly && this.hx == r.hx && this.hy == r.hy);
+		return (this.lowX == r.lowX && this.lowY == r.lowY && this.highX == r.highX && this.highY == r.highY);
 	}
 	
 	public String toString() {
-		String out = "lx: " + lx;
-		out += " ly: " + ly;
-		out += " hx: " + hx;
-		out += " hy: " + hy;
+		String out = "lowX: " + lowX;
+		out += " lowY: " + lowY;
+		out += " highX: " + highX;
+		out += " highY: " + highY;
 		return out;
 	}
 
