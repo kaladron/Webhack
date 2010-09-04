@@ -12,62 +12,6 @@ package net.webhack.game.shared;
  */
 public class DungeonLevel implements LocationMap {
 
-	/**
-	 * <pre>
-	 * TLCORNER     TDWALL          TRCORNER
-	 * +-           -+-             -+
-	 * |             |               |
-	 * 
-	 * TRWALL       CROSSWALL       TLWALL          HWALL
-	 * |             |               |
-	 * +-           -+-             -+              ---
-	 * |             |               |
-	 * 
-	 * BLCORNER     TUWALL          BRCORNER        VWALL
-	 * |             |               |              |
-	 * +-           -+-             -+              |
-	 * </pre>
-	 */
-	/* Level location types */
-	static int STONE = 0;
-	static int VWALL = 1;
-	static int HWALL = 2;
-	static int TLCORNER = 3;
-	static int TRCORNER = 4;
-	static int BLCORNER = 5;
-	static int BRCORNER = 6;
-	static int CROSSWALL = 7; /* For pretty mazes and special levels */
-	static int TUWALL = 8;
-	static int TDWALL = 9;
-	static int TLWALL = 10;
-	static int TRWALL = 11;
-	static int DBWALL = 12;
-	static int TREE = 13; /* KMH */
-	static int SDOOR = 14;
-	static int SCORR = 15;
-	static int POOL = 16;
-	static int MOAT = 17; /* pool that doesn't boil, adjust messages */
-	static int WATER = 18;
-	static int DRAWBRIDGE_UP = 19;
-	static int LAVAPOOL = 20;
-	static int IRONBARS = 21; /* KMH */
-	static int DOOR = 22;
-	static int CORR = 23;
-	static int ROOM = 24;
-	static int STAIRS = 25;
-	static int LADDER = 26;
-	static int FOUNTAIN = 27;
-	static int THRONE = 28;
-	static int SINK = 29;
-	static int GRAVE = 30;
-	static int ALTAR = 31;
-	static int ICE = 32;
-	static int DRAWBRIDGE_DOWN = 33;
-	static int AIR = 34;
-	static int CLOUD = 35;
-	static int MAX_TYPE = 36;
-	static int INVALID_TYPE = 127;
-
 	Location[][] locations = new Location[Webhack.COLNO][Webhack.ROWNO];
 
 	/** number of fountains on level */
@@ -139,8 +83,6 @@ public class DungeonLevel implements LocationMap {
 		rooms = new Rooms(rectangles, random, this);
 		makeStairs();
 		makeCorridors();
-
-		dumpLevelMap();
 	}
 
 	private void makeStairs() {
@@ -149,7 +91,7 @@ public class DungeonLevel implements LocationMap {
 
 	private void makeCorridors() {
 		boolean any = true;
-		
+
 		for (int a = 0; a < rooms.nroom - 1; a++) {
 			join(a, a + 1, false);
 			if (random.rn2(50) == 0)
@@ -235,7 +177,7 @@ public class DungeonLevel implements LocationMap {
 		yy = cc.y;
 		tx = tt.x - dx;
 		ty = tt.y - dy;
-		if (nxcor && getLoc(xx + dx, yy + dy).typ != 0)
+		if (nxcor && getLoc(xx + dx, yy + dy).typ != null)
 			return;
 		if (okDoor(xx, yy) || !nxcor)
 			doDoor(xx, yy, croom);
@@ -245,7 +187,8 @@ public class DungeonLevel implements LocationMap {
 		dest.x = tx;
 		dest.y = ty;
 
-		if (!digCorridor(org, dest, nxcor, arboreal ? ROOM : CORR, STONE))
+		if (!digCorridor(org, dest, nxcor, arboreal ? LocationType.ROOM
+				: LocationType.CORR, LocationType.STONE))
 			return;
 
 		/* we succeeded in digging the corridor */
@@ -270,7 +213,7 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	boolean digCorridor(Coordinate org, Coordinate dest, boolean nxcor,
-			int ftyp, int btyp) {
+			LocationType ftyp, LocationType btyp) {
 		int dx = 0, dy = 0, dix, diy, cct;
 		Location crm;
 		int tx, ty, xx, yy;
@@ -310,16 +253,16 @@ public class DungeonLevel implements LocationMap {
 
 			crm = locations[xx][yy];
 			if (crm.typ == btyp) {
-				if (ftyp != CORR || random.oneIn(100)) {
+				if (ftyp != LocationType.CORR || random.oneIn(100)) {
 					crm.typ = ftyp;
 					if (nxcor && random.oneIn(50)) {
 						// TODO(jeffbailey): webhack.mksobj_at(webhack.BOULDER,
 						// xx, yy, true, false);
 					}
 				} else {
-					crm.typ = SCORR;
+					crm.typ = LocationType.SCORR;
 				}
-			} else if (crm.typ != ftyp && crm.typ != SCORR) {
+			} else if (crm.typ != ftyp && crm.typ != LocationType.SCORR) {
 				/* strange ... */
 				return false;
 			}
@@ -333,7 +276,8 @@ public class DungeonLevel implements LocationMap {
 				int ddx = (xx > tx) ? -1 : 1;
 
 				crm = locations[xx + ddx][yy];
-				if (crm.typ == btyp || crm.typ == ftyp || crm.typ == SCORR) {
+				if (crm.typ == btyp || crm.typ == ftyp
+						|| crm.typ == LocationType.SCORR) {
 					dx = ddx;
 					dy = 0;
 					continue;
@@ -342,7 +286,8 @@ public class DungeonLevel implements LocationMap {
 				int ddy = (yy > ty) ? -1 : 1;
 
 				crm = locations[xx][yy + ddy];
-				if (crm.typ == btyp || crm.typ == ftyp || crm.typ == SCORR) {
+				if (crm.typ == btyp || crm.typ == ftyp
+						|| crm.typ == LocationType.SCORR) {
 					dy = ddy;
 					dx = 0;
 					continue;
@@ -351,7 +296,8 @@ public class DungeonLevel implements LocationMap {
 
 			/* continue straight on? */
 			crm = locations[xx + dx][yy + dy];
-			if (crm.typ == btyp || crm.typ == ftyp || crm.typ == SCORR)
+			if (crm.typ == btyp || crm.typ == ftyp
+					|| crm.typ == LocationType.SCORR)
 				continue;
 
 			/* no, what must we do now?? */
@@ -363,7 +309,8 @@ public class DungeonLevel implements LocationMap {
 				dx = (tx < xx) ? -1 : 1;
 			}
 			crm = locations[xx + dx][yy + dy];
-			if (crm.typ == btyp || crm.typ == ftyp || crm.typ == SCORR)
+			if (crm.typ == btyp || crm.typ == ftyp
+					|| crm.typ == LocationType.SCORR)
 				continue;
 			dy = -dy;
 			dx = -dx;
@@ -394,7 +341,8 @@ public class DungeonLevel implements LocationMap {
 
 		for (x = xl; x <= xh; x++)
 			for (y = yl; y <= yh; y++)
-				if (isDoor(locations[x][y].typ) || locations[x][y].typ == SDOOR) {
+				if (isDoor(locations[x][y].typ)
+						|| locations[x][y].typ == LocationType.SDOOR) {
 					gotit(cc, x, y);
 					return;
 				}
@@ -405,31 +353,31 @@ public class DungeonLevel implements LocationMap {
 		return;
 	}
 
-	boolean isDoor(int typ) {
-		return typ == DOOR;
+	boolean isDoor(LocationType typ) {
+		return typ == LocationType.DOOR;
 	}
 
 	boolean byDoor(int x, int y) {
-		int typ;
+		LocationType typ;
 
 		if (isOk(x + 1, y)) {
 			typ = locations[x + 1][y].typ;
-			if (isDoor(typ) || typ == SDOOR)
+			if (isDoor(typ) || typ == LocationType.SDOOR)
 				return true;
 		}
 		if (isOk(x - 1, y)) {
 			typ = locations[x - 1][y].typ;
-			if (isDoor(typ) || typ == SDOOR)
+			if (isDoor(typ) || typ == LocationType.SDOOR)
 				return true;
 		}
 		if (isOk(x, y + 1)) {
 			typ = locations[x][y + 1].typ;
-			if (isDoor(typ) || typ == SDOOR)
+			if (isDoor(typ) || typ == LocationType.SDOOR)
 				return true;
 		}
 		if (isOk(x, y - 1)) {
 			typ = locations[x][y - 1].typ;
-			if (isDoor(typ) || typ == SDOOR)
+			if (isDoor(typ) || typ == LocationType.SDOOR)
 				return true;
 		}
 		return false;
@@ -444,21 +392,8 @@ public class DungeonLevel implements LocationMap {
 	boolean okDoor(int x, int y) {
 		boolean near_door = byDoor(x, y);
 
-		return ((locations[x][y].typ == HWALL || locations[x][y].typ == VWALL)
+		return ((locations[x][y].typ == LocationType.HWALL || locations[x][y].typ == LocationType.VWALL)
 				&& doorIndex < Webhack.DOORMAX && !near_door);
-	}
-
-	private void dumpLevelMap() {
-		for (int y = 0; y < Webhack.ROWNO; y++) {
-			for (int x = 0; x < Webhack.COLNO; x++) {
-				if (locations[x][y].typ < 10) {
-					System.out.print('0');
-				}
-				System.out.print(locations[x][y].typ);
-				System.out.print(' ');
-			}
-			System.out.println();
-		}
 	}
 
 }

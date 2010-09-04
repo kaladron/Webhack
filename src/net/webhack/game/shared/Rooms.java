@@ -255,7 +255,7 @@ public class Rooms {
 		if (!special) {
 			for (int x = lowx - 1; x <= hix + 1; x++) {
 				for (int y = lowy - 1; y <= hiy + 1; y += (hiy - lowy + 2)) {
-					locMap.getLoc(x, y).typ = DungeonLevel.HWALL;
+					locMap.getLoc(x, y).typ = LocationType.HWALL;
 					/*
 					 * For open/secret doors.
 					 */
@@ -265,7 +265,7 @@ public class Rooms {
 
 			for (int x = lowx - 1; x <= hix + 1; x += (hix - lowx + 2)) {
 				for (int y = lowy; y <= hiy; y++) {
-					locMap.getLoc(x, y).typ = DungeonLevel.VWALL;
+					locMap.getLoc(x, y).typ = LocationType.VWALL;
 					/*
 					 * For open/secret doors.
 					 */
@@ -275,15 +275,15 @@ public class Rooms {
 
 			for (int x = lowx; x <= hix; x++) {
 				for (int y = lowy; y <= hiy; y++) {
-					locMap.getLoc(x, y).typ = DungeonLevel.ROOM;
+					locMap.getLoc(x, y).typ = LocationType.ROOM;
 				}
 			}
 
 			if (isRoom) {
-				locMap.getLoc(lowx - 1, lowy - 1).typ = DungeonLevel.TLCORNER;
-				locMap.getLoc(hix + 1, lowy - 1).typ = DungeonLevel.TRCORNER;
-				locMap.getLoc(lowx - 1, hiy + 1).typ = DungeonLevel.BLCORNER;
-				locMap.getLoc(hix + 1, hiy + 1).typ = DungeonLevel.BRCORNER;
+				locMap.getLoc(lowx - 1, lowy - 1).typ = LocationType.TLCORNER;
+				locMap.getLoc(hix + 1, lowy - 1).typ = LocationType.TRCORNER;
+				locMap.getLoc(lowx - 1, hiy + 1).typ = LocationType.BLCORNER;
+				locMap.getLoc(hix + 1, hiy + 1).typ = LocationType.BRCORNER;
 			} else { /* a subroom */
 				// wallification(lowx - 1, lowy - 1, hix + 1, hiy + 1);
 			}

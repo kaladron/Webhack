@@ -17,7 +17,7 @@ public class Location {
 	/** what the hero thinks is there */
 	int glyph;
 	/** what is really there */
-	int typ;
+	LocationType typ;
 	/** seen vector */
 	int seenv;
 	/** extra information for typ */
