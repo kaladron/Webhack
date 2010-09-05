@@ -75,7 +75,6 @@ public class RectanglesTest {
 
 	public void hugeTest() {
 		RandomHelper random = new WebhackRandom();
-		
-		new DungeonLevel(random);
+		new DungeonLevel(random, new You());
 	}
 }

@@ -38,13 +38,13 @@ public class Webhack {
 
 	/** extinct monst after this number created */
 	public static int MAXMONNO = 120; 
-	
+
 	/** maximum monster hp */
 	public static int MHPMAX = 500; 
 
+	Dungeon dungeon;
+	You you;
 	
-	DungeonLevel dlevel;
-
 	static int YLIM = 3;
 
 	static int XLIM = 4;
@@ -59,7 +59,7 @@ public class Webhack {
 	
 	private void newGame() {
 		RandomHelper random = new WebhackRandom();
-		
-		dlevel = new DungeonLevel(random);
+		you = new You();
+		dungeon = new Dungeon(random, you);
 	}
 }

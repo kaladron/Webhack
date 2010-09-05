@@ -60,14 +60,18 @@ public class DungeonLevel implements LocationMap {
 
 	private final RandomHelper random;
 
+	private final You you;
+
+	
 	/** Rectangles for making room. */
 	private final Rectangles rectangles;
 
 	/** References to Rooms. */
 	private Rooms rooms;
-
-	public DungeonLevel(final RandomHelper random) {
+	
+	public DungeonLevel(final RandomHelper random, final You you) {
 		this.random = random;
+		this.you = you;
 		this.rectangles = new Rectangles(random);
 
 		for (int x = 0; x < Webhack.COLNO; x++) {
