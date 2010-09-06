@@ -34,9 +34,13 @@ public class Dungeon {
 			// return(deepest_lev_reached(FALSE));
 			return 1;
 		} else {
-			// return((xchar) depth(&u.uz));
-			return 1;
+			return depth(you.uz);
 		}
 	}
 
+	int depth(DLevel level) {
+		// TOOD(jeffbailey): STUB!
+		return 1;
+	}
+	
 }

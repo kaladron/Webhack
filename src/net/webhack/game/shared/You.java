@@ -88,14 +88,12 @@ public class You {
 	boolean uinvulnerable; /* you're invulnerable (praying) */
 	boolean uburied; /* you're buried */
 	boolean uedibility; /* blessed food detection; sense unsafe food */
-	/* 1 free bit! */
 
 	int udg_cnt; /* how long you have been demigod */
-	// struct u_event uevent; /* certain events have happened */
-	You.YouHave youHave = new You.YouHave(); /* you're carrying special objects */
+	You.Event youEvent = new You.Event(); /* certain events have happened */
+	You.Have youHave = new You.Have(); /* you're carrying special objects */
 
-	// struct u_have uhave; /* you're carrying special objects */
-	// struct u_conduct uconduct; /* KMH, conduct */
+	You.Conduct youConduct = new You.Conduct(); /* KMH, conduct */
 	// struct attribs acurr, /* your current attributes (eg. str)*/
 	// aexe, /* for gain/loss via "exercise" */
 	// abon, /* your bonus attributes (eg. str) */
@@ -103,6 +101,7 @@ public class You {
 	// atemp, /* used for temporary loss/gain */
 	// atime; /* used for loss/gain countdown */
 	// align ualign; /* character alignment */
+	
 	public You() {
 
 	}
@@ -112,7 +111,7 @@ public class You {
 		return false;
 	}
 
-	public class YouHave {
+	public class Have {
 		/** carrying Amulet */
 		boolean amulet;
 		/** carrying Bell */
@@ -123,6 +122,61 @@ public class You {
 		boolean menorah;
 		/** carrying the Quest Artifact */
 		boolean questart;
+	}
+
+	public class Event {
+		/** received at least 1 cheap oracle */
+		boolean minor_oracle;
+		/** " expensive oracle */
+		boolean major_oracle;
+		/** called by Quest leader to do task */
+		boolean qcalled;
+		/** expelled from the Quest dungeon */
+		boolean qexpelled;
+		/** successfully completed Quest task */
+		boolean qcompleted;
+		/** 1=know about, 2=heard passtune */
+		int uheard_tune;
+		/** opened the drawbridge */
+		boolean uopened_dbridge;
+
+		/** invoked Gate to the Sanctum level */
+		boolean invoked;
+		/** entered Gehennom via Valley */
+		boolean gehennom_entered;
+		/** became Hand of Elbereth */
+		int uhand_of_elbereth;
+		/** killed the wiz */
+		boolean udemigod;
+		/** has offered the Amulet */
+		boolean ascended;
+
+	}
+
+	public class Conduct {
+		/** eaten any animal */
+		long unvegetarian;
+		/** ... or any animal byproduct */
+		long unvegan;
+		/** ... or any comestible */
+		long food;
+		/** used prayer, priest, or altar */
+		long gnostic;
+		/** hit a monster with a weapon */
+		long weaphit;
+		/** killed a monster yourself */
+		long killer;
+		/** read something (other than BotD) */
+		long literate;
+		/** polymorphed an object */
+		long polypiles;
+		/** transformed yourself */
+		long polyselfs;
+		/** used a wish */
+		long wishes;
+		/** wished for an artifact */
+		long wisharti;
+
 	}
 
 }
