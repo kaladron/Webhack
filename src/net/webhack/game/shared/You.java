@@ -111,6 +111,15 @@ public class You {
 		return false;
 	}
 
+	public enum Attribute {
+		STR,
+		INT,
+		WIS,
+		DEX,
+		CON,
+		CHA;
+	}
+	
 	public class Have {
 		/** carrying Amulet */
 		boolean amulet;

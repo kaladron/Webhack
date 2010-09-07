@@ -11,38 +11,75 @@ package net.webhack.game.shared;
 public class Role {
 
 	public abstract class Class {
-		public String name[];
-		public String title[];
+		public String[] name;
+		public String[][] title;
+
+		public String lgod;
+		public String ngod;
+		public String cgod;
+
+		public String filecode;
+		public String homebase;
+		public String intermed;
+
+		PM[] monster;
+		PM pet;
+		PM questLeader;
+		PM questGuardian;
+		PM questNemisis;
+
+		PM questEnemy[];
+
+		Monster questMonsterClass[];
+		Artifact questArtifact;
+
+		int maxLevel;
+		int alignmentRecord;
+
+		/** base spellcasting penalty */
+		int spelbase;
+		/** penalty (-bonus) for healing spells */
+		int spelheal;
+		/** penalty for wearing any shield */
+		int spelshld;
+		/** penalty for wearing metal armour */
+		int spelarmr;
+		/** which stat is used */
+		You.Attribute spelstat;
+		/** spell (SPE_) the class excels at */
+		ObjectName spelspec;
+		/** penalty (-bonus) for that spell */
+		int spelsbon;
 	}
 
 	public class Archeologist extends Role.Class {
-		{
-			final String name[] = { "Archeologist", null };
-			final String title[][] = { { "Digger", null },
+		public Archeologist() {
+			name = new String[] { "Archeologist", null };
+			title = new String[][] { { "Digger", null },
 					{ "Field Worker", null }, { "Investigator", null },
 					{ "Exhumer", null }, { "Excavator", null },
 					{ "Spelunker", null }, { "Speleologist", null },
 					{ "Collector", null }, { "Curator", null } };
 
 			/* Central American */
-			final String lgod = "Quetzalcoatl";
-			final String ngod = "Camaxtli";
-			final String cgod = "Huhetotl";
+			lgod = "Quetzalcoatl";
+			ngod = "Camaxtli";
+			cgod = "Huhetotl";
 
-			final String filecode = "Arc";
-			final String homebase = "the College of Archeology";
-			final String intermed = "the Tomb of the Toltec Kings";
+			filecode = "Arc";
+			homebase = "the College of Archeology";
+			intermed = "the Tomb of the Toltec Kings";
 
-			final PM monster[] = { PM.ARCHEOLOGIST, null };
-			final PM pet = null;
-			final PM questLeader = PM.LORD_CARNARVON;
-			final PM questGuardian = PM.STUDENT;
-			final PM questNemisis = PM.MINION_OF_HUHETOTL;
+			monster = new PM[] { PM.ARCHEOLOGIST, null };
+			pet = null;
+			questLeader = PM.LORD_CARNARVON;
+			questGuardian = PM.STUDENT;
+			questNemisis = PM.MINION_OF_HUHETOTL;
 
-			final PM questEnemy[] = { null, PM.HUMAN_MUMMY };
+			questEnemy = new PM[] { null, PM.HUMAN_MUMMY };
 
-			final Monster questMonsterClass[] = { Monster.SNAKE, Monster.MUMMY };
-			final Artifact questArtifact = Artifact.ORB_OF_DETECTION;
+			questMonsterClass = new Monster[] { Monster.SNAKE, Monster.MUMMY };
+			questArtifact = Artifact.ORB_OF_DETECTION;
 
 			// TODO(jeffbailey): Variations.
 			// MH_HUMAN|MH_DWARF|MH_GNOME | ROLE_MALE|ROLE_FEMALE |
@@ -62,30 +99,24 @@ public class Role {
 			// TODO(jeffbailey): Energy advancement.
 			// { 1, 0, 0, 1, 0, 1 }, /* Energy */
 
-			int maxLevel = 14;
-			int alignmentRecord = 10;
+			maxLevel = 14;
+			alignmentRecord = 10;
 
-			/** base spellcasting penalty */
-			int spelbase = 5;
-			/** penalty (-bonus) for healing spells */
-			int spelheal = 0;
-			/** penalty for wearing any shield */
-			int spelshld = 2;
-			/** penalty for wearing metal armour */
-			int spelarmr = 10;
-			/** which stat (A_) is used */
-			int spelstat; // A_INT
-			/** spell (SPE_) the class excels at */
-			ObjectName spelspec = ObjectName.SPE_MAGIC_MAPPING;
-			/** penalty (-bonus) for that spell */
-			int spelsbon = -4;
+			spelbase = 5;
+			spelheal = 0;
+			spelshld = 2;
+			spelarmr = 10;
+			spelstat = You.Attribute.INT;
+			spelspec = ObjectName.SPE_MAGIC_MAPPING;
+			spelsbon = -4;
 
 		}
-
 	}
 
-	public interface Gender {
-
+	public enum Gender {
+		MALE,
+		FEMALE,
+		NEUTER;
 	}
 
 	public interface Alignment {
