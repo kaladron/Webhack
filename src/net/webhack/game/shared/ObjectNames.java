@@ -438,41 +438,4 @@ public class ObjectNames {
 	final static int LAST_GEM = JADE;
 	final static int MAXSPELL = 43;
 	final static int NUM_OBJECTS = 433;
-
-	/* Artifacts (unique objects) */
-
-	final static int ART_EXCALIBUR = 1;
-	final static int ART_STORMBRINGER = 2;
-	final static int ART_MJOLLNIR = 3;
-	final static int ART_CLEAVER = 4;
-	final static int ART_GRIMTOOTH = 5;
-	final static int ART_ORCRIST = 6;
-	final static int ART_STING = 7;
-	final static int ART_MAGICBANE = 8;
-	final static int ART_FROST_BRAND = 9;
-	final static int ART_FIRE_BRAND = 10;
-	final static int ART_DRAGONBANE = 11;
-	final static int ART_DEMONBANE = 12;
-	final static int ART_WEREBANE = 13;
-	final static int ART_GRAYSWANDIR = 14;
-	final static int ART_GIANTSLAYER = 15;
-	final static int ART_OGRESMASHER = 16;
-	final static int ART_TROLLSBANE = 17;
-	final static int ART_VORPAL_BLADE = 18;
-	final static int ART_SNICKERSNEE = 19;
-	final static int ART_SUNSWORD = 20;
-	final static int ART_ORB_OF_DETECTION = 21;
-	final static int ART_HEART_OF_AHRIMAN = 22;
-	final static int ART_SCEPTRE_OF_MIGHT = 23;
-	final static int ART_STAFF_OF_AESCULAPIUS = 24;
-	final static int ART_MAGIC_MIRROR_OF_MERLIN = 25;
-	final static int ART_EYES_OF_THE_OVERWORLD = 26;
-	final static int ART_MITRE_OF_HOLINESS = 27;
-	final static int ART_LONGBOW_OF_DIANA = 28;
-	final static int ART_MASTER_KEY_OF_THIEVERY = 29;
-	final static int ART_TSURUGI_OF_MURAMASA = 30;
-	final static int ART_YENDORIAN_EXPRESS_CARD = 31;
-	final static int ART_ORB_OF_FATE = 32;
-	final static int ART_EYE_OF_THE_AETHIOPICA = 33;
-	final static int NROFARTIFACTS = 33;
 }
