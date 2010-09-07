@@ -76,7 +76,7 @@ public class Role {
 			/** which stat (A_) is used */
 			int spelstat; // A_INT
 			/** spell (SPE_) the class excels at */
-			int spelspec; // SPE_MAGIC_MAPPING
+			ObjectName spelspec = ObjectName.SPE_MAGIC_MAPPING;
 			/** penalty (-bonus) for that spell */
 			int spelsbon = -4;
 
