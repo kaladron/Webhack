@@ -4,6 +4,8 @@
 
 package net.webhack.game.shared;
 
+import java.util.EnumSet;
+
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
@@ -32,6 +34,10 @@ public class Role {
 
 		Monster questMonsterClass[];
 		Artifact questArtifact;
+		
+		EnumSet<Race> allowedRace;
+		EnumSet<Gender> allowedGender;
+		EnumSet<Alignment> allowedAlignment;
 
 		int maxLevel;
 		int alignmentRecord;
@@ -81,13 +87,13 @@ public class Role {
 			questMonsterClass = new Monster[] { Monster.SNAKE, Monster.MUMMY };
 			questArtifact = Artifact.ORB_OF_DETECTION;
 
-			// TODO(jeffbailey): Variations.
-			// MH_HUMAN|MH_DWARF|MH_GNOME | ROLE_MALE|ROLE_FEMALE |
-			// ROLE_LAWFUL|ROLE_NEUTRAL,
+			allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF, Race.GNOME);
+			allowedGender = EnumSet.of(Gender.MALE, Gender.FEMALE);
+			allowedAlignment = EnumSet.of(Alignment.LAWFUL, Alignment.NEUTRAL);
 
 			// TODO(jeffbailey): Lowest attributes.
 			/* Str Int Wis Dex Con Cha */
-			// { 7, 10, 10, 7, 7, 7 },
+			// ( 7, 10, 10, 7, 7, 7 );
 
 			// TODO(jeffbailey): Highest Attributes.
 			// { 20, 20, 20, 10, 20, 10 },
@@ -112,6 +118,22 @@ public class Role {
 
 		}
 	}
+	
+	public class Advance {
+        /* "fix" is the fixed amount, "rnd" is the random amount */
+        final int infix, inrnd;     /* at character initialization */
+        final int lofix, lornd;     /* gained per level <  urole.xlev */
+        final int hifix, hirnd;     /* gained per level >= urole.xlev */
+        
+        public Advance(int infix, int inrnd, int lofix, int lornd, int hifix, int hirnd) {
+        	this.infix = infix;
+        	this.inrnd = inrnd;
+        	this.lofix = lofix;
+        	this.lornd = lornd;
+        	this.hifix = hifix;
+        	this.hirnd = hirnd;
+        }
+	}
 
 	public enum Gender {
 		MALE,
@@ -119,12 +141,18 @@ public class Role {
 		NEUTER;
 	}
 
-	public interface Alignment {
-
+	public enum Alignment {
+		LAWFUL,
+		NEUTRAL,
+		CHAOTIC;
 	}
 
-	public interface Race {
-
+	public enum Race {
+		HUMAN,
+		ELF,
+		DWARF,
+		GNOME,
+		ORC;
 	}
 
 }
