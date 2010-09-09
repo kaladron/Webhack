@@ -38,6 +38,9 @@ public class Role {
 		EnumSet<Race> allowedRace;
 		EnumSet<Gender> allowedGender;
 		EnumSet<Alignment> allowedAlignment;
+		
+		Advance hpadv;
+		Advance enadv;
 
 		int maxLevel;
 		int alignmentRecord;
@@ -98,12 +101,11 @@ public class Role {
 			// TODO(jeffbailey): Highest Attributes.
 			// { 20, 20, 20, 10, 20, 10 },
 
-			// TODO(jeffbailey): Hitpoint advancement.
-			/* Init Lower Higher */
-			// { 11, 0, 0, 8, 1, 0 }, /* Hit points */
+			// Hit points
+			hpadv = new Advance( 11, 0, 0, 8, 1, 0 ); /* Hit points */
 
-			// TODO(jeffbailey): Energy advancement.
-			// { 1, 0, 0, 1, 0, 1 }, /* Energy */
+			// Energy
+			enadv = new Advance( 1, 0, 0, 1, 0, 1 ); /* Energy */
 
 			maxLevel = 14;
 			alignmentRecord = 10;
