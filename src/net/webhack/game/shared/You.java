@@ -102,6 +102,8 @@ public class You {
 	// atime; /* used for loss/gain countdown */
 	// align ualign; /* character alignment */
 	
+	Role role;
+	
 	public You() {
 
 	}

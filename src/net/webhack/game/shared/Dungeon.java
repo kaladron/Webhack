@@ -17,6 +17,8 @@ public class Dungeon {
 	public Dungeon(RandomHelper random, You you) {
 		this.random = random;
 		this.you = you;
+		// TODO(jeffbailey): This is for testing.
+		you.role = new Archeologist();
 		dlevel = new DungeonLevel(random, you);
 
 	}
