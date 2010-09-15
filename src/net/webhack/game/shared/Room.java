@@ -82,4 +82,23 @@ public class Room {
     Room[] sbrooms = new Room[Webhack.MAX_SUBROOMS];  /* Subrooms pointers */
     //struct monst *resident; /* priest/shopkeeper/guard for this room */
 
+    /**
+     * Random X coordinate within a room
+     * 
+     * @param random
+     * @return
+     */
+    public int someX(RandomHelper random) {
+        return random.rn2(hx - lx + 1) + lx;
+    }
+    
+    /**
+     * Random Y coordinate within a room
+     * 
+     * @param random
+     * @return
+     */
+    public int someY(RandomHelper random) {
+        return random.rn2(hy - ly + 1) + ly;
+    }
 }

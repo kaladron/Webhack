@@ -58,17 +58,22 @@ public class DungeonLevel implements LocationMap {
 	/** Coordinates of up stairs */
 	private Coordinate upstair;
 
+	/** Room in which down stairs can be found. */
+	private Room dnstairsRoom;
+
+	/** Room in which up stairs can be found. */
+	private Room upstairsRoom;
+
 	private final RandomHelper random;
 
 	private final You you;
 
-	
 	/** Rectangles for making room. */
 	private final Rectangles rectangles;
 
 	/** References to Rooms. */
 	private Rooms rooms;
-	
+
 	public DungeonLevel(final RandomHelper random, final You you) {
 		this.random = random;
 		this.you = you;
@@ -89,9 +94,68 @@ public class DungeonLevel implements LocationMap {
 		makeCorridors();
 	}
 
+	public void onUpstairs() {
+		you.newPos(upstair);
+	}
+
 	private void makeStairs() {
+		/* construct stairs (up and down in different rooms if possible) */
+		Room croom = rooms.rooms[random.rn2(rooms.nroom)];
+		// TODO(jeffbailey): if (!Is_botlevel(you.uz))
+		mkstairs(croom.someX(random), croom.someY(random), false, croom); /* down */
+		if (rooms.nroom > 1) {
+			// TODO(jeffbailey): Room troom = croom;
+			croom = rooms.rooms[random.rn2(rooms.nroom - 1)];
+			// TODO(jeffbailey): if (croom == troom) croom++;
+		}
+
+		// TODO(jeffbailey): if (you.uz.dlevel != 1)
+		{
+			int sx, sy;
+			do {
+				sx = croom.someX(random);
+				sy = croom.someY(random);
+				// TODO(jeffbailey): } while(occupied(sx, sy));
+			} while (false);
+			mkstairs(sx, sy, true, croom); /* up */
+		}
 
 	}
+
+	/**
+	 * 
+	 * @param x
+	 *            X coordinate of stair
+	 * @param y
+	 *            Y coordinate of stair
+	 * @param up
+	 *            True if an upstair
+	 * @param croom
+	 *            Room in which to make the stairs
+	 */
+	void mkstairs(int x, int y, boolean up, Room croom) {
+		/*
+		 * We can't make a regular stair off an end of the dungeon. This attempt
+		 * can happen when a special level is placed at an end and has an up or
+		 * down stair specified in its description file.
+		 */
+		/*
+		 * TODO(jeffbailey): Add this back in. if ((dunlev(&u.uz) == 1 && up) ||
+		 * (dunlev(&u.uz) == dunlevs_in_dungeon(&u.uz) && !up)) return;
+		 */
+
+		if (up) {
+			upstair = new Coordinate(x, y);
+			upstairsRoom = croom;
+		} else {
+			dnstair = new Coordinate(x, y);
+			dnstairsRoom = croom;
+		}
+
+		locations[x][y].typ = LocationType.STAIRS;
+		locations[x][y].ladder = up ? LocationType.Ladder.UP
+				: LocationType.Ladder.DOWN;
+	};
 
 	private void makeCorridors() {
 		boolean any = true;

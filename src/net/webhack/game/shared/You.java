@@ -18,8 +18,10 @@ public class You {
 	int tx, ty;
 	/** initial position FF */
 	int ux0, uy0;
-	/** your level on this and the previous turn */
-	DLevel uz, uz0;
+	/** your level on this turn */
+	DLevel uz = new DLevel(1,1);
+	/** Level on the previous turn */
+	DLevel uz0;
 	/** level monster teleported you to, or uz */
 	DLevel utolev;
 	/** bitmask of goto_level() flags for utolev */
@@ -111,6 +113,11 @@ public class You {
 	boolean inEndGame() {
 		// TODO(jeffbailey): Stub!
 		return false;
+	}
+	
+	public void newPos(Coordinate c) {
+		ux = c.x;
+		uy = c.y;
 	}
 
 	public enum Attribute {

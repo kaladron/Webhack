@@ -10,8 +10,12 @@ package net.webhack.game.shared;
  */
 public class DLevel {
 	/** dungeon number */
-	int dnum;
+	final int dnum;
 	/** level number */
-	int dlevel;
+	final int dlevel;
 
+	public DLevel(int dnum, int dlevel) {
+		this.dnum = dnum;
+		this.dlevel = dlevel;
+	}
 }

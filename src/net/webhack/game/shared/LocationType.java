@@ -65,4 +65,9 @@ public enum LocationType {
 	CLOUD,
 	MAX_TYPE,
 	INVALID_TYPE;
+	
+	public enum Ladder {
+		UP,
+		DOWN;
+	}
 }

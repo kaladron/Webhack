@@ -11,16 +11,14 @@ package net.webhack.game.shared;
 public class Dungeon {
 
 	private final DungeonLevel dlevel;
-	private final RandomHelper random;
 	private final You you;
 
 	public Dungeon(RandomHelper random, You you) {
-		this.random = random;
 		this.you = you;
 		// TODO(jeffbailey): This is for testing.
 		you.role = new Archeologist();
 		dlevel = new DungeonLevel(random, you);
-
+		dlevel.onUpstairs();
 	}
 
 	/**
@@ -41,8 +39,8 @@ public class Dungeon {
 	}
 
 	int depth(DLevel level) {
-		// TOOD(jeffbailey): STUB!
-		return 1;
+		// TODO(jeffbailey): STUB!
+		return level.dlevel;
 	}
 	
 }
