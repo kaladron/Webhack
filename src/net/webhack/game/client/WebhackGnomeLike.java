@@ -1,5 +1,7 @@
 package net.webhack.game.client;
 
+import net.webhack.game.shared.Display;
+
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -8,7 +10,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class WebhackGnomeLike implements WebhackUI {
+public class WebhackGnomeLike extends Display {
 
 	Command sayHello = new Command() {
 		public void execute() {

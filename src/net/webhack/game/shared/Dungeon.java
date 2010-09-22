@@ -12,13 +12,21 @@ public class Dungeon {
 
 	private final DungeonLevel dlevel;
 	private final You you;
+	private final WebhackUI ui;
 
-	public Dungeon(RandomHelper random, You you) {
+	public Dungeon(RandomHelper random, You you, WebhackUI ui) {
 		this.you = you;
+		this.ui = ui;
+		// TODO(jeffbailey): Figure out better bootstrapping
+		ui.init(this);
 		// TODO(jeffbailey): This is for testing.
 		you.role = new Archeologist();
 		dlevel = new DungeonLevel(random, you);
 		dlevel.onUpstairs();
+	}
+	
+	DungeonLevel getLevel() {
+		return dlevel;
 	}
 
 	/**

@@ -1,6 +1,5 @@
 package net.webhack.game.shared;
 
-import net.webhack.game.client.WebhackUI;
 
 public class Webhack {
 	
@@ -44,13 +43,14 @@ public class Webhack {
 
 	Dungeon dungeon;
 	You you;
+	final WebhackUI ui;
 	
 	static int YLIM = 3;
 
 	static int XLIM = 4;
 	
 	public Webhack(WebhackUI ui) {
-		
+		this.ui = ui;
 	}
 
 	public void main() {
@@ -60,6 +60,6 @@ public class Webhack {
 	private void newGame() {
 		RandomHelper random = new WebhackRandom();
 		you = new You();
-		dungeon = new Dungeon(random, you);
+		dungeon = new Dungeon(random, you, ui);
 	}
 }

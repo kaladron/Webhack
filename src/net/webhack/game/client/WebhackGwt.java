@@ -1,6 +1,7 @@
 package net.webhack.game.client;
 
 import net.webhack.game.shared.Webhack;
+import net.webhack.game.shared.WebhackUI;
 
 import com.google.gwt.core.client.EntryPoint;
 
