@@ -19,6 +19,9 @@ public class WebhackGnomeLike extends Display {
 	};
 
 	public WebhackGnomeLike() {
+	}
+	
+	public void initNhWindows() {
 		VerticalPanel basePanel = new VerticalPanel();
 		MenuBar menu = new MenuBar();
 		menu.addItem("Game", sayHello);

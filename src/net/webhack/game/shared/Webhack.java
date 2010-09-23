@@ -59,6 +59,7 @@ public class Webhack {
 	
 	private void newGame() {
 		RandomHelper random = new WebhackRandom();
+		ui.initNhWindows();
 		you = new You();
 		dungeon = new Dungeon(random, you, ui);
 	}
