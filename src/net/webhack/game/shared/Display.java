@@ -2,7 +2,24 @@ package net.webhack.game.shared;
 
 public abstract class Display implements WebhackUI {
 
+	protected class Gbuf {
+		public boolean updated = false;
+		public int glyph;
+
+		/**
+		 * Initializes the entry to be a stone background.
+		 */
+		public Gbuf() {
+			glyph = cmap_to_glyph(S_stone);
+		}
+	}
+
+	protected enum WindowType {
+		MESSAGE, STATUS, MAP, MENU, TEXT;
+	}
+
 	protected Dungeon dungeon;
+
 	protected You you;
 
 	/* begin dungeon characters */
@@ -203,9 +220,29 @@ public abstract class Display implements WebhackUI {
 	public final int GLYPH_WARNING_OFF = ((NUMMONS << 3) + GLYPH_SWALLOW_OFF);
 	public final int MAX_GLYPH = (WARNCOUNT + GLYPH_WARNING_OFF);
 
+	protected Gbuf gbuf[][];
+
+	public Display() {
+		clear_glyph_buffer();
+	}
+
+	/**
+	 * This routine assumes that cls() does the following: + fills the physical
+	 * screen with the symbol for rock + clears the glyph buffer
+	 */
+	public void cls() {
+		displayNhWindow(WindowType.MESSAGE, false); /* flush messages */
+		// flags.botlx = 1; /* force update of botl window */
+		clearNhWindow(WindowType.MAP); /* clear physical screen */
+
+		clear_glyph_buffer(); /* this is sort of an extra effort, but OK */
+
+	}
+
 	public void docrt() {
-		if (you.ux == 0)
+		if (you.ux == 0) {
 			return; /* display isn't ready yet */
+		}
 
 		if (you.uswallow) {
 			swallowed(true);
@@ -228,22 +265,20 @@ public abstract class Display implements WebhackUI {
 		 * This routine assumes that cls() does the following: + fills the
 		 * physical screen with the symbol for rock + clears the glyph buffer
 		 */
-		// cls();
+		cls();
 
 		/* display memory */
 		for (int x = 1; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
-				Location ptr = dungeon.getLevel().getLoc(x, y);
-				System.out.print(ptr.glyph);
-				System.out.print(" ");
-				if (ptr.glyph != cmap_to_glyph(S_stone))
+				final Location ptr = dungeon.getLevel().getLoc(x, y);
+				if (ptr.glyph != cmap_to_glyph(S_stone)) {
 					show_glyph(x, y, ptr.glyph);
+				}
 			}
-			System.out.println();
 		}
 
 		/* see what is to be seen */
-		// vision_recalc(0);
+		vision_recalc(0);
 
 		/* overlay with monsters */
 		// see_monsters();
@@ -252,7 +287,7 @@ public abstract class Display implements WebhackUI {
 
 	}
 
-	public void init(Dungeon dungeon, You you) {
+	public void init(final Dungeon dungeon, final You you) {
 		this.dungeon = dungeon;
 		this.you = you;
 	}
@@ -263,7 +298,7 @@ public abstract class Display implements WebhackUI {
 	 * @param x
 	 * @param y
 	 */
-	public void newsym(int x, int y) {
+	public void newsym(final int x, final int y) {
 		// TODO(jeffbailey): stub
 		map_location(x, y, true);
 	}
@@ -310,11 +345,17 @@ public abstract class Display implements WebhackUI {
 	 * affects vision [parseoptions()] + Right after the hero is swallowed.
 	 * [gulpmu()] + Just before bubbles are moved. [movebubbles()]
 	 */
-	public void vision_recalc(int control) {
+	public void vision_recalc(final int control) {
 		// TODO(jeffbailey): STUB
 
 		// At this point, we're just making everything visible to the hero. Want
 		// to make the game playable soonish.
+
+		for (int y = 0; y < Webhack.ROWNO; y++) {
+			for (int x = 0; x < Webhack.COLNO; x++) {
+				newsym(x, y);
+			}
+		}
 
 	}
 
@@ -331,9 +372,9 @@ public abstract class Display implements WebhackUI {
 	 * were up or down. I didn't want to check the upstairs and dnstairs
 	 * variables.
 	 */
-	int back_to_glyph(int x, int y) {
+	int back_to_glyph(final int x, final int y) {
 		int idx;
-		Location ptr = dungeon.getLevel().getLoc(x, y);
+		final Location ptr = dungeon.getLevel().getLoc(x, y);
 
 		switch (ptr.typ) {
 		case SCORR:
@@ -453,26 +494,42 @@ public abstract class Display implements WebhackUI {
 		return cmap_to_glyph(idx);
 	}
 
-	int cmap_to_glyph(int cmap_idx) {
+	int cmap_to_glyph(final int cmap_idx) {
 		return cmap_idx + GLYPH_CMAP_OFF;
+	}
+
+	/**
+	 * Sync the third screen with the display.
+	 * 
+	 * @param cursorOnYou
+	 *            if the cursor should be placed on the Character
+	 */
+	void flush_screen(final boolean cursorOnYou) {
+
 	}
 
 	/**
 	 * Make the real background part of our map. This routine assumes that the
 	 * hero can physically see the location. Update the screen if directed.
 	 */
-	void map_background(int x, int y, boolean show) {
-		int glyph = back_to_glyph(x, y);
+	void map_background(final int x, final int y, final boolean show) {
+		final int glyph = back_to_glyph(x, y);
 
-		if (dungeon.getLevel().hero_memory)
+		if (dungeon.getLevel().hero_memory) {
 			dungeon.getLevel().getLoc(x, y).glyph = glyph;
-		if (show)
+		}
+		if (show) {
 			show_glyph(x, y, glyph);
+		}
 	}
 
-	void show_glyph(int x, int y, int glyph) {
+	void show_glyph(final int x, final int y, final int glyph) {
 		// TODO(jeffbailey): STUB
-		
+		if (gbuf[y][x].glyph != glyph) {
+			gbuf[y][x].glyph = glyph;
+			gbuf[y][x].updated = true;
+		}
+
 	}
 
 	/**
@@ -484,7 +541,7 @@ public abstract class Display implements WebhackUI {
 	 * @param first
 	 *            if should refresh whole screen.
 	 */
-	void swallowed(boolean first) {
+	void swallowed(final boolean first) {
 		// TODO(jeffbailey): STUB
 	}
 
@@ -493,15 +550,27 @@ public abstract class Display implements WebhackUI {
 	 * 
 	 * @param mode
 	 */
-	void under_ground(int mode) {
+	void under_ground(final int mode) {
 		// TODO(jeffbailey): STUB
+	}
+
+	/**
+	 * Turns the 3rd screen into stone.
+	 */
+	private void clear_glyph_buffer() {
+		gbuf = new Gbuf[Webhack.ROWNO][Webhack.COLNO];
+		for (int y = 0; y < Webhack.ROWNO; y++) {
+			for (int x = 0; x < Webhack.COLNO; x++) {
+				gbuf[y][x] = new Gbuf();
+			}
+		}
 	}
 
 	/**
 	 * Make whatever at this location show up. This is only for non-living
 	 * things. This will not handle feeling invisible objects correctly.
 	 */
-	private void map_location(int x, int y, boolean show) {
+	private void map_location(final int x, final int y, final boolean show) {
 		// TODO(jeffbailey): STUB
 		map_background(x, y, show);
 	}

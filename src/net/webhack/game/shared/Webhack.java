@@ -1,5 +1,7 @@
 package net.webhack.game.shared;
 
+import net.webhack.game.shared.Display.WindowType;
+
 public class Webhack {
 
 	// CONFIG Things go here for now.
@@ -48,7 +50,7 @@ public class Webhack {
 
 	static int XLIM = 4;
 
-	public Webhack(WebhackUI ui) {
+	public Webhack(final WebhackUI ui) {
 		this.ui = ui;
 	}
 
@@ -63,6 +65,19 @@ public class Webhack {
 		premove();
 		// moveloop();
 
+	}
+
+	/**
+	 * Handles input from the user and takes the turn.
+	 * 
+	 * The original NetHack code uses a strange putch/getch setup to handle
+	 * movement. This isn't available to us as we want to be purely event-based.
+	 * moveloop() in NH also has a bunch of init at the top of moveloop, which
+	 * we don't want to be performed on each action, so it's split out into
+	 * premove()
+	 */
+	public void moveLoop() {
+		ui.displayNhWindow(WindowType.MAP, false);
 	}
 
 	/**
@@ -91,24 +106,13 @@ public class Webhack {
 
 	}
 
-	/**
-	 * Handles input from the user and takes the turn.
-	 * 
-	 * The original NetHack code uses a strange putch/getch setup to handle
-	 * movement. This isn't available to us as we want to be purely event-based.
-	 * moveloop() in NH also has a bunch of init at the top of moveloop, which
-	 * we don't want to be performed on each action, so it's split out into
-	 * premove()
-	 */
-	public void moveLoop() {
-
-	}
-
 	private void newGame() {
-		RandomHelper random = new WebhackRandom();
+		final RandomHelper random = new WebhackRandom();
 		you = new You();
 		dungeon = new Dungeon(random, you, ui);
-		
+
 		this.ui.docrt();
+
+		moveLoop();
 	}
 }

@@ -17,7 +17,7 @@ public class Location {
 	/** what the hero thinks is there */
 	int glyph;
 	/** what is really there */
-	LocationType typ;
+	LocationType typ = LocationType.STONE;
 	/** seen vector */
 	int seenv;
 
