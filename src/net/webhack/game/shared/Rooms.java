@@ -15,19 +15,18 @@ public class Rooms {
 
 	/** Number of rooms */
 	int nroom = 0;
-	
+
 	/** Token to determine if room is part of the mesh. */
 	int[] smeq = new int[Webhack.MAXNROFROOMS];
 
-	private int subroom = 0;
-
-	private int doorindex = 0;
+	private final int doorindex = 0;
 
 	private final RandomHelper random;
 
 	private final LocationMap locMap;
 
-	public Rooms(Rectangles rectangles, RandomHelper random, LocationMap lmap) {
+	public Rooms(final Rectangles rectangles, final RandomHelper random,
+			final LocationMap lmap) {
 		this.rectangles = rectangles;
 		this.random = random;
 		this.locMap = lmap;
@@ -37,30 +36,6 @@ public class Rooms {
 		}
 		makeRooms();
 		sortRooms();
-	}
-
-	private void makeRooms() {
-		boolean tried_vault = false;
-
-		// make rooms until satisfied.
-		// rnd_rect() will return 0 if no more rects are available...
-
-		while (nroom < Webhack.MAXNROFROOMS && (rectangles.rndRect() != null)) {
-			if (nroom >= (Webhack.MAXNROFROOMS / 6) && (random.rn2(2) != 0)
-					&& !tried_vault) {
-				tried_vault = true;
-				// TODO(jeffbailey): Create_vault stuff goes here.
-			} else {
-				if (!createRoom(-1, -1, -1, -1, -1, -1, Room.OROOM, null)) {
-					return;
-				}
-			}
-		}
-		return;
-	}
-	
-	public void sortRooms() {
-		
 	}
 
 	/**
@@ -76,8 +51,8 @@ public class Rooms {
 	 * @param rlit
 	 *            Is the room lit
 	 */
-	public boolean createRoom(int x, int y, int w, int h, int xal, int yal,
-			int rtype, Boolean rlit) {
+	public boolean createRoom(final int x, final int y, final int w,
+			final int h, final int xal, final int yal, int rtype, Boolean rlit) {
 		Rectangle r1 = null;
 		Rectangle r2 = null;
 		int trycnt = 0;
@@ -115,10 +90,10 @@ public class Rooms {
 		do {
 			wtmp = w;
 			htmp = h;
-			int xtmp = x;
-			int ytmp = y;
-			int xaltmp = xal;
-			int yaltmp = yal;
+			final int xtmp = x;
+			final int ytmp = y;
+			final int xaltmp = xal;
+			final int yaltmp = yal;
 			int xborder;
 			int yborder;
 
@@ -134,17 +109,18 @@ public class Rooms {
 					System.out.println("No more rects...");
 					return false;
 				}
-				int hx = r1.highX;
-				int hy = r1.highY;
-				int lx = r1.lowX;
-				int ly = r1.lowY;
+				final int hx = r1.highX;
+				final int hy = r1.highY;
+				final int lx = r1.lowX;
+				final int ly = r1.lowY;
 				if (vault) {
 					dx = dy = 1;
 				} else {
 					dx = 2 + random.rn2((hx - lx > 28) ? 12 : 8);
 					dy = 2 + random.rn2(4);
-					if (dx * dy > 50)
+					if (dx * dy > 50) {
 						dy = (int) Math.floor(50 / dx);
+					}
 				}
 				xborder = (lx > 0 && hx < Webhack.COLNO - 1) ? 2 * xlim
 						: xlim + 1;
@@ -162,8 +138,9 @@ public class Rooms {
 						&& (nroom == 0 || random.rn2(nroom) == 0)
 						&& (yabs + dy > Webhack.ROWNO / 2)) {
 					yabs = random.rn1(3, 2);
-					if (nroom < 4 && dy > 1)
+					if (nroom < 4 && dy > 1) {
 						dy--;
+					}
 				}
 				if (!checkRoom(xabs, dx, yabs, dy, vault)) {
 					r1 = null;
@@ -182,11 +159,15 @@ public class Rooms {
 		rectangles.splitRects(r1, r2);
 
 		if (!vault) {
-            smeq[nroom] = nroom;
+			smeq[nroom] = nroom;
 			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, rtype,
 					false);
 		}
 		return true;
+
+	}
+
+	public void sortRooms() {
 
 	}
 
@@ -199,31 +180,38 @@ public class Rooms {
 	 * @param rtype
 	 * @param special
 	 */
-	private void addRoom(int lowx, int lowy, int hix, int hiy, boolean lit,
-			int rtype, boolean special) {
+	private void addRoom(final int lowx, final int lowy, final int hix,
+			final int hiy, final boolean lit, final int rtype,
+			final boolean special) {
 		doRoomOrSubroom(rooms[nroom], lowx, lowy, hix, hiy, lit, rtype,
 				special, true);
-		rooms[nroom+1].hx = -1;
+		rooms[nroom + 1].hx = -1;
 		nroom++;
 	}
 
-	private boolean checkRoom(int a, int b, int c, int d, boolean e) {
+	private boolean checkRoom(final int a, final int b, final int c,
+			final int d, final boolean e) {
 		// TODO(jeffbailey): Stub
 		return true;
 	}
 
-	private void doRoomOrSubroom(Room croom, int lowx, int lowy, int hix,
-			int hiy, boolean lit, int rtype, boolean special, boolean isRoom) {
+	private void doRoomOrSubroom(final Room croom, int lowx, int lowy, int hix,
+			int hiy, final boolean lit, final int rtype, final boolean special,
+			final boolean isRoom) {
 		/* locations might bump level edges in wall-less rooms */
 		/* add/subtract 1 to allow for edge locations */
-		if (lowx == 0)
+		if (lowx == 0) {
 			lowx++;
-		if (lowy == 0)
+		}
+		if (lowy == 0) {
 			lowy++;
-		if (hix >= Webhack.COLNO - 1)
+		}
+		if (hix >= Webhack.COLNO - 1) {
 			hix = Webhack.COLNO - 2;
-		if (hiy >= Webhack.ROWNO - 1)
+		}
+		if (hiy >= Webhack.ROWNO - 1) {
 			hiy = Webhack.ROWNO - 2;
+		}
 
 		if (lit) {
 			for (int x = lowx - 1; x <= hix + 1; x++) {
@@ -232,9 +220,9 @@ public class Rooms {
 				}
 			}
 			croom.rlit = true;
-		} else
-
+		} else {
 			croom.rlit = false;
+		}
 
 		croom.lx = lowx;
 		croom.hx = hix;
@@ -289,5 +277,25 @@ public class Rooms {
 			}
 		}
 
+	}
+
+	private void makeRooms() {
+		boolean tried_vault = false;
+
+		// make rooms until satisfied.
+		// rnd_rect() will return 0 if no more rects are available...
+
+		while (nroom < Webhack.MAXNROFROOMS && (rectangles.rndRect() != null)) {
+			if (nroom >= (Webhack.MAXNROFROOMS / 6) && (random.rn2(2) != 0)
+					&& !tried_vault) {
+				tried_vault = true;
+				// TODO(jeffbailey): Create_vault stuff goes here.
+			} else {
+				if (!createRoom(-1, -1, -1, -1, -1, -1, Room.OROOM, null)) {
+					return;
+				}
+			}
+		}
+		return;
 	}
 }

@@ -12,11 +12,9 @@ public class Dungeon {
 
 	private final DungeonLevel dlevel;
 	private final You you;
-	private final WebhackUI ui;
 
-	public Dungeon(RandomHelper random, You you, WebhackUI ui) {
+	public Dungeon(final RandomHelper random, final You you, final WebhackUI ui) {
 		this.you = you;
-		this.ui = ui;
 		// TODO(jeffbailey): Figure out better bootstrapping
 		ui.init(this, you);
 		// TODO(jeffbailey): This is for testing.
@@ -24,7 +22,12 @@ public class Dungeon {
 		dlevel = new DungeonLevel(random, you);
 		dlevel.onUpstairs();
 	}
-	
+
+	int depth(final DLevel level) {
+		// TODO(jeffbailey): STUB!
+		return level.dlevel;
+	}
+
 	DungeonLevel getLevel() {
 		return dlevel;
 	}
@@ -46,9 +49,4 @@ public class Dungeon {
 		}
 	}
 
-	int depth(DLevel level) {
-		// TODO(jeffbailey): STUB!
-		return level.dlevel;
-	}
-	
 }
