@@ -18,7 +18,7 @@ public class Dungeon {
 		this.you = you;
 		this.ui = ui;
 		// TODO(jeffbailey): Figure out better bootstrapping
-		ui.init(this);
+		ui.init(this, you);
 		// TODO(jeffbailey): This is for testing.
 		you.role = new Archeologist();
 		dlevel = new DungeonLevel(random, you);

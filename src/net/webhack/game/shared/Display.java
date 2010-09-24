@@ -3,6 +3,7 @@ package net.webhack.game.shared;
 public abstract class Display implements WebhackUI {
 
 	protected Dungeon dungeon;
+	protected You you;
 
 	/* begin dungeon characters */
 
@@ -202,21 +203,119 @@ public abstract class Display implements WebhackUI {
 	public final int GLYPH_WARNING_OFF = ((NUMMONS << 3) + GLYPH_SWALLOW_OFF);
 	public final int MAX_GLYPH = (WARNCOUNT + GLYPH_WARNING_OFF);
 
-	public void init(Dungeon dungeon) {
-		dungeon = this.dungeon;
+	public void docrt() {
+		if (you.ux == 0)
+			return; /* display isn't ready yet */
+
+		if (you.uswallow) {
+			swallowed(true);
+			return;
+		}
+		// if (Underwater && !Is_waterlevel(&u.uz)) {
+		// under_water(1);
+		// return;
+		// }
+
+		if (you.uburied) {
+			under_ground(1);
+			return;
+		}
+
+		/* shut down vision */
+		// vision_recalc(2);
+
+		/*
+		 * This routine assumes that cls() does the following: + fills the
+		 * physical screen with the symbol for rock + clears the glyph buffer
+		 */
+		// cls();
+
+		/* display memory */
+		for (int x = 1; x < Webhack.COLNO; x++) {
+			for (int y = 0; y < Webhack.ROWNO; y++) {
+				Location ptr = dungeon.getLevel().getLoc(x, y);
+				System.out.print(ptr.glyph);
+				System.out.print(" ");
+				if (ptr.glyph != cmap_to_glyph(S_stone))
+					show_glyph(x, y, ptr.glyph);
+			}
+			System.out.println();
+		}
+
+		/* see what is to be seen */
+		// vision_recalc(0);
+
+		/* overlay with monsters */
+		// see_monsters();
+
+		// flags.botlx = 1; /* force a redraw of the bottom line */
+
+	}
+
+	public void init(Dungeon dungeon, You you) {
+		this.dungeon = dungeon;
+		this.you = you;
 	}
 
 	/**
-	 * Make the real background part of our map. This routine assumes that the
-	 * hero can physically see the location. Update the screen if directed.
+	 * Possibly put a new glyph at the given location
+	 * 
+	 * @param x
+	 * @param y
 	 */
-	void map_background(int x, int y, boolean show) {
-		int glyph = back_to_glyph(x, y);
+	public void newsym(int x, int y) {
+		// TODO(jeffbailey): stub
+		map_location(x, y, true);
+	}
 
-		if (dungeon.getLevel().hero_memory)
-			dungeon.getLevel().getLoc(x, y).glyph = glyph;
-		if (show)
-			show_glyph(x, y, glyph);
+	/**
+	 * * Do all of the heavy vision work. Recalculate all locations that could
+	 * possibly be seen by the hero --- if the location were lit, etc. Note
+	 * which locations are actually seen because of lighting. Then add to this
+	 * all locations that be seen by hero due to night vision and x-ray vision.
+	 * Finally, compare with what the hero was able to see previously. Update
+	 * the difference.
+	 * 
+	 * This function is usually called only when the variable
+	 * 'vision_full_recalc' is set. The following is a list of places where this
+	 * function is called, with three valid values for the control flag
+	 * parameter:
+	 * 
+	 * Control flag = 0. A complete vision recalculation. Generate the vision
+	 * tables from scratch. This is necessary to correctly set what the hero can
+	 * see. (1) and (2) call this routine for synchronization purposes, (3)
+	 * calls this routine so it can operate correctly.
+	 * 
+	 * + After the monster move, before input from the player. [moveloop()] + At
+	 * end of moveloop. [moveloop() ??? not sure why this is here] + Right
+	 * before something is printed. [pline()] + Right before we do a vision
+	 * based operation. [do_clear_area()] + screen redraw, so we can renew all
+	 * positions in sight. [docrt()]
+	 * 
+	 * Control flag = 1. An adjacent vision recalculation. The hero has moved
+	 * one square. Knowing this, it might be possible to optimize the vision
+	 * recalculation using the current knowledge. This is presently
+	 * unimplemented and is treated as a control = 0 call.
+	 * 
+	 * + Right after the hero moves. [domove()]
+	 * 
+	 * Control flag = 2. Turn off the vision system. Nothing new will be
+	 * displayed, since nothing is seen. This is usually done when you need a
+	 * newsym() run on all locations in sight, or on some locations but you
+	 * don't know which ones.
+	 * 
+	 * + Before a screen redraw, so all positions are renewed. [docrt()] + Right
+	 * before the hero arrives on a new level. [goto_level()] + Right after a
+	 * scroll of light is read. [litroom()] + After an option has changed that
+	 * affects vision [parseoptions()] + Right after the hero is swallowed.
+	 * [gulpmu()] + Just before bubbles are moved. [movebubbles()]
+	 */
+	public void vision_recalc(int control) {
+		// TODO(jeffbailey): STUB
+
+		// At this point, we're just making everything visible to the hero. Want
+		// to make the game playable soonish.
+
 	}
 
 	/**
@@ -241,81 +340,109 @@ public abstract class Display implements WebhackUI {
 		case STONE:
 			idx = dungeon.getLevel().arboreal ? S_tree : S_stone;
 			break;
-			
-        case ROOM:              idx = S_room;     break;
-        //TODO(jeffbailey):
-        //case CORR:
-        //    idx = (ptr.waslit || dungeon.getLevel().lit_corridor) ? S_litcorr : S_corr;
-        //    break;
-        case HWALL:
-        case VWALL:
-        case TLCORNER:
-        case TRCORNER:
-        case BLCORNER:
-        case BRCORNER:
-        case CROSSWALL:
-        case TUWALL:
-        case TDWALL:
-        case TLWALL:
-        case TRWALL:
-        //TODO(jeffbailey):
-        //case SDOOR:
-        //    idx = ptr.seenv ? wall_angle(ptr) : S_stone;
-        //    break;
-        //case DOOR:
-        //    if (ptr.doormask) {
-        //        if (ptr.doormask & D_BROKEN)
-        //            idx = S_ndoor;
-        //        else if (ptr.doormask & D_ISOPEN)
-        //            idx = (ptr.horizontal) ? S_hodoor : S_vodoor;
-        //        else                    /* else is closed */
-        //            idx = (ptr.horizontal) ? S_hcdoor : S_vcdoor;
-        //    } else
-        //        idx = S_ndoor;
-        //    break;
-        case IRONBARS:  idx = S_bars;     break;
-        case TREE:              idx = S_tree;     break;
-        case POOL:
-        case MOAT:              idx = S_pool;     break;
-        // TODO(jeffbailey):
-        //case STAIRS:
-        //    idx = (ptr.ladder & LA_DOWN) ? S_dnstair : S_upstair;
-        //    break;
-        //case LADDER:
-        //    idx = (ptr.ladder & LA_DOWN) ? S_dnladder : S_upladder;
-        //    break;
-        case FOUNTAIN:          idx = S_fountain; break;
-        case SINK:              idx = S_sink;     break;
-        case ALTAR:             idx = S_altar;    break;
-        case GRAVE:             idx = S_grave;    break;
-        case THRONE:            idx = S_throne;   break;
-        case LAVAPOOL:          idx = S_lava;     break;
-        case ICE:               idx = S_ice;      break;
-        case AIR:               idx = S_air;      break;
-        case CLOUD:             idx = S_cloud;    break;
-        case WATER:             idx = S_water;    break;
-        case DBWALL:
-            idx = (ptr.horizontal) ? S_hcdbridge : S_vcdbridge;
-            break;
-        //TODO(jeffbailey):    
-        //case DRAWBRIDGE_UP:
-        //    switch(ptr.drawbridgemask & DB_UNDER) {
-        //    case DB_MOAT:  idx = S_pool; break;
-        //    case DB_LAVA:  idx = S_lava; break;
-        //    case DB_ICE:   idx = S_ice;  break;
-        //    case DB_FLOOR: idx = S_room; break;
-        //    default:
-        //        impossible("Strange db-under: %d",
-        //                   ptr.drawbridgemask & DB_UNDER);
-        //        idx = S_room; /* something is better than nothing */
-        //        break;
-        //    }
-        //    break;
-        case DRAWBRIDGE_DOWN:
-            idx = (ptr.horizontal) ? S_hodbridge : S_vodbridge;
-            break;
 
-			
+		case ROOM:
+			idx = S_room;
+			break;
+		// TODO(jeffbailey):
+		// case CORR:
+		// idx = (ptr.waslit || dungeon.getLevel().lit_corridor) ? S_litcorr :
+		// S_corr;
+		// break;
+		case HWALL:
+		case VWALL:
+		case TLCORNER:
+		case TRCORNER:
+		case BLCORNER:
+		case BRCORNER:
+		case CROSSWALL:
+		case TUWALL:
+		case TDWALL:
+		case TLWALL:
+		case TRWALL:
+			// TODO(jeffbailey):
+			// case SDOOR:
+			// idx = ptr.seenv ? wall_angle(ptr) : S_stone;
+			// break;
+			// case DOOR:
+			// if (ptr.doormask) {
+			// if (ptr.doormask & D_BROKEN)
+			// idx = S_ndoor;
+			// else if (ptr.doormask & D_ISOPEN)
+			// idx = (ptr.horizontal) ? S_hodoor : S_vodoor;
+			// else /* else is closed */
+			// idx = (ptr.horizontal) ? S_hcdoor : S_vcdoor;
+			// } else
+			// idx = S_ndoor;
+			// break;
+		case IRONBARS:
+			idx = S_bars;
+			break;
+		case TREE:
+			idx = S_tree;
+			break;
+		case POOL:
+		case MOAT:
+			idx = S_pool;
+			break;
+		// TODO(jeffbailey):
+		// case STAIRS:
+		// idx = (ptr.ladder & LA_DOWN) ? S_dnstair : S_upstair;
+		// break;
+		// case LADDER:
+		// idx = (ptr.ladder & LA_DOWN) ? S_dnladder : S_upladder;
+		// break;
+		case FOUNTAIN:
+			idx = S_fountain;
+			break;
+		case SINK:
+			idx = S_sink;
+			break;
+		case ALTAR:
+			idx = S_altar;
+			break;
+		case GRAVE:
+			idx = S_grave;
+			break;
+		case THRONE:
+			idx = S_throne;
+			break;
+		case LAVAPOOL:
+			idx = S_lava;
+			break;
+		case ICE:
+			idx = S_ice;
+			break;
+		case AIR:
+			idx = S_air;
+			break;
+		case CLOUD:
+			idx = S_cloud;
+			break;
+		case WATER:
+			idx = S_water;
+			break;
+		case DBWALL:
+			idx = (ptr.horizontal) ? S_hcdbridge : S_vcdbridge;
+			break;
+		// TODO(jeffbailey):
+		// case DRAWBRIDGE_UP:
+		// switch(ptr.drawbridgemask & DB_UNDER) {
+		// case DB_MOAT: idx = S_pool; break;
+		// case DB_LAVA: idx = S_lava; break;
+		// case DB_ICE: idx = S_ice; break;
+		// case DB_FLOOR: idx = S_room; break;
+		// default:
+		// impossible("Strange db-under: %d",
+		// ptr.drawbridgemask & DB_UNDER);
+		// idx = S_room; /* something is better than nothing */
+		// break;
+		// }
+		// break;
+		case DRAWBRIDGE_DOWN:
+			idx = (ptr.horizontal) ? S_hodbridge : S_vodbridge;
+			break;
+
 		default:
 			idx = S_room;
 			break;
@@ -326,12 +453,57 @@ public abstract class Display implements WebhackUI {
 		return cmap_to_glyph(idx);
 	}
 
+	int cmap_to_glyph(int cmap_idx) {
+		return cmap_idx + GLYPH_CMAP_OFF;
+	}
+
+	/**
+	 * Make the real background part of our map. This routine assumes that the
+	 * hero can physically see the location. Update the screen if directed.
+	 */
+	void map_background(int x, int y, boolean show) {
+		int glyph = back_to_glyph(x, y);
+
+		if (dungeon.getLevel().hero_memory)
+			dungeon.getLevel().getLoc(x, y).glyph = glyph;
+		if (show)
+			show_glyph(x, y, glyph);
+	}
+
 	void show_glyph(int x, int y, int glyph) {
+		// TODO(jeffbailey): STUB
+		
+	}
+
+	/**
+	 * The hero is swallowed. Show a special graphics sequence for this. This
+	 * bypasses all of the display routines and messes with buffered screen
+	 * directly. This method works because both vision and display check for
+	 * being swallowed.
+	 * 
+	 * @param first
+	 *            if should refresh whole screen.
+	 */
+	void swallowed(boolean first) {
 		// TODO(jeffbailey): STUB
 	}
 
-	int cmap_to_glyph(int cmap_idx) {
-		return cmap_idx + GLYPH_CMAP_OFF;
+	/**
+	 * Very restricted display. You can only see yourself.
+	 * 
+	 * @param mode
+	 */
+	void under_ground(int mode) {
+		// TODO(jeffbailey): STUB
+	}
+
+	/**
+	 * Make whatever at this location show up. This is only for non-living
+	 * things. This will not handle feeling invisible objects correctly.
+	 */
+	private void map_location(int x, int y, boolean show) {
+		// TODO(jeffbailey): STUB
+		map_background(x, y, show);
 	}
 
 }
