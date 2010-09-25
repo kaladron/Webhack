@@ -12,6 +12,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebhackGnomeLike extends Display {
 
+	private final int CELL_SIZE = 16;
+	private final int TILES_PER_ROW = 40;
 	private final int glyph2tile[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 			12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29,
 			30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
@@ -476,6 +478,11 @@ public class WebhackGnomeLike extends Display {
 		final HorizontalPanel statusPanel = new HorizontalPanel();
 		final Image image = new Image();
 		image.setUrl("x11tiles.png");
+		final int num = 848;
+		final int left = (num % TILES_PER_ROW) * CELL_SIZE;
+		final int top = (int) Math.floor(num / TILES_PER_ROW) * CELL_SIZE;
+
+		image.setVisibleRect(left, top, CELL_SIZE, CELL_SIZE);
 
 		statusPanel.add(image);
 		basePanel.add(statusPanel);
