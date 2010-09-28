@@ -1,21 +1,53 @@
 <!doctype html>
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" rel="stylesheet" href="Webhack.css">
-    <title>Webhack</title>
-    <script src="webhack/webhack.nocache.js"></script>
-  </head>
-  <body>
-    <!-- OPTIONAL: include this if you want history support -->
-    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
-    
-    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
-    <noscript>
-      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
-        Your web browser must have JavaScript enabled
-        in order for this application to display correctly.
-      </div>
-    </noscript>
-  </body>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link type="text/css" rel="stylesheet" href="Webhack.css">
+<title>Webhack</title>
+<script>
+var DISPLAY_SQUARE = 16;
+var TILE_SQUARE = 16;
+var TILES_PER_ROW = 40;
+var image = new Image();
+
+var ctx;
+
+function init() {
+	ctx = document.getElementById('canvas').getContext("2d");
+	//image.onload = demo;
+	image.src = "x11tiles.png";
+}
+
+function putGlyph(x, y, glyph) {
+
+   	  glyph_x = glyph % TILES_PER_ROW;
+   	  glyph_y = Math.floor(glyph / TILES_PER_ROW);
+
+   	  ctx.drawImage(image, glyph_x * TILE_SQUARE,
+   	                glyph_y * TILE_SQUARE,
+   	               TILE_SQUARE,
+   	               TILE_SQUARE,
+   	               x * DISPLAY_SQUARE,
+   	               y * DISPLAY_SQUARE,
+   	               DISPLAY_SQUARE,
+   	               DISPLAY_SQUARE);
+}
+
+    </script>
+<script src="webhack/webhack.nocache.js"></script>
+</head>
+<body onLoad="init()">
+<!-- OPTIONAL: include this if you want history support -->
+<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+	style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+
+<!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+<noscript>
+<div
+	style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+Your web browser must have JavaScript enabled in order for this
+application to display correctly.</div>
+</noscript>
+<canvas id="canvas" width="1280" height="336"></canvas>
+</body>
 </html>

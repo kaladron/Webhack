@@ -1,19 +1,17 @@
 package net.webhack.game.client;
 
 import net.webhack.game.shared.Display;
+import net.webhack.game.shared.Webhack;
 
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebhackGnomeLike extends Display {
 
-	private final int CELL_SIZE = 16;
-	private final int TILES_PER_ROW = 40;
 	private final int glyph2tile[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 			12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29,
 			30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
@@ -453,13 +451,11 @@ public class WebhackGnomeLike extends Display {
 
 	public void displayNhWindow(final Display.WindowType window,
 			final boolean blocking) {
-		for (final Gbuf[] rows : gbuf) {
-			for (final Gbuf cell : rows) {
-				System.out.print(glyph2tile[cell.glyph] + " ");
+		for (int x = 0; x < Webhack.COLNO; x++) {
+			for (int y = 0; y < Webhack.ROWNO; y++) {
+				putGlyph(x, y, glyph2tile[gbuf[y][x].glyph]);
 			}
-			System.out.println();
 		}
-
 	}
 
 	public void initNhWindows() {
@@ -476,17 +472,13 @@ public class WebhackGnomeLike extends Display {
 		basePanel.add(menu);
 
 		final HorizontalPanel statusPanel = new HorizontalPanel();
-		final Image image = new Image();
-		image.setUrl("x11tiles.png");
-		final int num = 848;
-		final int left = (num % TILES_PER_ROW) * CELL_SIZE;
-		final int top = (int) Math.floor(num / TILES_PER_ROW) * CELL_SIZE;
-
-		image.setVisibleRect(left, top, CELL_SIZE, CELL_SIZE);
-
-		statusPanel.add(image);
 		basePanel.add(statusPanel);
 
 		RootPanel.get().add(basePanel);
 	}
+
+	native void putGlyph(final int x, final int y, final int glyph) /*-{
+		$wnd.putGlyph(x, y, glyph);
+	}-*/;
+
 }
