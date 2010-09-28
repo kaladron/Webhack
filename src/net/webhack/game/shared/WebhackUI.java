@@ -7,7 +7,7 @@ public interface WebhackUI {
 
 	void docrt();
 
-	void init(Dungeon dungeon, You you);
+	void init(Dungeon dungeon, You you, Flags flags);
 
 	void initNhWindows();
 }

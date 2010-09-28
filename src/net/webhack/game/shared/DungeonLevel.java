@@ -236,7 +236,7 @@ public class DungeonLevel implements LocationMap {
 
 		// TODO(jeffbailey): dosdoor(x, y, aroom, random.oneIn(8) ? DOOR :
 		// SDOOR);
-	};
+	}
 
 	void finddpos(final Coordinate cc, final int xl, final int yl,
 			final int xh, final int yh) {
@@ -271,7 +271,7 @@ public class DungeonLevel implements LocationMap {
 		y = yh;
 		gotit(cc, x, y);
 		return;
-	}
+	};
 
 	void gotit(final Coordinate cc, final int x, final int y) {
 		cc.x = x;

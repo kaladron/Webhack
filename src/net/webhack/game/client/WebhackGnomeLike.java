@@ -453,7 +453,9 @@ public class WebhackGnomeLike extends Display {
 			final boolean blocking) {
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
-				putGlyph(x, y, glyph2tile[gbuf[y][x].glyph]);
+				if (gbuf[y][x].updated) {
+					putGlyph(x, y, glyph2tile[gbuf[y][x].glyph]);
+				}
 			}
 		}
 	}

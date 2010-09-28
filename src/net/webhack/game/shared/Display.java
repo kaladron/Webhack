@@ -221,6 +221,7 @@ public abstract class Display implements WebhackUI {
 	public final int MAX_GLYPH = (WARNCOUNT + GLYPH_WARNING_OFF);
 
 	protected Gbuf gbuf[][];
+	protected Flags flags;
 
 	public Display() {
 		clear_glyph_buffer();
@@ -287,8 +288,9 @@ public abstract class Display implements WebhackUI {
 
 	}
 
-	public void init(final Dungeon dungeon, final You you) {
+	public void init(final Dungeon dungeon, final You you, final Flags flags) {
 		this.dungeon = dungeon;
+		this.flags = flags;
 		this.you = you;
 	}
 
@@ -353,7 +355,11 @@ public abstract class Display implements WebhackUI {
 
 		for (int y = 0; y < Webhack.ROWNO; y++) {
 			for (int x = 0; x < Webhack.COLNO; x++) {
-				newsym(x, y);
+				final Location ptr = dungeon.getLevel().getLoc(x, y);
+				if (ptr.typ != LocationType.STONE) {
+					newsym(x, y);
+				}
+
 			}
 		}
 
@@ -381,15 +387,12 @@ public abstract class Display implements WebhackUI {
 		case STONE:
 			idx = dungeon.getLevel().arboreal ? S_tree : S_stone;
 			break;
-
 		case ROOM:
 			idx = S_room;
 			break;
-		// TODO(jeffbailey):
-		// case CORR:
-		// idx = (ptr.waslit || dungeon.getLevel().lit_corridor) ? S_litcorr :
-		// S_corr;
-		// break;
+		case CORR:
+			idx = (ptr.waslit || flags.lit_corridor) ? S_litcorr : S_corr;
+			break;
 		case HWALL:
 		case VWALL:
 		case TLCORNER:
@@ -426,13 +429,14 @@ public abstract class Display implements WebhackUI {
 		case MOAT:
 			idx = S_pool;
 			break;
-		// TODO(jeffbailey):
-		// case STAIRS:
-		// idx = (ptr.ladder & LA_DOWN) ? S_dnstair : S_upstair;
-		// break;
-		// case LADDER:
-		// idx = (ptr.ladder & LA_DOWN) ? S_dnladder : S_upladder;
-		// break;
+		case STAIRS:
+			idx = (ptr.ladder == LocationType.Ladder.DOWN) ? S_dnstair
+					: S_upstair;
+			break;
+		case LADDER:
+			idx = (ptr.ladder == LocationType.Ladder.DOWN) ? S_dnladder
+					: S_upladder;
+			break;
 		case FOUNTAIN:
 			idx = S_fountain;
 			break;

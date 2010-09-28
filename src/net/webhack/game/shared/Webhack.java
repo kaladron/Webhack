@@ -44,6 +44,7 @@ public class Webhack {
 
 	Dungeon dungeon;
 	You you;
+	final Flags flags;
 	final WebhackUI ui;
 
 	static int YLIM = 3;
@@ -51,6 +52,7 @@ public class Webhack {
 	static int XLIM = 4;
 
 	public Webhack(final WebhackUI ui) {
+		this.flags = new Flags();
 		this.ui = ui;
 	}
 
@@ -109,7 +111,7 @@ public class Webhack {
 	private void newGame() {
 		final RandomHelper random = new WebhackRandom();
 		you = new You();
-		dungeon = new Dungeon(random, you, ui);
+		dungeon = new Dungeon(random, you, ui, flags);
 
 		this.ui.docrt();
 
