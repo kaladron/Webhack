@@ -79,16 +79,8 @@ public abstract class Role {
 		}
 	}
 
-	public enum Gender {
-		MALE, FEMALE, NEUTER;
-	}
-
 	public enum Alignment {
 		LAWFUL, NEUTRAL, CHAOTIC;
-	}
-
-	public enum Race {
-		HUMAN, ELF, DWARF, GNOME, ORC;
 	}
 
 }

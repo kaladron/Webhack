@@ -164,8 +164,7 @@ public class DungeonLevel implements LocationMap {
 				if (ftyp != LocationType.CORR || random.oneIn(100)) {
 					crm.typ = ftyp;
 					if (nxcor && random.oneIn(50)) {
-						// TODO(jeffbailey): webhack.mksobj_at(webhack.BOULDER,
-						// xx, yy, true, false);
+						mksobj_at(ObjectName.BOULDER, xx, yy, true, false);
 					}
 				} else {
 					crm.typ = LocationType.SCORR;
@@ -271,12 +270,12 @@ public class DungeonLevel implements LocationMap {
 		y = yh;
 		gotit(cc, x, y);
 		return;
-	};
+	}
 
 	void gotit(final Coordinate cc, final int x, final int y) {
 		cc.x = x;
 		cc.y = y;
-	}
+	};
 
 	boolean isDoor(final LocationType typ) {
 		return typ == LocationType.DOOR;
@@ -286,6 +285,12 @@ public class DungeonLevel implements LocationMap {
 		/* x corresponds to curx, so x==1 is the first column. Ach. %% */
 		return x >= 1 && x <= Webhack.COLNO - 1 && y >= 0
 				&& y <= Webhack.ROWNO - 1;
+	}
+
+	void mksobj_at(final ObjectName boulder, final int xx, final int yy,
+			final boolean b, final boolean c) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**

@@ -110,7 +110,7 @@ public class Webhack {
 
 	private void newGame() {
 		final RandomHelper random = new WebhackRandom();
-		you = new You();
+		you = new You(null, Race.getRandom(random), Gender.getRandom(random));
 		dungeon = new Dungeon(random, you, ui, flags);
 
 		this.ui.docrt();

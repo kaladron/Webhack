@@ -181,9 +181,15 @@ public class You {
 	// align ualign; /* character alignment */
 
 	Role role;
+	Race race;
+	Gender gender;
 
-	public You() {
-
+	public You(final Role role, final Race race, final Gender gender) {
+		this.role = role;
+		this.race = race;
+		this.gender = gender;
+		// artifacts_init
+		// u_init
 	}
 
 	public void newPos(final Coordinate c) {
