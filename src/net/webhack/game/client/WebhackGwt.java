@@ -6,11 +6,12 @@ import net.webhack.game.shared.WebhackUI;
 import com.google.gwt.core.client.EntryPoint;
 
 /**
- * GWT Entry Point for Webhack.  This does nothing more than bootstrap into the game.
+ * GWT Entry Point for Webhack. This does nothing more than bootstrap into the
+ * game.
  * 
- * A classic game entrance might read configs off of a file on disk.  This isn't
- * an option for us.  Instead, we might have some configs stored in LocalStorage on 
- * the client, or might have defaults set up here.
+ * A classic game entrance might read configs off of a file on disk. This isn't
+ * an option for us. Instead, we might have some configs stored in LocalStorage
+ * on the client, or might have defaults set up here.
  */
 public class WebhackGwt implements EntryPoint {
 
@@ -19,13 +20,16 @@ public class WebhackGwt implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		// Read config
-		
+
 		// Init UI
-		WebhackUI ui = new WebhackGnomeLike();
-		
+		final WebhackUI ui = new WebhackGnomeLike();
+
 		// Init game
-		Webhack game = new Webhack(ui);
-		
+		final Webhack game = new Webhack(ui);
+
+		// Determine Role, Race, Gender
+		new RoleRaceGender().show();
+
 		game.main();
 	}
 }
