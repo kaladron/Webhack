@@ -15,7 +15,8 @@ public class Location {
 	 * and save files.
 	 */
 	/** what the hero thinks is there */
-	int glyph;
+	// TODO(jeffbailey): Don't hardcode this. This is the glyph for stone.
+	int glyph = 2344;
 	/** what is really there */
 	LocationType typ = LocationType.STONE;
 	/** seen vector */

@@ -4,6 +4,8 @@
 
 package net.webhack.game.shared;
 
+import java.util.Date;
+
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
@@ -143,8 +145,8 @@ public class You {
 	int bc_order; /* ball & chain order [see bc_order() in ball.c] */
 	int bc_felt; /* mask for ball/chain being felt */
 
-	int umonster; /* hero's "real" monster num */
-	int umonnum; /* current monster number */
+	PM umonster; /* hero's "real" monster num */
+	PM umonnum; /* current monster number */
 
 	int mh, mhmax, mtimedone; /* for polymorph-self */
 	// struct attribs macurr, /* for monster attribs */
@@ -179,6 +181,37 @@ public class You {
 	// atemp, /* used for temporary loss/gain */
 	// atime; /* used for loss/gain countdown */
 	// align ualign; /* character alignment */
+	// aligntyp ualignbase[CONVERT]; /* for ualign conversion record */
+	// schar uluck, moreluck; /* luck and luck bonus */
+	int uhitinc;
+	int udaminc;
+	int uac;
+	int uspellprot; /* protection by SPE_PROTECTION */
+	int usptime; /* #moves until uspellprot-- */
+	int uspmtime; /* #moves between uspellprot-- */
+	int uhp, uhpmax;
+	int uen, uenmax; /* magical energy - M. Stephenson */
+	int ugangr; /* if the gods are angry at you */
+	int ugifts; /* number of artifacts bestowed */
+	int ublessed, ublesscnt; /* blessing/duration from #pray */
+	long umoney0;
+	long uexp, urexp;
+	long ucleansed; /* to record moves when player was cleansed */
+	long usleep; /* sleeping; monstermove you last started */
+	int uinvault;
+	Monster stuck;
+	Monster steed;
+	long ugallop;
+	int urideturns;
+	int umortality; /* how many times you died */
+	int ugrave_arise; /* you die and become something aside from a ghost */
+	Date ubirthday; /* real world time when game began */
+
+	int weapon_slots; /* unused skill slots */
+	int skills_advanced; /* # of advances made so far */
+	// xchar skill_record[P_SKILL_LIMIT]; /* skill advancements */
+	// struct skills weapon_skills[P_NUM_SKILLS];
+	boolean twoweap; /* KMH -- Using two-weapon combat */
 
 	Role role;
 	Race race;
@@ -190,6 +223,10 @@ public class You {
 		this.gender = gender;
 		// artifacts_init
 		// u_init
+
+		// TODO(jeffbailey): STUB, access this through a gendered API
+		umonnum = umonster = role.monster[0];
+
 	}
 
 	public void newPos(final Coordinate c) {

@@ -4,14 +4,9 @@ public abstract class Display implements WebhackUI {
 
 	protected class Gbuf {
 		public boolean updated = false;
-		public int glyph;
 
-		/**
-		 * Initializes the entry to be a stone background.
-		 */
-		public Gbuf() {
-			glyph = cmap_to_glyph(S_stone);
-		}
+		/** Initializes the entry to be a stone background */
+		public int glyph = cmap_to_glyph(S_stone);
 	}
 
 	protected enum WindowType {
@@ -233,7 +228,7 @@ public abstract class Display implements WebhackUI {
 	 */
 	public void cls() {
 		displayNhWindow(WindowType.MESSAGE, false); /* flush messages */
-		// flags.botlx = 1; /* force update of botl window */
+		flags.botlx = true; /* force update of botl window */
 		clearNhWindow(WindowType.MAP); /* clear physical screen */
 
 		clear_glyph_buffer(); /* this is sort of an extra effort, but OK */
@@ -282,7 +277,7 @@ public abstract class Display implements WebhackUI {
 		vision_recalc(0);
 
 		/* overlay with monsters */
-		// see_monsters();
+		see_monsters();
 
 		// flags.botlx = 1; /* force a redraw of the bottom line */
 
@@ -302,9 +297,46 @@ public abstract class Display implements WebhackUI {
 	 */
 	public void newsym(final int x, final int y) {
 		// TODO(jeffbailey): stub
-		map_location(x, y, true);
+		if (x == you.ux && y == you.uy) {
+			if (senseself()) {
+				map_location(x, y, false); /* map *under* self */
+				display_self();
+			} else {
+				/* we can see what is there */
+				map_location(x, y, true);
+			}
+		} else {
+			map_location(x, y, true);
+		}
 	}
 
+	/**
+	 * Loops through all of the monsters and update them. Called when: + going
+	 * blind & telepathic + regaining sight & telepathic + getting and losing
+	 * infravision + hallucinating + doing a full screen redraw + see invisible
+	 * times out or a ring of see invisible is taken off + when a potion of see
+	 * invisible is quaffed or a ring of see invisible is put on + gaining
+	 * telepathy when blind [givit() in eat.c, pleased() in pray.c] + losing
+	 * telepathy while blind [xkilled() in mon.c, attrcurse() in sit.c]
+	 */
+	public void see_monsters() {
+		// for (mon = fmon; mon; mon = mon->nmon) {
+		// if (DEADMONSTER(mon)) continue;
+		// newsym(mon->mx,mon->my);
+		// if (mon->wormno) see_wsegs(mon);
+		// }
+		/* when mounted, hero's location gets caught by monster loop */
+		if (you.steed == null) {
+			newsym(you.ux, you.uy);
+		}
+	}
+
+	/*
+	 * Returns true if the hero can see her/himself.
+	 * 
+	 * The u.uswallow check assumes that you can see yourself even if you are
+	 * invisible. If not, then we don't need the check.
+	 */
 	/**
 	 * * Do all of the heavy vision work. Recalculate all locations that could
 	 * possibly be seen by the hero --- if the location were lit, etc. Note
@@ -498,8 +530,25 @@ public abstract class Display implements WebhackUI {
 		return cmap_to_glyph(idx);
 	}
 
+	/**
+	 * Returns true if the hero can see her/himself.
+	 * 
+	 * The u.uswallow check assumes that you can see yourself even if you are
+	 * invisible. If not, then we don't need the check.
+	 */
+	boolean canseeself() {
+		// TODO(jeffbailey): stub
+		// return Blind || u.uswallow || (!Invisible && !u.uundetected)
+		return true;
+	}
+
 	int cmap_to_glyph(final int cmap_idx) {
 		return cmap_idx + GLYPH_CMAP_OFF;
+	}
+
+	void display_self() {
+		// TODO(jeffbailey): STUB
+		show_glyph(you.ux, you.uy, monnum_to_glyph(you.umonnum.idx));
 	}
 
 	/**
@@ -525,6 +574,19 @@ public abstract class Display implements WebhackUI {
 		if (show) {
 			show_glyph(x, y, glyph);
 		}
+	}
+
+	int monnum_to_glyph(final int idx) {
+		return idx + GLYPH_MON_OFF;
+	}
+
+	/**
+	 * Returns true if the hero can sense her/himself.
+	 */
+	boolean senseself() {
+		// TODO(jeffbailey): stub
+		// return canseeself() || Unblind_telepat || Detect_monsters
+		return true;
 	}
 
 	void show_glyph(final int x, final int y, final int glyph) {
