@@ -30,7 +30,7 @@ public class Location {
 	LocationType.Ladder ladder;
 
 	// More things that eventually provide typ information
-	// #define doormask flags
+	LocationType.Door doormask;
 	// #define altarmask flags
 	// #define wall_info flags
 	// #define drawbridgemask flags

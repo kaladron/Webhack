@@ -388,6 +388,10 @@ public abstract class Display implements WebhackUI {
 		for (int y = 0; y < Webhack.ROWNO; y++) {
 			for (int x = 0; x < Webhack.COLNO; x++) {
 				final Location ptr = dungeon.getLevel().getLoc(x, y);
+				if (ptr.typ == LocationType.SCORR) {
+					ptr.typ = LocationType.CORR;
+				}
+
 				if (ptr.typ != LocationType.STONE) {
 					newsym(x, y);
 				}
@@ -436,21 +440,26 @@ public abstract class Display implements WebhackUI {
 		case TDWALL:
 		case TLWALL:
 		case TRWALL:
-			// TODO(jeffbailey):
-			// case SDOOR:
-			// idx = ptr.seenv ? wall_angle(ptr) : S_stone;
-			// break;
-			// case DOOR:
-			// if (ptr.doormask) {
-			// if (ptr.doormask & D_BROKEN)
-			// idx = S_ndoor;
-			// else if (ptr.doormask & D_ISOPEN)
-			// idx = (ptr.horizontal) ? S_hodoor : S_vodoor;
-			// else /* else is closed */
-			// idx = (ptr.horizontal) ? S_hcdoor : S_vcdoor;
-			// } else
-			// idx = S_ndoor;
-			// break;
+		case SDOOR:
+			// TODO(jeffbailey): STUB
+			// idx = ptr.seenv != 0 ? wall_angle(ptr) : S_stone;
+			idx = S_bars;
+			break;
+		case DOOR:
+			if (ptr.doormask != null) {
+				// TODO(jeffbailey): Treat doormask like a mask
+				if (ptr.doormask == LocationType.Door.BROKEN) {
+					idx = S_ndoor;
+					// TODO(jeffbailey): Treat doormask like a mask
+				} else if (ptr.doormask == LocationType.Door.ISOPEN) {
+					idx = (ptr.horizontal) ? S_hodoor : S_vodoor;
+				} else {
+					idx = (ptr.horizontal) ? S_hcdoor : S_vcdoor;
+				}
+			} else {
+				idx = S_ndoor;
+			}
+			break;
 		case IRONBARS:
 			idx = S_bars;
 			break;

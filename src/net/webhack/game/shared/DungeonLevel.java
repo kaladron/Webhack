@@ -86,6 +86,9 @@ public class DungeonLevel implements LocationMap {
 		you.newPos(upstair);
 	}
 
+	void add_door(final int x, final int y, final Room aroom) {
+	}
+
 	boolean byDoor(final int x, final int y) {
 		LocationType typ;
 
@@ -233,8 +236,8 @@ public class DungeonLevel implements LocationMap {
 			return;
 		}
 
-		// TODO(jeffbailey): dosdoor(x, y, aroom, random.oneIn(8) ? DOOR :
-		// SDOOR);
+		dosDoor(x, y, aroom, random.oneIn(8) ? LocationType.SDOOR
+				: LocationType.DOOR);
 	}
 
 	void finddpos(final Coordinate cc, final int xl, final int yl,
@@ -331,6 +334,71 @@ public class DungeonLevel implements LocationMap {
 
 		return ((locations[x][y].typ == LocationType.HWALL || locations[x][y].typ == LocationType.VWALL)
 				&& doorIndex < Webhack.DOORMAX && !near_door);
+	}
+
+	private void dosDoor(final int x, final int y, final Room aroom,
+			final LocationType type) {
+		// final boolean shdoor = ((in_rooms(x, y, SHOPBASE)) ? true : false);
+
+		// if (!isWall(locations[x][y].typ)) {
+		// type = LocationType.DOOR;
+		// }
+		locations[x][y].typ = type;
+		if (type == LocationType.DOOR) {
+			if (random.oneIn(3)) { /*
+									 * is it a locked door, closed, or a
+									 * doorway?
+									 */
+				if (random.oneIn(5)) {
+					locations[x][y].doormask = LocationType.Door.ISOPEN;
+				} else if (random.oneIn(6)) {
+					locations[x][y].doormask = LocationType.Door.LOCKED;
+				} else {
+					locations[x][y].doormask = LocationType.Door.CLOSED;
+				}
+
+				// TODO(jeffbailey): STUB
+				// if (locations[x][y].doormask != LocationType.Door.ISOPEN
+				// && !shdoor && level_difficulty() >= 5
+				// && random.oneIn(25)) {
+				// locations[x][y].doormask |= LocationType.Door.TRAPPED;
+				// }
+			} else {
+				// locations[x][y].doormask = (shdoor ? LocationType.Door.ISOPEN
+				// : LocationType.Door.NODOOR);
+			}
+
+			// TODO(jeffbailey): STUB!
+			// if (locations[x][y].doormask & LocationType.Door.TRAPPED) {
+			// final Monster mtmp;
+			// if (level_difficulty() >= 9
+			// && random.oneIn(5)
+			// && !((mvitals[PM_SMALL_MIMIC].mvflags & G_GONE)
+			// && (mvitals[PM_LARGE_MIMIC].mvflags & G_GONE) &&
+			// (mvitals[PM_GIANT_MIMIC].mvflags & G_GONE))) {
+			// /* make a mimic instead */
+			// locations[x][y].doormask = LocationType.Door.NODOOR;
+			// mtmp = makemon(mkclass(S_MIMIC, 0), x, y, NO_MM_FLAGS);
+			// if (mtmp) {
+			// set_mimic_sym(mtmp);
+			// }
+			// }
+			// }
+			/* newsym(x,y); */
+		} else { /* SDOOR */
+			// if (shdoor || random.oneIn(5)) {
+			// locations[x][y].doormask = LocationType.Door.LOCKED;
+			// } else {
+			// locations[x][y].doormask = LocationType.Door.CLOSED;
+			// }
+
+			// TODO(jeffbailey): STUB
+			// if (!shdoor && level_difficulty() >= 4 && random.oneIn(20)) {
+			// locations[x][y].doormask |= D_TRAPPED;
+			// }
+		}
+
+		add_door(x, y, aroom);
 	}
 
 	/**
