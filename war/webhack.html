@@ -9,13 +9,13 @@ var DISPLAY_SQUARE = 16;
 var TILE_SQUARE = 16;
 var TILES_PER_ROW = 40;
 var image = new Image();
+//image.onload = demo;
+image.src = "x11tiles.png";
 
 var ctx;
 
-function init() {
+function initCanvas() {
 	ctx = document.getElementById('canvas').getContext("2d");
-	//image.onload = demo;
-	image.src = "x11tiles.png";
 }
 
 function putGlyph(x, y, glyph) {
@@ -36,7 +36,7 @@ function putGlyph(x, y, glyph) {
     </script>
 <script src="webhack/webhack.nocache.js"></script>
 </head>
-<body onLoad="init()">
+<body>
 <!-- OPTIONAL: include this if you want history support -->
 <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
 	style="position: absolute; width: 0; height: 0; border: 0"></iframe>

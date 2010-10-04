@@ -461,6 +461,7 @@ public class WebhackGnomeLike extends Display {
 	}
 
 	public void initNhWindows() {
+		initCanvas();
 		final VerticalPanel basePanel = new VerticalPanel();
 		final MenuBar menu = new MenuBar();
 		menu.addItem("Game", sayHello);
@@ -477,7 +478,12 @@ public class WebhackGnomeLike extends Display {
 		basePanel.add(statusPanel);
 
 		RootPanel.get().add(basePanel);
+
 	}
+
+	native void initCanvas() /*-{
+		$wnd.initCanvas();
+	}-*/;
 
 	native void putGlyph(final int x, final int y, final int glyph) /*-{
 		$wnd.putGlyph(x, y, glyph);
