@@ -290,10 +290,10 @@ public class DungeonLevel implements LocationMap {
 				&& y <= Webhack.ROWNO - 1;
 	}
 
-	void mksobj_at(final ObjectName boulder, final int xx, final int yy,
-			final boolean b, final boolean c) {
-		// TODO Auto-generated method stub
-
+	void mksobj_at(final ObjectName oType, final int x, final int y,
+			final boolean init, final boolean isArtifact) {
+		// final int otmp = mksobj(oType, init, isArtifact);
+		// place_object(otmp, x, y);
 	}
 
 	/**
