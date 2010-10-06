@@ -9,5 +9,8 @@ public interface WebhackUI {
 
 	void init(Dungeon dungeon, You you, Flags flags);
 
-	void initNhWindows();
+	void initNhWindows(Webhack webhack);
+
+	void newsym(int x, int y);
+
 }

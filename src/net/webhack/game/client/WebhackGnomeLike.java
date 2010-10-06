@@ -3,6 +3,7 @@ package net.webhack.game.client;
 import net.webhack.game.shared.Display;
 import net.webhack.game.shared.Webhack;
 
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -11,6 +12,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebhackGnomeLike extends Display {
+
+	private static Webhack webhack;
+
+	public static void onKeyDown(final NativeEvent event) {
+		final char a = (char) event.getKeyCode();
+		webhack.moveLoop(Character.toLowerCase(a));
+	}
 
 	private final int glyph2tile[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 			12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29,
@@ -460,7 +468,13 @@ public class WebhackGnomeLike extends Display {
 		}
 	}
 
-	public void initNhWindows() {
+	public native void initKeyDown() /*-{
+		$wnd.javaKeyDown = @net.webhack.game.client.WebhackGnomeLike::onKeyDown(Lcom/google/gwt/dom/client/NativeEvent;);
+	}-*/;
+
+	public void initNhWindows(final Webhack webhack) {
+		registerWebhack(webhack);
+		initKeyDown();
 		initCanvas();
 		final VerticalPanel basePanel = new VerticalPanel();
 
@@ -576,5 +590,9 @@ public class WebhackGnomeLike extends Display {
 	native void putGlyph(final int x, final int y, final int glyph) /*-{
 		$wnd.putGlyph(x, y, glyph);
 	}-*/;
+
+	private void registerWebhack(final Webhack webhack) {
+		WebhackGnomeLike.webhack = webhack;
+	}
 
 }

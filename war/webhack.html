@@ -18,6 +18,10 @@ function initCanvas() {
 	ctx = document.getElementById('canvas').getContext("2d");
 }
 
+function keyDown(event) {
+	javaKeyDown(event);
+}
+
 function putGlyph(x, y, glyph) {
 
    	  glyph_x = glyph % TILES_PER_ROW;
@@ -36,7 +40,7 @@ function putGlyph(x, y, glyph) {
     </script>
 <script src="webhack/webhack.nocache.js"></script>
 </head>
-<body>
+<body onkeydown="return keyDown(event);">
 <!-- OPTIONAL: include this if you want history support -->
 <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
 	style="position: absolute; width: 0; height: 0; border: 0"></iframe>

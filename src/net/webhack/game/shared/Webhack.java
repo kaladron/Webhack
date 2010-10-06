@@ -57,7 +57,7 @@ public class Webhack {
 	}
 
 	public void main() {
-		ui.initNhWindows();
+		ui.initNhWindows(this);
 
 		// askname();
 		// player_selection();
@@ -78,7 +78,26 @@ public class Webhack {
 	 * we don't want to be performed on each action, so it's split out into
 	 * premove()
 	 */
-	public void moveLoop() {
+	public void moveLoop(final char c) {
+
+		final String sdir = "hykulnjb><";
+		// final char ndir[] = {'4','7','8','9','6','3','2','1','>','<'}; /*
+		// number pad mode */
+		final int xdir[] = { -1, -1, 0, 1, 1, 1, 0, -1, 0, 0 };
+		final int ydir[] = { 0, -1, -1, -1, 0, 1, 1, 1, 0, 0 };
+		final int offset = sdir.indexOf(c);
+
+		if (offset != -1) {
+			you.ux0 = you.ux;
+			you.uy0 = you.uy;
+			you.uz0 = you.uz;
+			you.ux += xdir[offset];
+			you.uy += ydir[offset];
+			// you.uz += zdir[offset];
+			ui.newsym(you.ux, you.uy);
+			ui.newsym(you.ux0, you.uy0);
+		}
+
 		ui.displayNhWindow(WindowType.MAP, false);
 	}
 
@@ -87,6 +106,7 @@ public class Webhack {
 	 */
 	public void premove() {
 		// TODO(jeffbailey): STUB
+		ui.displayNhWindow(WindowType.MAP, false);
 		// flags.moonphase = phase_of_the_moon();
 		// if(flags.moonphase == FULL_MOON) {
 		// You("are lucky!  Full moon tonight.");
@@ -116,6 +136,6 @@ public class Webhack {
 
 		this.ui.docrt();
 
-		moveLoop();
+		// moveLoop();
 	}
 }
