@@ -16,8 +16,35 @@ public class WebhackGnomeLike extends Display {
 	private static Webhack webhack;
 
 	public static void onKeyDown(final NativeEvent event) {
-		final char a = (char) event.getKeyCode();
-		webhack.moveLoop(Character.toLowerCase(a));
+		final int code = event.getKeyCode();
+
+		char a;
+
+		// TODO(jeffbailey): Find symbolic constants for these elsewhere!
+
+		final int LEFT = 37;
+		final int RIGHT = 39;
+		final int UP = 38;
+		final int DOWN = 40;
+
+		switch (code) {
+		case LEFT:
+			a = 'h';
+			break;
+		case RIGHT:
+			a = 'l';
+			break;
+		case UP:
+			a = 'k';
+			break;
+		case DOWN:
+			a = 'j';
+			break;
+		default:
+			a = Character.toLowerCase((char) code);
+		}
+
+		webhack.moveLoop(a);
 	}
 
 	private final int glyph2tile[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,

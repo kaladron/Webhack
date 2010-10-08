@@ -343,7 +343,7 @@ public class DungeonLevel implements LocationMap {
 
 		final LocationType typ = locations[x][y].typ;
 
-		if (typ == LocationType.STONE) {
+		if (typ.isRock()) {
 			return false;
 		}
 
