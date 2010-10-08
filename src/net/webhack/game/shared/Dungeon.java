@@ -10,7 +10,7 @@ package net.webhack.game.shared;
  */
 public class Dungeon {
 
-	private final DungeonLevel dlevel;
+	final DungeonLevel dlevel;
 	private final You you;
 
 	public Dungeon(final RandomHelper random, final You you,

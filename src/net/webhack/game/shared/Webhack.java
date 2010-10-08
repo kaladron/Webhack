@@ -91,8 +91,16 @@ public class Webhack {
 			you.ux0 = you.ux;
 			you.uy0 = you.uy;
 			you.uz0 = you.uz;
-			you.ux += xdir[offset];
-			you.uy += ydir[offset];
+
+			you.dx = xdir[offset];
+			you.dy = ydir[offset];
+
+			if (!dungeon.dlevel.testMove(you.ux, you.uy, you.dx, you.dy, 1)) {
+				return;
+			}
+
+			you.ux += you.dx;
+			you.uy += you.dy;
 			// you.uz += zdir[offset];
 			ui.newsym(you.ux, you.uy);
 			ui.newsym(you.ux0, you.uy0);

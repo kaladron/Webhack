@@ -336,6 +336,20 @@ public class DungeonLevel implements LocationMap {
 				&& doorIndex < Webhack.DOORMAX && !near_door);
 	}
 
+	boolean testMove(final int ux, final int uy, final int dx, final int dy,
+			final int mode) {
+		final int x = ux + dx;
+		final int y = uy + dy;
+
+		final LocationType typ = locations[x][y].typ;
+
+		if (typ == LocationType.STONE) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void dosDoor(final int x, final int y, final Room aroom,
 			final LocationType type) {
 		// final boolean shdoor = ((in_rooms(x, y, SHOPBASE)) ? true : false);
