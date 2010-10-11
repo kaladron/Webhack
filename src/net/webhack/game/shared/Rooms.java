@@ -4,6 +4,8 @@
 
 package net.webhack.game.shared;
 
+import java.util.Vector;
+
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
@@ -11,10 +13,7 @@ package net.webhack.game.shared;
 public class Rooms {
 
 	private final Rectangles rectangles;
-	Room[] rooms = new Room[Webhack.MAXNROFROOMS];
-
-	/** Number of rooms */
-	int nroom = 0;
+	Vector<Room> rooms = new Vector<Room>();
 
 	/** Token to determine if room is part of the mesh. */
 	int[] smeq = new int[Webhack.MAXNROFROOMS];
@@ -31,9 +30,6 @@ public class Rooms {
 		this.random = random;
 		this.locMap = lmap;
 
-		for (int x = 0; x < Webhack.MAXNROFROOMS; x++) {
-			rooms[x] = new Room();
-		}
 		makeRooms();
 		sortRooms();
 	}
@@ -135,10 +131,10 @@ public class Rooms {
 				yabs = ly + (ly > 0 ? ylim : 2)
 						+ random.rn2(hy - (ly > 0 ? ly : 2) - dy - yborder + 1);
 				if (ly == 0 && hy >= (Webhack.ROWNO - 1)
-						&& (nroom == 0 || random.rn2(nroom) == 0)
+						&& (rooms.size() == 0 || random.rn2(rooms.size()) == 0)
 						&& (yabs + dy > Webhack.ROWNO / 2)) {
 					yabs = random.rn1(3, 2);
-					if (nroom < 4 && dy > 1) {
+					if (rooms.size() < 4 && dy > 1) {
 						dy--;
 					}
 				}
@@ -159,7 +155,7 @@ public class Rooms {
 		rectangles.splitRects(r1, r2);
 
 		if (!vault) {
-			smeq[nroom] = nroom;
+			smeq[rooms.size()] = rooms.size();
 			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, rtype,
 					false);
 		}
@@ -183,10 +179,9 @@ public class Rooms {
 	private void addRoom(final int lowx, final int lowy, final int hix,
 			final int hiy, final boolean lit, final int rtype,
 			final boolean special) {
-		doRoomOrSubroom(rooms[nroom], lowx, lowy, hix, hiy, lit, rtype,
-				special, true);
-		rooms[nroom + 1].hx = -1;
-		nroom++;
+		final Room aRoom = new Room();
+		rooms.add(aRoom);
+		doRoomOrSubroom(aRoom, lowx, lowy, hix, hiy, lit, rtype, special, true);
 	}
 
 	private boolean checkRoom(final int a, final int b, final int c,
@@ -285,9 +280,10 @@ public class Rooms {
 		// make rooms until satisfied.
 		// rnd_rect() will return 0 if no more rects are available...
 
-		while (nroom < Webhack.MAXNROFROOMS && (rectangles.rndRect() != null)) {
-			if (nroom >= (Webhack.MAXNROFROOMS / 6) && (random.rn2(2) != 0)
-					&& !tried_vault) {
+		while (rooms.size() < Webhack.MAXNROFROOMS
+				&& (rectangles.rndRect() != null)) {
+			if (rooms.size() >= (Webhack.MAXNROFROOMS / 6)
+					&& (random.rn2(2) != 0) && !tried_vault) {
 				tried_vault = true;
 				// TODO(jeffbailey): Create_vault stuff goes here.
 			} else {

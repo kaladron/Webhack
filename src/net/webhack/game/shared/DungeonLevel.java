@@ -296,7 +296,6 @@ public class DungeonLevel implements LocationMap {
 	void mksobj_at(final Thing thing, final int x, final int y,
 			final boolean init, final boolean isArtifact) {
 		// final int otmp = mksobj(oType, init, isArtifact);
-		System.out.println("mksobj_at");
 		place_object(thing, x, y);
 	}
 
@@ -446,8 +445,8 @@ public class DungeonLevel implements LocationMap {
 		int tx, ty, xx, yy;
 		int dx, dy;
 
-		final Room croom = rooms.rooms[a];
-		final Room troom = rooms.rooms[b];
+		final Room croom = rooms.rooms.elementAt(a);
+		final Room troom = rooms.rooms.elementAt(b);
 
 		/*
 		 * find positions cc and tt for doors in croom and troom and direction
@@ -523,30 +522,30 @@ public class DungeonLevel implements LocationMap {
 	private void makeCorridors() {
 		boolean any = true;
 
-		for (int a = 0; a < rooms.nroom - 1; a++) {
+		for (int a = 0; a < rooms.rooms.size() - 1; a++) {
 			join(a, a + 1, false);
 			if (random.rn2(50) == 0) {
 				break; /* allow some randomness */
 			}
 		}
-		for (int a = 0; a < rooms.nroom - 2; a++) {
+		for (int a = 0; a < rooms.rooms.size() - 2; a++) {
 			if (rooms.smeq[a] != rooms.smeq[a + 2]) {
 				join(a, a + 2, false);
 			}
 		}
-		for (int a = 0; any && a < rooms.nroom; a++) {
+		for (int a = 0; any && a < rooms.rooms.size(); a++) {
 			any = false;
-			for (int b = 0; b < rooms.nroom; b++) {
+			for (int b = 0; b < rooms.rooms.size(); b++) {
 				if (rooms.smeq[a] != rooms.smeq[b]) {
 					join(a, b, false);
 					any = true;
 				}
 			}
 		}
-		if (rooms.nroom > 2) {
-			for (int i = random.rn2(rooms.nroom) + 4; i != 0; i--) {
-				final int a = random.rn2(rooms.nroom);
-				int b = random.rn2(rooms.nroom - 2);
+		if (rooms.rooms.size() > 2) {
+			for (int i = random.rn2(rooms.rooms.size()) + 4; i != 0; i--) {
+				final int a = random.rn2(rooms.rooms.size());
+				int b = random.rn2(rooms.rooms.size() - 2);
 				if (b >= a) {
 					b += 2;
 				}
@@ -567,12 +566,12 @@ public class DungeonLevel implements LocationMap {
 
 	private void makeStairs() {
 		/* construct stairs (up and down in different rooms if possible) */
-		Room croom = rooms.rooms[random.rn2(rooms.nroom)];
+		Room croom = rooms.rooms.elementAt(random.rn2(rooms.rooms.size()));
 		// TODO(jeffbailey): if (!Is_botlevel(you.uz))
 		mkstairs(croom.someX(random), croom.someY(random), false, croom); /* down */
-		if (rooms.nroom > 1) {
+		if (rooms.rooms.size() > 1) {
 			// TODO(jeffbailey): Room troom = croom;
-			croom = rooms.rooms[random.rn2(rooms.nroom - 1)];
+			croom = rooms.rooms.elementAt(random.rn2(rooms.rooms.size() - 1));
 			// TODO(jeffbailey): if (croom == troom) croom++;
 		}
 
@@ -595,7 +594,6 @@ public class DungeonLevel implements LocationMap {
 			return;
 		}
 
-		System.out.println("mksink");
 		locations[c.x][c.y].typ = LocationType.SINK;
 	}
 

@@ -685,6 +685,7 @@ public abstract class Display implements WebhackUI {
 		ThingLocation thingloc;
 		if ((thingloc = vobj_at(x, y)) != null) {
 			map_object(thingloc, show);
+			return;
 		}
 		map_background(x, y, show);
 	}
