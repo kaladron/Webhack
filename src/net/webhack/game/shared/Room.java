@@ -69,36 +69,47 @@ public class Room {
 
 	/** maximum valid room type */
 	public static int MAXRTYPE = 24;
-	
-	
-	
-    int lx,hx,ly,hy;      /* usually xchar, but hx may be -1 */
-    int rtype;            /* type of room (zoo, throne, etc...) */
-    boolean rlit;             /* is the room lit ? */
-    int doorct;           /* door count */
-    int fdoor;            /* index for the first door of the room */
-    int nsubrooms;        /* number of subrooms */
-    boolean irregular;      /* true if room is non-rectangular */
-    Room[] sbrooms = new Room[Webhack.MAX_SUBROOMS];  /* Subrooms pointers */
-    //struct monst *resident; /* priest/shopkeeper/guard for this room */
 
-    /**
-     * Random X coordinate within a room
-     * 
-     * @param random
-     * @return
-     */
-    public int someX(RandomHelper random) {
-        return random.rn2(hx - lx + 1) + lx;
-    }
-    
-    /**
-     * Random Y coordinate within a room
-     * 
-     * @param random
-     * @return
-     */
-    public int someY(RandomHelper random) {
-        return random.rn2(hy - ly + 1) + ly;
-    }
+	int lx, hx, ly, hy; /* usually xchar, but hx may be -1 */
+	int rtype; /* type of room (zoo, throne, etc...) */
+	boolean rlit; /* is the room lit ? */
+	int doorct; /* door count */
+	int fdoor; /* index for the first door of the room */
+	int nsubrooms; /* number of subrooms */
+	boolean irregular; /* true if room is non-rectangular */
+	Room[] sbrooms = new Room[Webhack.MAX_SUBROOMS]; /* Subrooms pointers */
+
+	// struct monst *resident; /* priest/shopkeeper/guard for this room */
+
+	/**
+	 * Random X coordinate within a room
+	 * 
+	 * @param random
+	 * @return
+	 */
+	public int someX(final RandomHelper random) {
+		return random.rn2(hx - lx + 1) + lx;
+	}
+
+	/**
+	 * Random Y coordinate within a room
+	 * 
+	 * @param random
+	 * @return
+	 */
+	public int someY(final RandomHelper random) {
+		return random.rn2(hy - ly + 1) + ly;
+	}
+
+	Coordinate someXY(final RandomHelper random) {
+		if (nsubrooms == 0) {
+			final int x = someX(random);
+			final int y = someY(random);
+
+			return new Coordinate(x, y);
+		}
+
+		return null;
+
+	}
 }

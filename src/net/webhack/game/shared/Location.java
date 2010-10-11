@@ -4,6 +4,9 @@
 
 package net.webhack.game.shared;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
@@ -48,4 +51,6 @@ public class Location {
 	int roomno;
 	/** marks boundaries for special rooms */
 	boolean edge;
+
+	List<ThingLocation> things = new LinkedList<ThingLocation>();
 }

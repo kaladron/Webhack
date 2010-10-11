@@ -585,8 +585,28 @@ public abstract class Display implements WebhackUI {
 		}
 	}
 
+	/**
+	 * Maps the given object. This routine assumes that the hero can physically
+	 * see the location of the object. Update the screen if directed.
+	 */
+	void map_object(final ThingLocation thingloc, final boolean show) {
+		final int x = thingloc.x, y = thingloc.y;
+		final int glyph = obj_to_glyph(thingloc);
+
+		// if (level.flags.hero_memory)
+		// levl[x][y].glyph = glyph;
+		if (show) {
+			show_glyph(x, y, glyph);
+		}
+	}
+
 	int monnum_to_glyph(final int idx) {
 		return idx + GLYPH_MON_OFF;
+	}
+
+	int obj_to_glyph(final ThingLocation thingloc) {
+		// TODO(jeffbailey): STUB
+		return thingloc.thing.idx + GLYPH_OBJ_OFF;
 	}
 
 	/**
@@ -629,6 +649,21 @@ public abstract class Display implements WebhackUI {
 		// TODO(jeffbailey): STUB
 	}
 
+	ThingLocation vobj_at(final int x, final int y) {
+		// TODO(jeffbailey): STUB, handle invisibility
+		final Location ptr = dungeon.getLevel().getLoc(x, y);
+
+		if (ptr.things.size() == 0) {
+			return null;
+		}
+
+		for (final ThingLocation thingloc : ptr.things) {
+			return thingloc;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Turns the 3rd screen into stone.
 	 */
@@ -647,6 +682,10 @@ public abstract class Display implements WebhackUI {
 	 */
 	private void map_location(final int x, final int y, final boolean show) {
 		// TODO(jeffbailey): STUB
+		ThingLocation thingloc;
+		if ((thingloc = vobj_at(x, y)) != null) {
+			map_object(thingloc, show);
+		}
 		map_background(x, y, show);
 	}
 

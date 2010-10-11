@@ -4,6 +4,9 @@
 
 package net.webhack.game.shared;
 
+import net.webhack.game.shared.things.Boulder;
+import net.webhack.game.shared.things.Thing;
+
 /**
  * Routines defining a level within a Webhack Dungeon
  * 
@@ -167,7 +170,7 @@ public class DungeonLevel implements LocationMap {
 				if (ftyp != LocationType.CORR || random.oneIn(100)) {
 					crm.typ = ftyp;
 					if (nxcor && random.oneIn(50)) {
-						mksobj_at(ObjectName.BOULDER, xx, yy, true, false);
+						mksobj_at(new Boulder(), xx, yy, true, false);
 					}
 				} else {
 					crm.typ = LocationType.SCORR;
@@ -290,10 +293,11 @@ public class DungeonLevel implements LocationMap {
 				&& y <= Webhack.ROWNO - 1;
 	}
 
-	void mksobj_at(final ObjectName oType, final int x, final int y,
+	void mksobj_at(final Thing thing, final int x, final int y,
 			final boolean init, final boolean isArtifact) {
 		// final int otmp = mksobj(oType, init, isArtifact);
-		// place_object(otmp, x, y);
+		System.out.println("mksobj_at");
+		place_object(thing, x, y);
 	}
 
 	/**
@@ -334,6 +338,10 @@ public class DungeonLevel implements LocationMap {
 
 		return ((locations[x][y].typ == LocationType.HWALL || locations[x][y].typ == LocationType.VWALL)
 				&& doorIndex < Webhack.DOORMAX && !near_door);
+	}
+
+	void place_object(final Thing thing, final int x, final int y) {
+		locations[x][y].things.add(new ThingLocation(thing, x, y));
 	}
 
 	boolean testMove(final int ux, final int uy, final int dx, final int dy,
@@ -413,6 +421,14 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		add_door(x, y, aroom);
+	}
+
+	private void fillRooms() {
+		for (final Room room : rooms.rooms) {
+			if (random.oneIn(60)) {
+				mksink(room);
+			}
+		}
 	}
 
 	/**
@@ -543,6 +559,10 @@ public class DungeonLevel implements LocationMap {
 		rooms = new Rooms(rectangles, random, this);
 		makeStairs();
 		makeCorridors();
+
+		/* for each room: put things inside */
+		fillRooms();
+
 	}
 
 	private void makeStairs() {
@@ -567,6 +587,16 @@ public class DungeonLevel implements LocationMap {
 			mkstairs(sx, sy, true, croom); /* up */
 		}
 
+	}
+
+	private void mksink(final Room room) {
+		Coordinate c;
+		if ((c = room.someXY(random)) == null) {
+			return;
+		}
+
+		System.out.println("mksink");
+		locations[c.x][c.y].typ = LocationType.SINK;
 	}
 
 }
