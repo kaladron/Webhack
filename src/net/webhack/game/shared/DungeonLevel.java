@@ -424,6 +424,10 @@ public class DungeonLevel implements LocationMap {
 
 	private void fillRooms() {
 		for (final Room room : rooms.rooms) {
+			if (random.oneIn(10)) {
+				mkfount(false, room);
+			}
+
 			if (random.oneIn(60)) {
 				mksink(room);
 			}
@@ -564,6 +568,7 @@ public class DungeonLevel implements LocationMap {
 
 	}
 
+	@Stub
 	private void makeStairs() {
 		/* construct stairs (up and down in different rooms if possible) */
 		Room croom = rooms.rooms.elementAt(random.rn2(rooms.rooms.size()));
@@ -588,6 +593,17 @@ public class DungeonLevel implements LocationMap {
 
 	}
 
+	@Stub
+	private void mkfount(final boolean makeflag, final Room room) {
+		Coordinate c;
+		if ((c = room.someXY(random)) == null) {
+			return;
+		}
+
+		locations[c.x][c.y].typ = LocationType.FOUNTAIN;
+	}
+
+	@Stub
 	private void mksink(final Room room) {
 		Coordinate c;
 		if ((c = room.someXY(random)) == null) {
