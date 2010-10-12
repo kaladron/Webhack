@@ -431,6 +431,10 @@ public class DungeonLevel implements LocationMap {
 			if (random.oneIn(60)) {
 				mksink(room);
 			}
+
+			if (random.oneIn(60)) {
+				mkaltar(room);
+			}
 		}
 	}
 
@@ -591,6 +595,16 @@ public class DungeonLevel implements LocationMap {
 			mkstairs(sx, sy, true, croom); /* up */
 		}
 
+	}
+
+	@Stub
+	private void mkaltar(final Room room) {
+		Coordinate c;
+		if ((c = room.someXY(random)) == null) {
+			return;
+		}
+
+		locations[c.x][c.y].typ = LocationType.ALTAR;
 	}
 
 	@Stub
