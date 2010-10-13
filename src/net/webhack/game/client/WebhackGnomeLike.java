@@ -3,12 +3,14 @@ package net.webhack.game.client;
 import net.webhack.game.shared.Display;
 import net.webhack.game.shared.Webhack;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebhackGnomeLike extends Display {
@@ -502,9 +504,37 @@ public class WebhackGnomeLike extends Display {
 	public void initNhWindows(final Webhack webhack) {
 		registerWebhack(webhack);
 		initKeyDown();
-		initCanvas();
 		final VerticalPanel basePanel = new VerticalPanel();
+		basePanel.setWidth("100%");
+		basePanel.setHeight("100%");
 
+		addMenu(basePanel);
+
+		final HorizontalPanel statusPanel = new HorizontalPanel();
+		basePanel.add(statusPanel);
+
+		final SimplePanel gamePanel = new SimplePanel();
+		final Element gameDiv = gamePanel.getElement();
+		gameDiv.setId("gameDiv");
+		gameDiv.setInnerHTML("<canvas id=\"canvas\" width=\"1280\" height=\"336\" style=\"background-image: url('mapbg.png')\"></canvas>");
+		basePanel.add(gamePanel);
+
+		RootPanel.get().add(basePanel);
+
+		// Must be after the canvas has been put on the page.
+		initCanvas();
+
+	}
+
+	native void initCanvas() /*-{
+		$wnd.initCanvas();
+	}-*/;
+
+	native void putGlyph(final int x, final int y, final int glyph) /*-{
+		$wnd.putGlyph(x, y, glyph);
+	}-*/;
+
+	private void addMenu(final VerticalPanel basePanel) {
 		final MenuBar gameMenu = new MenuBar(true);
 		gameMenu.addItem("Change Settings...", sayHello);
 		gameMenu.addSeparator();
@@ -599,24 +629,8 @@ public class WebhackGnomeLike extends Display {
 		menu.addItem("Action", actionMenu);
 		menu.addItem("Magic", magicMenu);
 		menu.addItem("Help", helpMenu);
-		basePanel.setWidth("100%");
-		basePanel.setHeight("100%");
 		basePanel.add(menu);
-
-		final HorizontalPanel statusPanel = new HorizontalPanel();
-		basePanel.add(statusPanel);
-
-		RootPanel.get().add(basePanel);
-
 	}
-
-	native void initCanvas() /*-{
-		$wnd.initCanvas();
-	}-*/;
-
-	native void putGlyph(final int x, final int y, final int glyph) /*-{
-		$wnd.putGlyph(x, y, glyph);
-	}-*/;
 
 	private void registerWebhack(final Webhack webhack) {
 		WebhackGnomeLike.webhack = webhack;
