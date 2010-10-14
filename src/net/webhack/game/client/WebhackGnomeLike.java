@@ -511,6 +511,15 @@ public class WebhackGnomeLike extends Display {
 		addMenu(basePanel);
 
 		final HorizontalPanel statusPanel = new HorizontalPanel();
+
+		final SimplePanel textPanel = new SimplePanel();
+		textPanel.setHeight("8em");
+
+		statusPanel.add(textPanel);
+
+		final VerticalPanel attributePanel = new VerticalPanel();
+		statusPanel.add(attributePanel);
+
 		basePanel.add(statusPanel);
 
 		final SimplePanel gamePanel = new SimplePanel();
