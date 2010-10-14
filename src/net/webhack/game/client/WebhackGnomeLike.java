@@ -8,6 +8,7 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -514,10 +515,13 @@ public class WebhackGnomeLike extends Display {
 
 		final SimplePanel textPanel = new SimplePanel();
 		textPanel.setHeight("8em");
+		textPanel.add(new Label("Webhack text goes here"));
 
 		statusPanel.add(textPanel);
 
 		final VerticalPanel attributePanel = new VerticalPanel();
+		attributePanel.setStyleName("attributeDiv");
+		attributePanel.add(new Label("Attributes go here"));
 		statusPanel.add(attributePanel);
 
 		basePanel.add(statusPanel);

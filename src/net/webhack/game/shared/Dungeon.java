@@ -18,7 +18,7 @@ public class Dungeon {
 		this.you = you;
 		// TODO(jeffbailey): Figure out better bootstrapping
 		ui.init(this, you, flags);
-		dlevel = new DungeonLevel(random, you);
+		dlevel = new DungeonLevel(random, you, this);
 		dlevel.onUpstairs();
 	}
 

@@ -12,14 +12,24 @@ import java.util.Random;
  */
 public class WebhackRandom implements RandomHelper {
 
-	private Random random = new Random();
+	private final Random random = new Random();
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.webhack.game.shared.RandomHelper#d(int, int)
+	 */
+	public int d(final int n, final int x) {
+		// TODO Auto-generated method stub
+		throw new NotImplementedException();
+	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see net.webhack.game.shared.RandomHelper#oneIn(int)
 	 */
-	public boolean oneIn(int x) {
+	public boolean oneIn(final int x) {
 		return rn2(x) == 0;
 	}
 
@@ -28,7 +38,7 @@ public class WebhackRandom implements RandomHelper {
 	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rn1(int)
 	 */
-	public int rn1(int x, int y) {
+	public int rn1(final int x, final int y) {
 		return random.nextInt(x) + y;
 	}
 
@@ -37,18 +47,8 @@ public class WebhackRandom implements RandomHelper {
 	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rn2(int)
 	 */
-	public int rn2(int x) {
+	public int rn2(final int x) {
 		return random.nextInt(x);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.webhack.game.shared.RandomHelper#rnl(int)
-	 */
-	public int rnl(int x) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException();
 	}
 
 	/*
@@ -56,19 +56,8 @@ public class WebhackRandom implements RandomHelper {
 	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rnd(int)
 	 */
-	public int rnd(int x) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.webhack.game.shared.RandomHelper#d(int, int)
-	 */
-	public int d(int n, int x) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException();
+	public int rnd(final int x) {
+		return random.nextInt(x) + 1;
 	}
 
 	/*
@@ -76,7 +65,17 @@ public class WebhackRandom implements RandomHelper {
 	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rne(int)
 	 */
-	public int rne(int x) {
+	public int rne(final int x) {
+		// TODO Auto-generated method stub
+		throw new NotImplementedException();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see net.webhack.game.shared.RandomHelper#rnl(int)
+	 */
+	public int rnl(final int x) {
 		// TODO Auto-generated method stub
 		throw new NotImplementedException();
 	}
@@ -86,7 +85,7 @@ public class WebhackRandom implements RandomHelper {
 	 * 
 	 * @see net.webhack.game.shared.RandomHelper#rnz(int)
 	 */
-	public int rnz(int i) {
+	public int rnz(final int i) {
 		// TODO Auto-generated method stub
 		throw new NotImplementedException();
 	}

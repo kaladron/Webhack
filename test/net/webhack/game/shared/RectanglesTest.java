@@ -37,7 +37,7 @@ public class RectanglesTest {
 
 	public void hugeTest() {
 		final RandomHelper random = new WebhackRandom();
-		new DungeonLevel(random, new You(null, null, null));
+		new DungeonLevel(random, new You(null, null, null), null);
 	}
 
 	/**

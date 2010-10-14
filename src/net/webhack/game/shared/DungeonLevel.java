@@ -4,7 +4,10 @@
 
 package net.webhack.game.shared;
 
+import java.util.List;
+
 import net.webhack.game.shared.things.Boulder;
+import net.webhack.game.shared.things.Gold;
 import net.webhack.game.shared.things.Thing;
 
 /**
@@ -57,6 +60,8 @@ public class DungeonLevel implements LocationMap {
 	/** Coordinates of up stairs */
 	private Coordinate upstair;
 
+	private final Dungeon dungeon;
+
 	private final RandomHelper random;
 
 	private final You you;
@@ -67,10 +72,12 @@ public class DungeonLevel implements LocationMap {
 	/** References to Rooms. */
 	private Rooms rooms;
 
-	public DungeonLevel(final RandomHelper random, final You you) {
+	public DungeonLevel(final RandomHelper random, final You you,
+			final Dungeon dungeon) {
 		this.random = random;
 		this.you = you;
 		this.rectangles = new Rectangles(random);
+		this.dungeon = dungeon;
 
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
@@ -278,10 +285,22 @@ public class DungeonLevel implements LocationMap {
 		return;
 	}
 
+	Gold g_at(final int x, final int y) {
+		final List<ThingLocation> things = locations[x][y].things;
+
+		for (final ThingLocation thingloc : things) {
+			if (thingloc.thing instanceof Gold) {
+				return (Gold) thingloc.thing;
+			}
+		}
+
+		return null;
+	};
+
 	void gotit(final Coordinate cc, final int x, final int y) {
 		cc.x = x;
 		cc.y = y;
-	};
+	}
 
 	boolean isDoor(final LocationType typ) {
 		return typ == LocationType.DOOR;
@@ -293,10 +312,28 @@ public class DungeonLevel implements LocationMap {
 				&& y <= Webhack.ROWNO - 1;
 	}
 
-	void mksobj_at(final Thing thing, final int x, final int y,
+	Thing mkgold(long amount, final int x, final int y) {
+		Thing gold = g_at(x, y);
+
+		if (amount <= 0L) {
+			amount = (1 + random.rnd(dungeon.level_difficulty() + 2)
+					* random.rnd(30));
+		}
+		if (gold != null) {
+			gold.quan += amount;
+		} else {
+			gold = mksobj_at(new Gold(), x, y, true, false);
+			gold.quan = amount;
+		}
+
+		return (gold);
+	}
+
+	Thing mksobj_at(final Thing thing, final int x, final int y,
 			final boolean init, final boolean isArtifact) {
 		// final int otmp = mksobj(oType, init, isArtifact);
 		place_object(thing, x, y);
+		return thing;
 	}
 
 	/**
@@ -424,6 +461,18 @@ public class DungeonLevel implements LocationMap {
 
 	private void fillRooms() {
 		for (final Room room : rooms.rooms) {
+
+			int difficulty = 8 - (dungeon.level_difficulty() / 6);
+			if (difficulty <= 1) {
+				difficulty = 2;
+			}
+			while (random.oneIn(difficulty)) {
+				mktrap(0, false, room, null);
+			}
+			if (random.oneIn(3)) {
+				mkgold(0L, room.someX(random), room.someY(random));
+			}
+
 			if (random.oneIn(10)) {
 				mkfount(false, room);
 			}
@@ -625,6 +674,11 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		locations[c.x][c.y].typ = LocationType.SINK;
+	}
+
+	@Stub
+	private void mktrap(final int num, final boolean mazeflag, final Room room,
+			final Thing tm) {
 	}
 
 }

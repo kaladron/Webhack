@@ -3,6 +3,7 @@ package net.webhack.game.shared.things;
 import net.webhack.game.shared.Material;
 import net.webhack.game.shared.ObjectClass;
 import net.webhack.game.shared.Skills;
+import net.webhack.game.shared.Stub;
 
 public class Thing {
 	final public int idx;
@@ -32,6 +33,8 @@ public class Thing {
 	final int oc1;
 	final int oc2;
 	final int nut;
+
+	public long quan;
 
 	Thing(final int idx, final String name, final String desc,
 			final boolean nmkn, final boolean mrg, final boolean uskn,
@@ -69,5 +72,10 @@ public class Thing {
 		this.oc1 = oc1;
 		this.oc2 = oc2;
 		this.nut = nut;
+	}
+
+	@Stub
+	public int getWeight() {
+		return 1;
 	}
 }
