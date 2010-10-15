@@ -1,22 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+<!-- Generated from app.yaml. Do not edit. -->
+<appengine-web-app xmlns='http://appengine.google.com/ns/1.0'>
   <application>webhack-sw</application>
   <version>live</version>
-
-  <!-- Configure serving/caching of GWT files -->
   <static-files>
-    <include path="**" />
-
-    <!-- The following line requires App Engine 1.3.2 SDK -->
-    <include path="**.nocache.*" expiration="0s" />
-
-    <include path="**.cache.*" expiration="365d" />
-    <exclude path="**.gwt.rpc" />
+    <include path='/**'/>
+    <include path='/**.nocache.*' expiration='0s'/>
+    <include path='/**.cache.*' expiration='365d'/>
+    <exclude path='/**.gwt.rpc'/>
   </static-files>
-
-  <!-- Configure java.util.logging -->
+  <resource-files>
+  </resource-files>
+  <ssl-enabled>true</ssl-enabled>
+  <precompilation-enabled>true</precompilation-enabled>
+  <sessions-enabled>false</sessions-enabled>
   <system-properties>
-    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+    <property name='java.util.logging.config.file' value='WEB-INF/logging.properties'/>
   </system-properties>
-
 </appengine-web-app>

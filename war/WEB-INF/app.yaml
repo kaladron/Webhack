@@ -1,0 +1,21 @@
+application: webhack-sw
+version: live
+runtime: java
+
+static_files:
+  - include: /**
+  
+  - include: /**.nocache.*
+    expiration: 0s
+    
+  - include: /**.cache.*
+    expiration: 365d
+    
+  - exclude: /**.gwt.rpc
+  
+system_properties:
+  java.util.logging.config.file: WEB-INF/logging.properties
+  
+welcome_files:
+  - webhack.html
+
