@@ -34,7 +34,31 @@ public abstract class Role {
 	}
 
 	public enum Roles {
-		ARCHEOLOGIST, BARBARIAN, WIZARD
+		ARCHEOLOGIST,
+
+		BARBARIAN,
+
+		CAVEMAN,
+
+		HEALER,
+
+		KNIGHT,
+
+		MONK,
+
+		PRIEST,
+
+		RANGER,
+
+		ROGUE,
+
+		SAMURAI,
+
+		TOURIST,
+
+		VALKYRIE,
+
+		WIZARD
 	}
 
 	public static Role getRandom(final RandomHelper random) {
@@ -49,6 +73,26 @@ public abstract class Role {
 			return new Archeologist();
 		case BARBARIAN:
 			return new Barbarian();
+		case CAVEMAN:
+			return new Caveman();
+		case HEALER:
+			return new Healer();
+		case KNIGHT:
+			return new Knight();
+		case MONK:
+			return new Monk();
+		case PRIEST:
+			return new Priest();
+		case RANGER:
+			return new Ranger();
+		case ROGUE:
+			return new Rogue();
+		case SAMURAI:
+			return new Samurai();
+		case TOURIST:
+			return new Tourist();
+		case VALKYRIE:
+			return new Valkyrie();
 		case WIZARD:
 			return new Wizard();
 		default:
