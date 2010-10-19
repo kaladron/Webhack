@@ -44,15 +44,15 @@ public class Webhack {
 
 	Dungeon dungeon;
 	You you;
-	final Flags flags;
+	public final Flags flags;
 	final WebhackUI ui;
 
 	static int YLIM = 3;
 
 	static int XLIM = 4;
 
-	public Webhack(final WebhackUI ui) {
-		this.flags = new Flags();
+	public Webhack(final WebhackUI ui, final Flags flags) {
+		this.flags = flags;
 		this.ui = ui;
 	}
 
@@ -138,7 +138,8 @@ public class Webhack {
 
 	private void newGame() {
 		final RandomHelper random = new WebhackRandom();
-		you = new You(Role.getRandom(random), Race.getRandom(random),
+		you = new You(flags.initrole != null ? flags.initrole
+				: Role.getRandom(random), Race.getRandom(random),
 				Gender.getRandom(random));
 		dungeon = new Dungeon(random, you, ui, flags);
 

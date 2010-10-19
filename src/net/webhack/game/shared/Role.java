@@ -27,16 +27,33 @@ public abstract class Role {
 			this.hifix = hifix;
 			this.hirnd = hirnd;
 		}
-	}
+	};
 
 	public enum Alignment {
 		LAWFUL, NEUTRAL, CHAOTIC;
+	}
+
+	public enum Roles {
+		ARCHEOLOGIST, BARBARIAN, WIZARD
 	}
 
 	public static Role getRandom(final RandomHelper random) {
 		// TODO(jeffbailey): STUB!
 		// return roles[random.rn2(roles.length)];
 		return new Archeologist();
+	}
+
+	public static Role newRole(final Roles role) {
+		switch (role) {
+		case ARCHEOLOGIST:
+			return new Archeologist();
+		case BARBARIAN:
+			return new Barbarian();
+		case WIZARD:
+			return new Wizard();
+		default:
+			return null;
+		}
 	}
 
 	public String[] name;

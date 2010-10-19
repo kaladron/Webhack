@@ -85,7 +85,7 @@ public class Flags {
 	 * These variables should not be referred to after the character is
 	 * initialized or restored (specifically, after role_init() is called).
 	 */
-	int initrole; /* starting role (index into roles[]) */
+	public Role initrole; /* starting role (index into roles[]) */
 	int initrace; /* starting race (index into races[]) */
 	int initgend; /* starting gender (index into genders[]) */
 	int initalign; /* starting alignment (index into aligns[]) */

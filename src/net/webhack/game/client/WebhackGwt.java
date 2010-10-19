@@ -1,5 +1,6 @@
 package net.webhack.game.client;
 
+import net.webhack.game.shared.Flags;
 import net.webhack.game.shared.Webhack;
 import net.webhack.game.shared.WebhackUI;
 
@@ -15,6 +16,12 @@ import com.google.gwt.core.client.EntryPoint;
  */
 public class WebhackGwt implements EntryPoint {
 
+	final Flags flags;
+
+	public WebhackGwt() {
+		this.flags = new Flags();
+	}
+
 	/**
 	 * This is the entry point method.
 	 */
@@ -25,11 +32,9 @@ public class WebhackGwt implements EntryPoint {
 		final WebhackUI ui = new WebhackGnomeLike();
 
 		// Init game
-		final Webhack game = new Webhack(ui);
+		final Webhack game = new Webhack(ui, flags);
 
 		// Determine Role, Race, Gender
-		new RoleRaceGender().show();
-
-		game.main();
+		new RoleRaceGender(game).show();
 	}
 }

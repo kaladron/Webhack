@@ -4,6 +4,12 @@
 
 package net.webhack.game.client;
 
+import java.util.EnumSet;
+
+import net.webhack.game.shared.Role;
+import net.webhack.game.shared.Role.Roles;
+import net.webhack.game.shared.Webhack;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -19,17 +25,24 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class RoleRaceGender extends PopupPanel implements ClickHandler {
 
 	final ListBox roleSelector;
+	final EnumSet<Role.Roles> roleSet;
+	final Webhack game;
 
-	public RoleRaceGender() {
+	public RoleRaceGender(final Webhack game) {
 		super(false);
 		setGlassEnabled(true);
+
+		this.game = game;
 
 		final VerticalPanel panel = new VerticalPanel();
 		panel.add(new Label("Choose Role"));
 
+		roleSet = EnumSet.allOf(Role.Roles.class);
+
 		roleSelector = new ListBox();
-		roleSelector.addItem("Archeologist");
-		roleSelector.addItem("Wizard");
+		for (final Role.Roles role : roleSet) {
+			roleSelector.addItem(role.toString());
+		}
 
 		roleSelector.setVisibleItemCount(1);
 
@@ -43,9 +56,14 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 	}
 
 	public void onClick(final ClickEvent event) {
-		// System.out.println(roleSelector.getValue(roleSelector
-		// .getSelectedIndex()));
+		final String value = roleSelector.getValue(roleSelector
+				.getSelectedIndex());
+		final Roles myRole = Role.Roles.valueOf(value);
+		game.flags.initrole = Role.newRole(myRole);
 
 		this.hide();
+
+		game.main();
+
 	}
 }
