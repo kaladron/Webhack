@@ -310,6 +310,13 @@ public abstract class Display implements WebhackUI {
 		}
 	}
 
+	@Stub
+	public void pline(final String line) {
+		putstr(WindowType.MESSAGE, 0, line);
+	}
+
+	public abstract void putstr(WindowType window, int i, String line);
+
 	/**
 	 * Loops through all of the monsters and update them. Called when: + going
 	 * blind & telepathic + regaining sight & telepathic + getting and losing

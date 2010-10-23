@@ -13,4 +13,6 @@ public interface WebhackUI {
 
 	void newsym(int x, int y);
 
+	void pline(String line);
+
 }

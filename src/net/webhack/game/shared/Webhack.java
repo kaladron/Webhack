@@ -145,6 +145,11 @@ public class Webhack {
 
 		this.ui.docrt();
 
-		// moveLoop();
+		welcome(true);
+	}
+
+	@Stub
+	private void welcome(final boolean newgame) {
+		this.ui.pline("Welcome to Webhack!");
 	}
 }

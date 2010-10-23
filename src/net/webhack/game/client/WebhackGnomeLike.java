@@ -1,6 +1,7 @@
 package net.webhack.game.client;
 
 import net.webhack.game.shared.Display;
+import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
 import com.google.gwt.dom.client.Element;
@@ -537,6 +538,13 @@ public class WebhackGnomeLike extends Display {
 		// Must be after the canvas has been put on the page.
 		initCanvas();
 
+	}
+
+	@Override
+	@Stub
+	public void putstr(final Display.WindowType window, final int i,
+			final String line) {
+		System.out.println(line);
 	}
 
 	native void initCanvas() /*-{
