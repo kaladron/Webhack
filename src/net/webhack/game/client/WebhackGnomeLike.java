@@ -16,10 +16,10 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebhackGnomeLike extends Display {
-
 	private static Webhack webhack;
 
 	public static void onKeyDown(final NativeEvent event) {
+
 		final int code = event.getKeyCode();
 
 		char a;
@@ -516,7 +516,9 @@ public class WebhackGnomeLike extends Display {
 
 		final SimplePanel textPanel = new SimplePanel();
 		textPanel.setHeight("8em");
-		textPanel.add(new Label("Webhack text goes here"));
+		textPanel.setWidth("60em");
+		final Element textDiv = textPanel.getElement();
+		textDiv.setId("gameDiv");
 
 		statusPanel.add(textPanel);
 
@@ -544,7 +546,11 @@ public class WebhackGnomeLike extends Display {
 	@Stub
 	public void putstr(final Display.WindowType window, final int i,
 			final String line) {
-		System.out.println(line);
+		if (window == WindowType.MESSAGE) {
+			putMessageText(line);
+		} else {
+			System.out.println(line);
+		}
 	}
 
 	native void initCanvas() /*-{
@@ -652,6 +658,10 @@ public class WebhackGnomeLike extends Display {
 		menu.addItem("Help", helpMenu);
 		basePanel.add(menu);
 	}
+
+	private native void putMessageText(String line) /*-{
+		$wnd.putMessageText(line);
+	}-*/;
 
 	private void registerWebhack(final Webhack webhack) {
 		WebhackGnomeLike.webhack = webhack;

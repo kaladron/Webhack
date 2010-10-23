@@ -13,14 +13,28 @@ var image = new Image();
 image.src = "x11tiles.png";
 
 var ctx;
+var gameDiv;
 
 function initCanvas() {
 	ctx = document.getElementById('canvas').getContext("2d");
+	gameDiv = document.getElementById('gameDiv');
 }
 
 function keyDown(event) {
 	javaKeyDown(event);
 }
+
+function putMessageText(line) {
+	var textDiv = document.createElement('div');
+	var text = document.createTextNode(line);
+	textDiv.appendChild(text);
+	gameDiv.appendChild(textDiv);
+	if (gameDiv.childNodes.length > 20) {
+		gameDiv.removeChild(gameDiv.firstChild);
+	}
+	gameDiv.scrollTop = gameDiv.scrollHeight;
+}
+
 
 function putGlyph(x, y, glyph) {
 
