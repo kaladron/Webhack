@@ -4,6 +4,7 @@
 
 package net.webhack.game.shared;
 
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class Location {
 	/** what is really there */
 	LocationType typ = LocationType.STONE;
 	/** seen vector */
-	int seenv;
+	EnumSet<Display.SeenVector> seenv = EnumSet
+			.noneOf(Display.SeenVector.class);
 
 	// The various typ assists below had all been a unified bitfield.
 	// If we need to save memory, putting this into an interface with an

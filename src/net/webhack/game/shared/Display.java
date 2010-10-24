@@ -1,6 +1,27 @@
 package net.webhack.game.shared;
 
+import java.util.EnumSet;
+
 public abstract class Display implements WebhackUI {
+
+	/**
+	 * Seen vector values. The seen vector is an array of 8 bits, one for each
+	 * octant around a given center x:
+	 * 
+	 * <pre>
+	 *                      0 1 2
+	 *                      7 x 3
+	 *                      6 5 4
+	 * </pre>
+	 * 
+	 * In the case of walls, a single wall square can be viewed from 8 possible
+	 * directions. If we know the type of wall and the directions from which it
+	 * has been seen, then we can determine what it looks like to the hero.
+	 */
+
+	enum SeenVector {
+		SV1, SV2, SV3, SV4, SV5, SV6, SV7;
+	}
 
 	protected class Gbuf {
 		public boolean updated = false;
@@ -235,6 +256,7 @@ public abstract class Display implements WebhackUI {
 
 	}
 
+	@Stub
 	public void docrt() {
 		if (you.ux == 0) {
 			return; /* display isn't ready yet */
@@ -449,8 +471,8 @@ public abstract class Display implements WebhackUI {
 		case TRWALL:
 		case SDOOR:
 			/* TODO(jeffbailey): don't force this! */
-			ptr.seenv = 1;
-			idx = ptr.seenv != 0 ? wall_angle(ptr) : S_stone;
+			ptr.seenv = EnumSet.allOf(Display.SeenVector.class);
+			idx = !ptr.seenv.isEmpty() ? wall_angle(ptr) : S_stone;
 			break;
 		case DOOR:
 			if (ptr.doormask != null) {
