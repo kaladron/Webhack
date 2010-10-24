@@ -80,6 +80,11 @@ public class Webhack {
 	 */
 	public void moveLoop(final char c) {
 
+		switch (c) {
+		case 'o':
+			ui.pline("In what direction?");
+		}
+
 		final String sdir = "hykulnjb><";
 		// final char ndir[] = {'4','7','8','9','6','3','2','1','>','<'}; /*
 		// number pad mode */

@@ -9,7 +9,6 @@ var DISPLAY_SQUARE = 16;
 var TILE_SQUARE = 16;
 var TILES_PER_ROW = 40;
 var image = new Image();
-//image.onload = demo;
 image.src = "x11tiles.png";
 
 var ctx;
@@ -22,6 +21,7 @@ function initCanvas() {
 
 function keyDown(event) {
 	javaKeyDown(event);
+	event.stopPropagation();
 }
 
 function putMessageText(line) {
@@ -68,7 +68,7 @@ function putGlyph(x, y, glyph) {
 
 </script>
 </head>
-<body onkeydown="return keyDown(event);">
+<body onkeydown="keyDown(event);">
 <!-- OPTIONAL: include this if you want history support -->
 <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
 	style="position: absolute; width: 0; height: 0; border: 0"></iframe>

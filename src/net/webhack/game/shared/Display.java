@@ -448,9 +448,9 @@ public abstract class Display implements WebhackUI {
 		case TLWALL:
 		case TRWALL:
 		case SDOOR:
-			// TODO(jeffbailey): STUB
-			// idx = ptr.seenv != 0 ? wall_angle(ptr) : S_stone;
-			idx = S_bars;
+			/* TODO(jeffbailey): don't force this! */
+			ptr.seenv = 1;
+			idx = ptr.seenv != 0 ? wall_angle(ptr) : S_stone;
 			break;
 		case DOOR:
 			if (ptr.doormask != null) {
@@ -695,6 +695,39 @@ public abstract class Display implements WebhackUI {
 			return;
 		}
 		map_background(x, y, show);
+	}
+
+	/**
+	 * Returns the correct graphics character index using wall type, wall mode,
+	 * and the seen vector. It is expected that seenv is non zero.
+	 * 
+	 * All T-wall vectors are rotated to be TDWALL. All single crosswall blocks
+	 * are rotated to bottom right. All double crosswall are rotated to
+	 * W_X_BLTR. All results are converted back.
+	 * 
+	 * The only way to understand this is to take out pen and paper and draw
+	 * diagrams. See rm.h for more details on the wall modes and seen vector
+	 * (SV).
+	 */
+	@Stub
+	private int wall_angle(final Location lev) {
+		System.out.println("wall_angle");
+		switch (lev.typ) {
+		case TUWALL:
+
+		case SDOOR:
+			// TODO(jeffbailey): if (lev.horizontal) goto horiz;
+			/* fall through */
+
+		case VWALL:
+			return S_vwall;
+
+		case HWALL:
+			return S_hwall;
+
+		default:
+			return S_stone;
+		}
 	}
 
 }
