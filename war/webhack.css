@@ -29,7 +29,7 @@ h1 {
 }
 
 #gameDiv {
-	overflow: auto;
+	overflow-y: scroll;
 	width: 100%;
 }
 

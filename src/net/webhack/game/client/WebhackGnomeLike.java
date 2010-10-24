@@ -481,6 +481,12 @@ public class WebhackGnomeLike extends Display {
 		}
 	};
 
+	Command showAbout = new Command() {
+		public void execute() {
+			new AboutBox().show();
+		}
+	};
+
 	public WebhackGnomeLike() {
 	}
 
@@ -573,7 +579,6 @@ public class WebhackGnomeLike extends Display {
 		gameMenu.addSeparator();
 		gameMenu.addItem("New game", sayHello);
 		gameMenu.addItem("Save", sayHello);
-		gameMenu.addItem("Exit", sayHello);
 
 		final MenuBar editMenu = new MenuBar(true);
 		editMenu.addItem("Inventory", sayHello);
@@ -642,7 +647,7 @@ public class WebhackGnomeLike extends Display {
 		magicMenu.addItem("Turn Undead", sayHello);
 
 		final MenuBar helpMenu = new MenuBar(true);
-		helpMenu.addItem("About...", sayHello);
+		helpMenu.addItem("About...", showAbout);
 		helpMenu.addItem("Help", sayHello);
 		helpMenu.addSeparator();
 		helpMenu.addItem("What is here", sayHello);

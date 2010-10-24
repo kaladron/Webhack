@@ -31,6 +31,7 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 	public RoleRaceGender(final Webhack game) {
 		super(false);
 		setGlassEnabled(true);
+		this.center();
 
 		this.game = game;
 
