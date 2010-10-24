@@ -72,6 +72,12 @@ public class DungeonLevel implements LocationMap {
 	/** References to Rooms. */
 	private Rooms rooms;
 
+	public Command doOpen = new Command() {
+		public void execute() {
+			dungeon.ui.pline("In what direction?");
+		}
+	};
+
 	public DungeonLevel(final RandomHelper random, final You you,
 			final Dungeon dungeon) {
 		this.random = random;

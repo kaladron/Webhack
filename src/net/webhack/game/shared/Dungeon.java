@@ -10,12 +10,14 @@ package net.webhack.game.shared;
  */
 public class Dungeon {
 
-	final DungeonLevel dlevel;
+	public final DungeonLevel dlevel;
+	final WebhackUI ui;
 	private final You you;
 
 	public Dungeon(final RandomHelper random, final You you,
 			final WebhackUI ui, final Flags flags) {
 		this.you = you;
+		this.ui = ui;
 		// TODO(jeffbailey): Figure out better bootstrapping
 		ui.init(this, you, flags);
 		dlevel = new DungeonLevel(random, you, this);

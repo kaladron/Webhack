@@ -42,7 +42,7 @@ public class Webhack {
 	/** maximum monster hp */
 	public static int MHPMAX = 500;
 
-	Dungeon dungeon;
+	public Dungeon dungeon;
 	You you;
 	public final Flags flags;
 	final WebhackUI ui;
@@ -82,7 +82,7 @@ public class Webhack {
 
 		switch (c) {
 		case 'o':
-			ui.pline("In what direction?");
+			dungeon.dlevel.doOpen.execute();
 		}
 
 		final String sdir = "hykulnjb><";

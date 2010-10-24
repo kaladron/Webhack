@@ -487,6 +487,14 @@ public class WebhackGnomeLike extends Display {
 		}
 	};
 
+	Command doOpen = new Command() {
+		// TODO(jeffbailey): We shouldn't have access to this level of the code
+		// from here.
+		public void execute() {
+			webhack.dungeon.dlevel.doOpen.execute();
+		}
+	};
+
 	public WebhackGnomeLike() {
 	}
 
@@ -613,7 +621,7 @@ public class WebhackGnomeLike extends Display {
 		actionMenu.addItem("Throw/Shoot", sayHello);
 		actionMenu.addItem("Quiver/Ready", sayHello);
 		actionMenu.addItem("Quiver/Ready", sayHello);
-		actionMenu.addItem("Open Door", sayHello);
+		actionMenu.addItem("Open Door", doOpen);
 		actionMenu.addItem("Close Door", sayHello);
 		actionMenu.addSeparator();
 		actionMenu.addItem("Drop", sayHello);
