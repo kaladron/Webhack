@@ -153,8 +153,30 @@ public class Webhack {
 		welcome(true);
 	}
 
+	/**
+	 * The "welcome back" message always describes your innate form even when
+	 * polymorphed or wearing a helm of opposite alignment. Alignment is shown
+	 * unconditionally for new games; for restores it's only shown if it has
+	 * changed from its original value. Sex is shown for new games except when
+	 * it is redundant; for restores it's only shown if different from its
+	 * original value.
+	 */
 	@Stub
-	private void welcome(final boolean newgame) {
-		this.ui.pline("Welcome to Webhack!");
+	private void welcome(final boolean newGame) {
+
+		if (newGame) {
+			// welcome = String.format(
+			// "%1$s %1$s, welcome to WebHack!  You are a%1$s %1$s %1$s.",
+			// params);
+		} else {
+			// welcome = String.format(
+			// "%1$s %1$s, the%1$s %1$s %1$s, welcome back to WebHack!",
+			// params);
+		}
+
+		this.ui.pline("Hello, player, welcome to WebHack!  You are a "
+				+ you.gender.name() + " " + you.race.name() + " "
+				+ you.role.name[0] + ".");
+		// this.ui.pline(welcome);
 	}
 }
