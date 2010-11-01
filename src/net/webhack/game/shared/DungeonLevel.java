@@ -6,6 +6,7 @@ package net.webhack.game.shared;
 
 import java.util.List;
 
+import net.webhack.game.shared.monsters.GridBug;
 import net.webhack.game.shared.things.Boulder;
 import net.webhack.game.shared.things.Gold;
 import net.webhack.game.shared.things.Thing;
@@ -465,8 +466,25 @@ public class DungeonLevel implements LocationMap {
 		add_door(x, y, aroom);
 	}
 
+	/** for each room: put things inside */
 	private void fillRooms() {
+
 		for (final Room room : rooms.rooms) {
+
+			// if(you.uhave.amulet || !rn2(3)) {
+			// x = somex(croom); y = somey(croom);
+			// tmonst = makemon((struct permonst *) 0, x,y,NO_MM_FLAGS);
+			// if (tmonst && tmonst->data == &mons[PM_GIANT_SPIDER] &&
+			// !occupied(x, y))
+			// (void) maketrap(x, y, WEB);
+			// }
+
+			// Generate Monsters
+			if (random.oneIn(3)) {
+				final int x = room.someX(random);
+				final int y = room.someY(random);
+				locations[x][y].monsters.add(new GridBug());
+			}
 
 			int difficulty = 8 - (dungeon.level_difficulty() / 6);
 			if (difficulty <= 1) {

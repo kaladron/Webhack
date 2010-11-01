@@ -2,6 +2,8 @@ package net.webhack.game.shared;
 
 import java.util.EnumSet;
 
+import net.webhack.game.shared.monsters.Monster;
+
 public abstract class Display implements WebhackUI {
 
 	/**
@@ -318,6 +320,8 @@ public abstract class Display implements WebhackUI {
 	 * @param y
 	 */
 	public void newsym(final int x, final int y) {
+		final Location ptr = dungeon.getLevel().getLoc(x, y);
+
 		// TODO(jeffbailey): stub
 		if (x == you.ux && y == you.uy) {
 			if (senseself()) {
@@ -328,7 +332,12 @@ public abstract class Display implements WebhackUI {
 				map_location(x, y, true);
 			}
 		} else {
-			map_location(x, y, true);
+			if (!ptr.monsters.isEmpty()) {
+				map_location(x, y, false);
+				display_monster(x, y, ptr.monsters.get(0));
+			} else {
+				map_location(x, y, true);
+			}
 		}
 	}
 
@@ -629,12 +638,17 @@ public abstract class Display implements WebhackUI {
 		}
 	}
 
+	@Stub
+	int mon_to_glyph(final Monster monster) {
+		return monster.idx + GLYPH_MON_OFF;
+	}
+
 	int monnum_to_glyph(final int idx) {
 		return idx + GLYPH_MON_OFF;
 	}
 
+	@Stub
 	int obj_to_glyph(final ThingLocation thingloc) {
-		// TODO(jeffbailey): STUB
 		return thingloc.thing.idx + GLYPH_OBJ_OFF;
 	}
 
@@ -703,6 +717,19 @@ public abstract class Display implements WebhackUI {
 				gbuf[y][x] = new Gbuf();
 			}
 		}
+	}
+
+	/**
+	 * Note that this is *not* a map_XXXX() function! Monsters sort of float
+	 * above everything.
+	 * 
+	 * Yuck. Display body parts by recognizing that the display position is not
+	 * the same as the monster position. Currently the only body part is a worm
+	 * tail.
+	 */
+	@Stub
+	private void display_monster(final int x, final int y, final Monster mon) {
+		show_glyph(x, y, mon_to_glyph(mon));
 	}
 
 	/**

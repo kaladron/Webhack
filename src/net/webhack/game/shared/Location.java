@@ -55,4 +55,5 @@ public class Location {
 	boolean edge;
 
 	List<ThingLocation> things = new LinkedList<ThingLocation>();
+	List<net.webhack.game.shared.monsters.Monster> monsters = new LinkedList<net.webhack.game.shared.monsters.Monster>();
 }
