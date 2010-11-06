@@ -376,6 +376,28 @@ public class DungeonLevel implements LocationMap {
 				: LocationType.Ladder.DOWN;
 	}
 
+	/**
+	 * Some of you may remember the former assertion here that because of deaths
+	 * and other actions, a simple one-pass algorithm wasn't possible for
+	 * movemon. Deaths are no longer removed to the separate list fdmon; they
+	 * are simply left in the chain with hit points <= 0, to be cleaned up at
+	 * the end of the pass.
+	 * 
+	 * The only other actions which cause monsters to be removed from the chain
+	 * are level migrations and losedogs(). I believe losedogs() is a cleanup
+	 * routine not associated with monster movements, and monsters can only
+	 * affect level migrations on themselves, not others (hence the fetching of
+	 * nmon before moving the monster). Currently, monsters can jump into traps,
+	 * read cursed scrolls of teleportation, and drink cursed potions of raise
+	 * level to change levels. These are all reflexive at this point. Should one
+	 * monster be able to level teleport another, this scheme would have
+	 * problems.
+	 */
+	@Stub
+	boolean moveMon() {
+		return true;
+	}
+
 	boolean okDoor(final int x, final int y) {
 		final boolean near_door = byDoor(x, y);
 

@@ -760,7 +760,6 @@ public abstract class Display implements WebhackUI {
 	 */
 	@Stub
 	private int wall_angle(final Location lev) {
-		System.out.println("wall_angle");
 		switch (lev.typ) {
 		case TUWALL:
 
