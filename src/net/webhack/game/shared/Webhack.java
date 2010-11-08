@@ -111,6 +111,8 @@ public class Webhack {
 			ui.newsym(you.ux0, you.uy0);
 		}
 
+		dungeon.dlevel.moveMon();
+
 		ui.displayNhWindow(WindowType.MAP, false);
 	}
 

@@ -4,9 +4,11 @@
 
 package net.webhack.game.shared;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import net.webhack.game.shared.monsters.GridBug;
+import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.things.Boulder;
 import net.webhack.game.shared.things.Gold;
 import net.webhack.game.shared.things.Thing;
@@ -20,6 +22,7 @@ import net.webhack.game.shared.things.Thing;
 public class DungeonLevel implements LocationMap {
 
 	Location[][] locations = new Location[Webhack.COLNO][Webhack.ROWNO];
+	List<Monster> monlist = new LinkedList<Monster>();
 
 	/** number of fountains on level */
 	int nfountains;
@@ -247,6 +250,21 @@ public class DungeonLevel implements LocationMap {
 		return true;
 	}
 
+	/** returns true if monster died moving, false otherwise */
+	@Stub
+	boolean doChug(final Monster monster) {
+		mMove(monster, 0);
+
+		return false;
+	}
+
+	@Stub
+	boolean doChugW(final Monster monster) {
+		final boolean rd = doChug(monster);
+
+		return rd;
+	}
+
 	void doDoor(final int x, final int y, final Room aroom) {
 		if (doorIndex >= Webhack.DOORMAX) {
 			// TODO(jeffbailey): console.error("DOORMAX exceeded?");
@@ -255,7 +273,7 @@ public class DungeonLevel implements LocationMap {
 
 		dosDoor(x, y, aroom, random.oneIn(8) ? LocationType.SDOOR
 				: LocationType.DOOR);
-	}
+	};
 
 	void finddpos(final Coordinate cc, final int xl, final int yl,
 			final int xh, final int yh) {
@@ -302,7 +320,7 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		return null;
-	};
+	}
 
 	void gotit(final Coordinate cc, final int x, final int y) {
 		cc.x = x;
@@ -377,6 +395,32 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	/**
+	 * Return values: 0: did not move, but can still attack and do other stuff.
+	 * 1: moved, possibly can attack. 2: monster died. 3: did not move, and
+	 * can't do anything else either.
+	 */
+	@Stub
+	int mMove(final Monster monster, final int after) {
+		final int omx = monster.mx;
+		final int omy = monster.my;
+
+		// mfndpos - Find acceptable neighbour positions
+		// pick one and move to it.
+
+		final int nix = monster.mx + 1;
+		final int niy = monster.my + 1;
+
+		removeMonster(omx, omy);
+		placeMonster(monster, nix, niy);
+
+		dungeon.ui.newsym(omx, omy); /* update the old position */
+
+		dungeon.ui.newsym(nix, niy);
+
+		return 1;
+	}
+
+	/**
 	 * Some of you may remember the former assertion here that because of deaths
 	 * and other actions, a simple one-pass algorithm wasn't possible for
 	 * movemon. Deaths are no longer removed to the separate list fdmon; they
@@ -395,6 +439,12 @@ public class DungeonLevel implements LocationMap {
 	 */
 	@Stub
 	boolean moveMon() {
+		for (final Monster monster : monlist) {
+			if (doChugW(monster)) {
+				continue;
+			}
+			doChugW(monster);
+		}
 		return true;
 	}
 
@@ -407,6 +457,23 @@ public class DungeonLevel implements LocationMap {
 
 	void place_object(final Thing thing, final int x, final int y) {
 		locations[x][y].things.add(new ThingLocation(thing, x, y));
+	}
+
+	/**
+	 * Helper for making a monster
+	 * 
+	 * @param monster
+	 * @param x
+	 * @param y
+	 */
+	void placeMonster(final Monster monster, final int x, final int y) {
+		monster.mx = x;
+		monster.my = y;
+		locations[x][y].monster = monster;
+	}
+
+	void removeMonster(final int x, final int y) {
+		locations[x][y].monster = null;
 	}
 
 	boolean testMove(final int ux, final int uy, final int dx, final int dy,
@@ -505,7 +572,11 @@ public class DungeonLevel implements LocationMap {
 			if (random.oneIn(3)) {
 				final int x = room.someX(random);
 				final int y = room.someY(random);
-				locations[x][y].monsters.add(new GridBug());
+				final Monster monster = new GridBug();
+				monster.mx = x;
+				monster.my = y;
+				locations[x][y].monster = monster;
+				monlist.add(monster);
 			}
 
 			int difficulty = 8 - (dungeon.level_difficulty() / 6);

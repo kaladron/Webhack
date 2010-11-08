@@ -41,7 +41,7 @@ public class Ranger extends Role {
 		questNemisis = PM.SCORPIUS;
 
 		questEnemy = new PM[] { PM.FOREST_CENTAUR, PM.SCORPION };
-		questMonsterClass = new Monster[] { Monster.CENTAUR, Monster.SPIDER };
+		questMonsterClass = new MonsterClass[] { MonsterClass.CENTAUR, MonsterClass.SPIDER };
 
 		questArtifact = Artifact.LONGBOW_OF_DIANA;
 

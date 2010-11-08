@@ -332,9 +332,9 @@ public abstract class Display implements WebhackUI {
 				map_location(x, y, true);
 			}
 		} else {
-			if (!ptr.monsters.isEmpty()) {
+			if (ptr.monster != null) {
 				map_location(x, y, false);
-				display_monster(x, y, ptr.monsters.get(0));
+				display_monster(x, y, ptr.monster);
 			} else {
 				map_location(x, y, true);
 			}

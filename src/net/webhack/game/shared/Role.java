@@ -119,7 +119,7 @@ public abstract class Role {
 	PM questNemisis;
 
 	PM questEnemy[];
-	Monster questMonsterClass[];
+	MonsterClass questMonsterClass[];
 	Artifact questArtifact;
 
 	EnumSet<Race> allowedRace;

@@ -40,7 +40,7 @@ public class Samurai extends Role {
 		questNemisis = PM.ASHIKAGA_TAKAUJI;
 
 		questEnemy = new PM[] { PM.WOLF, PM.STALKER };
-		questMonsterClass = new Monster[] { Monster.DOG, Monster.ELEMENTAL };
+		questMonsterClass = new MonsterClass[] { MonsterClass.DOG, MonsterClass.ELEMENTAL };
 		questArtifact = Artifact.TSURUGI_OF_MURAMASA;
 
 		allowedRace = EnumSet.of(Race.HUMAN);

@@ -8,6 +8,8 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.webhack.game.shared.monsters.Monster;
+
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
@@ -55,5 +57,5 @@ public class Location {
 	boolean edge;
 
 	List<ThingLocation> things = new LinkedList<ThingLocation>();
-	List<net.webhack.game.shared.monsters.Monster> monsters = new LinkedList<net.webhack.game.shared.monsters.Monster>();
+	Monster monster = null;
 }

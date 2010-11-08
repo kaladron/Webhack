@@ -34,7 +34,7 @@ public class Knight extends Role {
 		questNemisis = PM.IXOTH;
 
 		questEnemy = new PM[] { PM.QUASIT, PM.OCHRE_JELLY };
-		questMonsterClass = new Monster[] { Monster.IMP, Monster.JELLY };
+		questMonsterClass = new MonsterClass[] { MonsterClass.IMP, MonsterClass.JELLY };
 		questArtifact = Artifact.MAGIC_MIRROR_OF_MERLIN;
 		allowedRace = EnumSet.of(Race.HUMAN);
 		allowedGender = EnumSet.of(Gender.MALE, Gender.FEMALE);

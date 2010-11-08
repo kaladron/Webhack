@@ -8,7 +8,7 @@ package net.webhack.game.shared;
  * @author Jeff Bailey <jeffbailey@google.com>
  *
  */
-public enum Monster {
+public enum MonsterClass {
 	/*
 	 * Monster classes.  , are the corresponding default characters for
 	 * them.  Monster class 0 is not used or defined so we can use it as a

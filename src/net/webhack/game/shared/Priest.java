@@ -34,7 +34,7 @@ public class Priest extends Role {
 		questGuardian = PM.ACOLYTE;
 		questNemisis = PM.NALZOK;
 		questEnemy = new PM[] { PM.HUMAN_ZOMBIE, PM.WRAITH };
-		questMonsterClass = new Monster[] { Monster.ZOMBIE, Monster.WRAITH };
+		questMonsterClass = new MonsterClass[] { MonsterClass.ZOMBIE, MonsterClass.WRAITH };
 
 		questArtifact = Artifact.MITRE_OF_HOLINESS;
 

@@ -42,6 +42,9 @@ public class Monster {
 	/** yet more boolean bitflags */
 	final int mflags3;
 
+	public int mx;
+	public int my;
+
 	public Monster(final int idx, final String mname, final char mlet,
 			final int mlevel, final int mmove, final int ac, final int mr,
 			final int maligntyp, final int geno, final int cwt,

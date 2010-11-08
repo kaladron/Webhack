@@ -34,7 +34,7 @@ public class Healer extends Role {
 		questGuardian = PM.ATTENDANT;
 		questNemisis = PM.CYCLOPS;
 		questEnemy = new PM[] { PM.GIANT_RAT, PM.SNAKE };
-		questMonsterClass = new Monster[] { Monster.RODENT, Monster.YETI };
+		questMonsterClass = new MonsterClass[] { MonsterClass.RODENT, MonsterClass.YETI };
 		questArtifact = Artifact.STAFF_OF_AESCULAPIUS;
 
 		allowedRace = EnumSet.of(Race.HUMAN, Race.GNOME);

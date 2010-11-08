@@ -34,7 +34,7 @@ public class Monk extends Role {
 		questNemisis = PM.MASTER_KAEN;
 
 		questEnemy = new PM[] { PM.EARTH_ELEMENTAL, PM.XORN };
-		questMonsterClass = new Monster[] { Monster.ELEMENTAL, Monster.XORN };
+		questMonsterClass = new MonsterClass[] { MonsterClass.ELEMENTAL, MonsterClass.XORN };
 
 		questArtifact = Artifact.EYES_OF_THE_OVERWORLD;
 

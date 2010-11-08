@@ -28,7 +28,7 @@ public class Archeologist extends Role {
 
 		questEnemy = new PM[] { null, PM.HUMAN_MUMMY };
 
-		questMonsterClass = new Monster[] { Monster.SNAKE, Monster.MUMMY };
+		questMonsterClass = new MonsterClass[] { MonsterClass.SNAKE, MonsterClass.MUMMY };
 		questArtifact = Artifact.ORB_OF_DETECTION;
 
 		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF, Race.GNOME);

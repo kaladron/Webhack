@@ -34,7 +34,7 @@ public class Wizard extends Role {
 		questNemisis = PM.DARK_ONE;
 
 		questEnemy = new PM[] { PM.VAMPIRE_BAT, PM.XORN };
-		questMonsterClass = new Monster[] { Monster.BAT, Monster.WRAITH };
+		questMonsterClass = new MonsterClass[] { MonsterClass.BAT, MonsterClass.WRAITH };
 
 		questArtifact = Artifact.EYE_OF_THE_AETHIOPICA;
 

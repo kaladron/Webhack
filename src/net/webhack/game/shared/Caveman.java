@@ -25,7 +25,7 @@ public class Caveman extends Role {
 		questLeader = PM.NEANDERTHAL;
 		questNemisis = PM.CHROMATIC_DRAGON;
 		questEnemy = new PM[] { PM.BUGBEAR, PM.HILL_GIANT };
-		questMonsterClass = new Monster[] { Monster.HUMANOID, Monster.GIANT };
+		questMonsterClass = new MonsterClass[] { MonsterClass.HUMANOID, MonsterClass.GIANT };
 		questArtifact = Artifact.SCEPTRE_OF_MIGHT;
 
 		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF, Race.GNOME);

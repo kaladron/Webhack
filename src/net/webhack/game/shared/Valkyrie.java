@@ -35,7 +35,7 @@ public class Valkyrie extends Role {
 		questNemisis = PM.LORD_SURTUR;
 
 		questEnemy = new PM[] { PM.FIRE_ANT, PM.FIRE_GIANT };
-		questMonsterClass = new Monster[] { Monster.ANT, Monster.GIANT };
+		questMonsterClass = new MonsterClass[] { MonsterClass.ANT, MonsterClass.GIANT };
 		questArtifact = Artifact.ORB_OF_FATE;
 
 		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF);

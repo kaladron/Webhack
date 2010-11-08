@@ -34,7 +34,7 @@ public class Barbarian extends Role {
 		questNemisis = PM.THOTH_AMON;
 
 		questEnemy = new PM[] { PM.OGRE, PM.TROLL };
-		questMonsterClass = new Monster[] { Monster.OGRE, Monster.TROLL };
+		questMonsterClass = new MonsterClass[] { MonsterClass.OGRE, MonsterClass.TROLL };
 		questArtifact = Artifact.HEART_OF_AHRIMAN;
 
 		allowedRace = EnumSet.of(Race.HUMAN, Race.ORC);

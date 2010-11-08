@@ -35,7 +35,7 @@ public class Rogue extends Role {
 
 		questEnemy = new PM[] { PM.LEPRECHAUN, PM.GUARDIAN_NAGA };
 
-		questMonsterClass = new Monster[] { Monster.NYMPH, Monster.NAGA };
+		questMonsterClass = new MonsterClass[] { MonsterClass.NYMPH, MonsterClass.NAGA };
 
 		questArtifact = Artifact.MASTER_KEY_OF_THIEVERY;
 

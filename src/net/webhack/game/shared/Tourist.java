@@ -36,7 +36,7 @@ public class Tourist extends Role {
 		questNemisis = PM.MASTER_OF_THIEVES;
 
 		questEnemy = new PM[] { PM.GIANT_SPIDER, PM.FOREST_CENTAUR };
-		questMonsterClass = new Monster[] { Monster.SPIDER, Monster.CENTAUR };
+		questMonsterClass = new MonsterClass[] { MonsterClass.SPIDER, MonsterClass.CENTAUR };
 
 		questArtifact = Artifact.YENDORIAN_EXPRESS_CARD;
 

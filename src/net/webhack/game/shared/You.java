@@ -199,8 +199,8 @@ public class You {
 	long ucleansed; /* to record moves when player was cleansed */
 	long usleep; /* sleeping; monstermove you last started */
 	int uinvault;
-	Monster stuck;
-	Monster steed;
+	MonsterClass stuck;
+	MonsterClass steed;
 	long ugallop;
 	int urideturns;
 	int umortality; /* how many times you died */
