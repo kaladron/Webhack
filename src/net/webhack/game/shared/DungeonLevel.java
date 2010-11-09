@@ -404,11 +404,15 @@ public class DungeonLevel implements LocationMap {
 		final int omx = monster.mx;
 		final int omy = monster.my;
 
-		// mfndpos - Find acceptable neighbour positions
+		final List<Coordinate> moveOptions = monster.findPosition(this);
 		// pick one and move to it.
+		if (moveOptions.isEmpty()) {
+			return 0;
+		}
+		final Coordinate moveTo = moveOptions.get(0);
 
-		final int nix = monster.mx + 1;
-		final int niy = monster.my + 1;
+		final int nix = moveTo.x;
+		final int niy = moveTo.y;
 
 		removeMonster(omx, omy);
 		placeMonster(monster, nix, niy);

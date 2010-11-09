@@ -6,8 +6,8 @@ package net.webhack.game.shared;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
- *
+ * 
  */
-interface LocationMap {
+public interface LocationMap {
 	Location getLoc(int x, int y);
 }

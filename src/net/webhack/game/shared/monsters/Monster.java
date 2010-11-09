@@ -1,5 +1,12 @@
 package net.webhack.game.shared.monsters;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import net.webhack.game.shared.Coordinate;
+import net.webhack.game.shared.LocationMap;
+import net.webhack.game.shared.Webhack;
+
 public class Monster {
 	/** glyph Index number. */
 	public final int idx;
@@ -71,6 +78,29 @@ public class Monster {
 		this.mflags1 = mflags1;
 		this.mflags2 = mflags2;
 		this.mflags3 = mflags3;
+	}
+
+	/**
+	 * Returns a list of possible directions the monster can move in.
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public List<Coordinate> findPosition(final LocationMap map) {
+		final List<Coordinate> aList = new LinkedList<Coordinate>();
+
+		final int maxX = Math.min(mx + 1, Webhack.COLNO - 1);
+		final int maxY = Math.min(my + 1, Webhack.ROWNO - 1);
+
+		for (int nx = Math.max(1, mx - 1); nx <= maxX; nx++) {
+			for (int ny = Math.max(0, my - 1); ny <= maxY; ny++) {
+				if (map.getLoc(nx, ny).typ.isRock()) {
+					continue;
+				}
+				aList.add(new Coordinate(nx, ny));
+			}
+		}
+		return aList;
 	}
 
 }

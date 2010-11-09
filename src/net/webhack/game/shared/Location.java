@@ -24,7 +24,7 @@ public class Location {
 	// TODO(jeffbailey): Don't hardcode this. This is the glyph for stone.
 	int glyph = 2344;
 	/** what is really there */
-	LocationType typ = LocationType.STONE;
+	public LocationType typ = LocationType.STONE;
 	/** seen vector */
 	EnumSet<Display.SeenVector> seenv = EnumSet
 			.noneOf(Display.SeenVector.class);
