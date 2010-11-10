@@ -102,8 +102,40 @@ public class DungeonLevel implements LocationMap {
 		return locations[x][y];
 	}
 
+	/**
+	 * Checks if there's a monster at this location.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return True if there's a monster at this location
+	 */
+	@Stub
+	public boolean monAt(final int x, final int y) {
+		if (locations[x][y].monster == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public void onUpstairs() {
 		you.newPos(upstair);
+	}
+
+	/**
+	 * Checks if the player is at this location.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return True if there player is at this location
+	 */
+	@Stub
+	public boolean youAt(final int x, final int y) {
+		if (you.ux == x && you.uy == y) {
+			return true;
+		}
+
+		return false;
 	}
 
 	void add_door(final int x, final int y, final Room aroom) {
@@ -263,7 +295,7 @@ public class DungeonLevel implements LocationMap {
 		final boolean rd = doChug(monster);
 
 		return rd;
-	}
+	};
 
 	void doDoor(final int x, final int y, final Room aroom) {
 		if (doorIndex >= Webhack.DOORMAX) {
@@ -273,7 +305,7 @@ public class DungeonLevel implements LocationMap {
 
 		dosDoor(x, y, aroom, random.oneIn(8) ? LocationType.SDOOR
 				: LocationType.DOOR);
-	};
+	}
 
 	void finddpos(final Coordinate cc, final int xl, final int yl,
 			final int xh, final int yh) {
@@ -409,7 +441,8 @@ public class DungeonLevel implements LocationMap {
 		if (moveOptions.isEmpty()) {
 			return 0;
 		}
-		final Coordinate moveTo = moveOptions.get(0);
+		final Coordinate moveTo = moveOptions
+				.get(random.rn2(moveOptions.size()));
 
 		final int nix = moveTo.x;
 		final int niy = moveTo.y;
@@ -447,7 +480,6 @@ public class DungeonLevel implements LocationMap {
 			if (doChugW(monster)) {
 				continue;
 			}
-			doChugW(monster);
 		}
 		return true;
 	}

@@ -94,9 +94,21 @@ public class Monster {
 
 		for (int nx = Math.max(1, mx - 1); nx <= maxX; nx++) {
 			for (int ny = Math.max(0, my - 1); ny <= maxY; ny++) {
+				if (nx == mx && ny == my) {
+					continue;
+				}
 				if (map.getLoc(nx, ny).typ.isRock()) {
 					continue;
 				}
+
+				if (map.youAt(nx, ny)) {
+					continue;
+				}
+
+				if (map.monAt(nx, ny)) {
+					continue;
+				}
+
 				aList.add(new Coordinate(nx, ny));
 			}
 		}

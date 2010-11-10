@@ -10,4 +10,8 @@ package net.webhack.game.shared;
  */
 public interface LocationMap {
 	Location getLoc(int x, int y);
+
+	boolean monAt(int x, int y);
+
+	boolean youAt(int x, int y);
 }
