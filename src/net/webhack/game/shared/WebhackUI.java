@@ -15,4 +15,6 @@ public interface WebhackUI {
 
 	void pline(String line);
 
+	char ynFunction(String question, char[] choices, char theDefault);
+
 }

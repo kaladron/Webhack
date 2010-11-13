@@ -567,6 +567,14 @@ public class WebhackGnomeLike extends Display {
 		}
 	}
 
+	public char ynFunction(final String question, final char[] choices,
+			final char theDefault) {
+
+		pline(question);
+
+		return theDefault;
+	}
+
 	native void initCanvas() /*-{
 		$wnd.initCanvas();
 	}-*/;

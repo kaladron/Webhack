@@ -78,7 +78,8 @@ public class DungeonLevel implements LocationMap {
 
 	public Command doOpen = new Command() {
 		public void execute() {
-			dungeon.ui.pline("In what direction?");
+			dungeon.ui.ynFunction("In what direction?", new char[] { 'a', 'b',
+					'c' }, 'a');
 		}
 	};
 
