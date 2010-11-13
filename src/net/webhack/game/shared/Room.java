@@ -1,6 +1,6 @@
 package net.webhack.game.shared;
 
-public class Room {
+public class Room implements Comparable<Room> {
 	/** Ordinary Room */
 	public static int OROOM = 0;
 
@@ -80,6 +80,16 @@ public class Room {
 	Room[] sbrooms = new Room[Webhack.MAX_SUBROOMS]; /* Subrooms pointers */
 
 	// struct monst *resident; /* priest/shopkeeper/guard for this room */
+
+	public int compareTo(final Room arg0) {
+		if (this.lx < arg0.lx) {
+			return -1;
+		}
+		if (this.lx > arg0.lx) {
+			return 1;
+		}
+		return 0;
+	}
 
 	/**
 	 * Random X coordinate within a room

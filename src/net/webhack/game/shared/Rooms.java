@@ -4,6 +4,7 @@
 
 package net.webhack.game.shared;
 
+import java.util.Collections;
 import java.util.Vector;
 
 /**
@@ -164,7 +165,7 @@ public class Rooms {
 	}
 
 	public void sortRooms() {
-
+		Collections.sort(rooms);
 	}
 
 	/**
