@@ -782,9 +782,13 @@ public class DungeonLevel implements LocationMap {
 		// TODO(jeffbailey): if (!Is_botlevel(you.uz))
 		mkstairs(croom.someX(random), croom.someY(random), false, croom); /* down */
 		if (rooms.rooms.size() > 1) {
-			// TODO(jeffbailey): Room troom = croom;
-			croom = rooms.rooms.elementAt(random.rn2(rooms.rooms.size() - 1));
-			// TODO(jeffbailey): if (croom == troom) croom++;
+			int roomNum = random.rn2(rooms.rooms.size() - 1);
+			final Room troom = croom;
+			croom = rooms.rooms.elementAt(roomNum);
+			if (croom == troom) {
+				roomNum++;
+				croom = rooms.rooms.elementAt(roomNum);
+			}
 		}
 
 		// TODO(jeffbailey): if (you.uz.dlevel != 1)
