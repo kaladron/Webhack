@@ -240,6 +240,7 @@ public abstract class Display implements WebhackUI {
 
 	protected Gbuf gbuf[][];
 	protected Flags flags;
+	Command command;
 
 	public Display() {
 		clear_glyph_buffer();
@@ -256,6 +257,13 @@ public abstract class Display implements WebhackUI {
 
 		clear_glyph_buffer(); /* this is sort of an extra effort, but OK */
 
+	}
+
+	public boolean command(final char letter) {
+		if (command != null) {
+			return command.callback(letter);
+		}
+		return false;
 	}
 
 	@Stub
@@ -367,6 +375,10 @@ public abstract class Display implements WebhackUI {
 		if (you.steed == null) {
 			newsym(you.ux, you.uy);
 		}
+	}
+
+	public void setCommand(final Command command) {
+		this.command = command;
 	}
 
 	/*
@@ -484,18 +496,17 @@ public abstract class Display implements WebhackUI {
 			idx = !ptr.seenv.isEmpty() ? wall_angle(ptr) : S_stone;
 			break;
 		case DOOR:
-			if (ptr.doormask != null) {
-				// TODO(jeffbailey): Treat doormask like a mask
-				if (ptr.doormask == LocationType.Door.BROKEN) {
-					idx = S_ndoor;
-					// TODO(jeffbailey): Treat doormask like a mask
-				} else if (ptr.doormask == LocationType.Door.ISOPEN) {
-					idx = (ptr.horizontal) ? S_hodoor : S_vodoor;
-				} else {
-					idx = (ptr.horizontal) ? S_hcdoor : S_vcdoor;
-				}
-			} else {
+			switch (ptr.doormask) {
+			case BROKEN:
+			case NODOOR:
 				idx = S_ndoor;
+				break;
+			case ISOPEN:
+				idx = (ptr.horizontal) ? S_hodoor : S_vodoor;
+				break;
+			default:
+				idx = (ptr.horizontal) ? S_hcdoor : S_vcdoor;
+				break;
 			}
 			break;
 		case IRONBARS:

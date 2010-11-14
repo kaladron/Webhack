@@ -45,7 +45,7 @@ public class Webhack {
 	public Dungeon dungeon;
 	You you;
 	public final Flags flags;
-	final WebhackUI ui;
+	public final WebhackUI ui;
 
 	static int YLIM = 3;
 

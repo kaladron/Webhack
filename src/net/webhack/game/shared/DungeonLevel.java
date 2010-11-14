@@ -77,9 +77,51 @@ public class DungeonLevel implements LocationMap {
 	private Rooms rooms;
 
 	public Command doOpen = new Command() {
+		@Stub
+		@Override
+		public boolean callback(final char letter) {
+
+			final Coordinate cc = new Coordinate(you.ux, you.uy - 1);
+			final Location door = locations[cc.x][cc.y];
+
+			if (!isDoor(door.typ)) {
+				dungeon.ui.pline("You see no door there.");
+				dungeon.ui.setCommand(null);
+				return true;
+			}
+
+			if (door.doormask != LocationType.Door.CLOSED) {
+				switch (door.doormask) {
+				case BROKEN:
+					dungeon.ui.pline("This door is broken.");
+					break;
+				case NODOOR:
+					dungeon.ui.pline("This doorway has no door.");
+					break;
+				case ISOPEN:
+					dungeon.ui.pline("This door is already open.");
+					break;
+				default:
+					dungeon.ui.pline("This door is locked");
+					break;
+				}
+				dungeon.ui.setCommand(null);
+				return true;
+			}
+
+			door.doormask = LocationType.Door.ISOPEN;
+			dungeon.ui.pline("The door opens.");
+			dungeon.ui.newsym(cc.x, cc.y);
+
+			dungeon.ui.setCommand(null);
+			return true;
+		}
+
+		@Override
 		public void execute() {
 			dungeon.ui.ynFunction("In what direction?", new char[] { 'a', 'b',
 					'c' }, 'a');
+			dungeon.ui.setCommand(this);
 		}
 	};
 
@@ -529,6 +571,9 @@ public class DungeonLevel implements LocationMap {
 
 	private void dosDoor(final int x, final int y, final Room aroom,
 			final LocationType type) {
+
+		final boolean shdoor = false;
+
 		// final boolean shdoor = ((in_rooms(x, y, SHOPBASE)) ? true : false);
 
 		// if (!isWall(locations[x][y].typ)) {
@@ -555,8 +600,8 @@ public class DungeonLevel implements LocationMap {
 				// locations[x][y].doormask |= LocationType.Door.TRAPPED;
 				// }
 			} else {
-				// locations[x][y].doormask = (shdoor ? LocationType.Door.ISOPEN
-				// : LocationType.Door.NODOOR);
+				locations[x][y].doormask = (shdoor ? LocationType.Door.ISOPEN
+						: LocationType.Door.NODOOR);
 			}
 
 			// TODO(jeffbailey): STUB!
@@ -775,9 +820,9 @@ public class DungeonLevel implements LocationMap {
 
 	}
 
+	/** Constructs stairs (up and down in different rooms if possible) */
 	@Stub
 	private void makeStairs() {
-		/* construct stairs (up and down in different rooms if possible) */
 		Room croom = rooms.rooms.elementAt(random.rn2(rooms.rooms.size()));
 		// TODO(jeffbailey): if (!Is_botlevel(you.uz))
 		mkstairs(croom.someX(random), croom.someY(random), false, croom); /* down */

@@ -8,8 +8,13 @@ package net.webhack.game.shared;
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
  */
-public interface Command {
+public abstract class Command {
+
+	/** Callback for multi-stage commands. */
+	public boolean callback(final char letter) {
+		return false;
+	}
 
 	/** Executes the command. */
-	void execute();
+	public abstract void execute();
 }
