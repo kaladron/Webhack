@@ -7,6 +7,7 @@ package net.webhack.game.shared;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.webhack.game.shared.Display.WindowType;
 import net.webhack.game.shared.monsters.GridBug;
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.things.Boulder;
@@ -81,7 +82,11 @@ public class DungeonLevel implements LocationMap {
 		@Override
 		public boolean callback(final char letter) {
 
-			final Coordinate cc = new Coordinate(you.ux, you.uy - 1);
+			final Coordinate cc = getAdjacentLoc(letter, null, you.ux, you.uy);
+			if (cc == null) {
+				dungeon.ui.setCommand(null);
+				return true;
+			}
 			final Location door = locations[cc.x][cc.y];
 
 			if (!isDoor(door.typ)) {
@@ -112,6 +117,9 @@ public class DungeonLevel implements LocationMap {
 			door.doormask = LocationType.Door.ISOPEN;
 			dungeon.ui.pline("The door opens.");
 			dungeon.ui.newsym(cc.x, cc.y);
+
+			// TODO(jeffbailey): Remove this:
+			dungeon.ui.displayNhWindow(WindowType.MAP, false);
 
 			dungeon.ui.setCommand(null);
 			return true;
@@ -338,7 +346,7 @@ public class DungeonLevel implements LocationMap {
 		final boolean rd = doChug(monster);
 
 		return rd;
-	};
+	}
 
 	void doDoor(final int x, final int y, final Room aroom) {
 		if (doorIndex >= Webhack.DOORMAX) {
@@ -348,7 +356,7 @@ public class DungeonLevel implements LocationMap {
 
 		dosDoor(x, y, aroom, random.oneIn(8) ? LocationType.SDOOR
 				: LocationType.DOOR);
-	}
+	};
 
 	void finddpos(final Coordinate cc, final int xl, final int yl,
 			final int xh, final int yh) {
@@ -395,6 +403,15 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		return null;
+	}
+
+	Coordinate getAdjacentLoc(final char letter, final String errorMsg,
+			final int x, final int y) {
+		if (!getdir(letter)) {
+			dungeon.ui.pline("Never mind.");
+			return null;
+		}
+		return new Coordinate(x + you.dx, y + you.dy);
 	}
 
 	void gotit(final Coordinate cc, final int x, final int y) {
@@ -686,6 +703,15 @@ public class DungeonLevel implements LocationMap {
 		}
 	}
 
+	private boolean getdir(final char dirsym) {
+		if (dirsym == '.' || dirsym == 's') {
+			you.dx = you.dy = you.dz = 0;
+		} else if (!movecmd(dirsym) && you.dz == 0) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * @param a
 	 *            First room to join
@@ -882,6 +908,32 @@ public class DungeonLevel implements LocationMap {
 	@Stub
 	private void mktrap(final int num, final boolean mazeflag, final Room room,
 			final Thing tm) {
+	}
+
+	@Stub
+	private boolean movecmd(final char c) {
+		// TODO this is a dupe of what's in MoveLoop. They should be
+		// consolidated.
+
+		// TODO Even worse, this isn't how movecmd is implemented at all. Need
+		// to move to that.
+		final String sdir = "hykulnjb><";
+		// final char ndir[] = {'4','7','8','9','6','3','2','1','>','<'}; /*
+		// number pad mode */
+		final int xdir[] = { -1, -1, 0, 1, 1, 1, 0, -1, 0, 0 };
+		final int ydir[] = { 0, -1, -1, -1, 0, 1, 1, 1, 0, 0 };
+		final int offset = sdir.indexOf(c);
+
+		if (offset != -1) {
+			you.ux0 = you.ux;
+			you.uy0 = you.uy;
+			you.uz0 = you.uz;
+
+			you.dx = xdir[offset];
+			you.dy = ydir[offset];
+			return true;
+		}
+		return false;
 	}
 
 }
