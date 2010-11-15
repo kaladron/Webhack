@@ -72,6 +72,13 @@ public enum LocationType {
 		UP, DOWN;
 	}
 
+	public boolean isDoor() {
+		if (equals(DOOR)) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean isRock() {
 		if (compareTo(POOL) < 0) {
 			return true;

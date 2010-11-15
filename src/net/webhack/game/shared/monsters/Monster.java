@@ -4,7 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.webhack.game.shared.Coordinate;
+import net.webhack.game.shared.Location;
 import net.webhack.game.shared.LocationMap;
+import net.webhack.game.shared.LocationType.Door;
+import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
 public class Monster {
@@ -83,9 +86,12 @@ public class Monster {
 	/**
 	 * Returns a list of possible directions the monster can move in.
 	 * 
+	 * Was mfndpos.
+	 * 
 	 * @param map
 	 * @return
 	 */
+	@Stub
 	public List<Coordinate> findPosition(final LocationMap map) {
 		final List<Coordinate> aList = new LinkedList<Coordinate>();
 
@@ -97,7 +103,15 @@ public class Monster {
 				if (nx == mx && ny == my) {
 					continue;
 				}
-				if (map.getLoc(nx, ny).typ.isRock()) {
+
+				final Location loc = map.getLoc(nx, ny);
+
+				if (loc.typ.isRock()) {
+					continue;
+				}
+
+				if (loc.typ.isDoor()
+						&& (loc.doormask == Door.CLOSED || loc.doormask == Door.LOCKED)) {
 					continue;
 				}
 

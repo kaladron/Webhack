@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.webhack.game.shared.Display.WindowType;
+import net.webhack.game.shared.LocationType.Door;
 import net.webhack.game.shared.monsters.GridBug;
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.things.Boulder;
@@ -89,7 +90,7 @@ public class DungeonLevel implements LocationMap {
 			}
 			final Location door = locations[cc.x][cc.y];
 
-			if (!isDoor(door.typ)) {
+			if (!door.typ.isDoor()) {
 				dungeon.ui.pline("You see no door there.");
 				dungeon.ui.setCommand(null);
 				return true;
@@ -197,25 +198,25 @@ public class DungeonLevel implements LocationMap {
 
 		if (isOk(x + 1, y)) {
 			typ = locations[x + 1][y].typ;
-			if (isDoor(typ) || typ == LocationType.SDOOR) {
+			if (typ.isDoor() || typ == LocationType.SDOOR) {
 				return true;
 			}
 		}
 		if (isOk(x - 1, y)) {
 			typ = locations[x - 1][y].typ;
-			if (isDoor(typ) || typ == LocationType.SDOOR) {
+			if (typ.isDoor() || typ == LocationType.SDOOR) {
 				return true;
 			}
 		}
 		if (isOk(x, y + 1)) {
 			typ = locations[x][y + 1].typ;
-			if (isDoor(typ) || typ == LocationType.SDOOR) {
+			if (typ.isDoor() || typ == LocationType.SDOOR) {
 				return true;
 			}
 		}
 		if (isOk(x, y - 1)) {
 			typ = locations[x][y - 1].typ;
-			if (isDoor(typ) || typ == LocationType.SDOOR) {
+			if (typ.isDoor() || typ == LocationType.SDOOR) {
 				return true;
 			}
 		}
@@ -379,7 +380,7 @@ public class DungeonLevel implements LocationMap {
 
 		for (x = xl; x <= xh; x++) {
 			for (y = yl; y <= yh; y++) {
-				if (isDoor(locations[x][y].typ)
+				if (locations[x][y].typ.isDoor()
 						|| locations[x][y].typ == LocationType.SDOOR) {
 					gotit(cc, x, y);
 					return;
@@ -417,10 +418,6 @@ public class DungeonLevel implements LocationMap {
 	void gotit(final Coordinate cc, final int x, final int y) {
 		cc.x = x;
 		cc.y = y;
-	}
-
-	boolean isDoor(final LocationType typ) {
-		return typ == LocationType.DOOR;
 	}
 
 	boolean isOk(final int x, final int y) {
@@ -577,9 +574,14 @@ public class DungeonLevel implements LocationMap {
 		final int x = ux + dx;
 		final int y = uy + dy;
 
-		final LocationType typ = locations[x][y].typ;
+		final Location loc = locations[x][y];
 
-		if (typ.isRock()) {
+		if (loc.typ.isRock()) {
+			return false;
+		}
+
+		if (loc.typ.isDoor()
+				&& (loc.doormask == Door.CLOSED || loc.doormask == Door.LOCKED)) {
 			return false;
 		}
 
