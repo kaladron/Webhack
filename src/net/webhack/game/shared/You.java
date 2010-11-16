@@ -86,7 +86,9 @@ public class You {
 	public int ux;
 	public int uy;
 	/** direction of move (or zap or ... ) */
-	int dx, dy, dz;
+	public int dx;
+	public int dy;
+	int dz;
 	/** direction of FF */
 	int di;
 	/** destination of travel */

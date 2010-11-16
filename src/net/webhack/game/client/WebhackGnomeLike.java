@@ -497,6 +497,12 @@ public class WebhackGnomeLike extends Display {
 		}
 	};
 
+	Command doClose = new Command() {
+		public void execute() {
+			webhack.dungeon.dlevel.doClose.execute();
+		}
+	};
+
 	public WebhackGnomeLike() {
 	}
 
@@ -632,7 +638,7 @@ public class WebhackGnomeLike extends Display {
 		actionMenu.addItem("Quiver/Ready", sayHello);
 		actionMenu.addItem("Quiver/Ready", sayHello);
 		actionMenu.addItem("Open Door", doOpen);
-		actionMenu.addItem("Close Door", sayHello);
+		actionMenu.addItem("Close Door", doClose);
 		actionMenu.addSeparator();
 		actionMenu.addItem("Drop", sayHello);
 		actionMenu.addItem("Eat", sayHello);

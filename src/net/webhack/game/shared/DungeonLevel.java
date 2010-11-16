@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.webhack.game.shared.LocationType.Door;
 import net.webhack.game.shared.command.Command;
+import net.webhack.game.shared.command.DoClose;
 import net.webhack.game.shared.command.DoOpen;
 import net.webhack.game.shared.monsters.GridBug;
 import net.webhack.game.shared.monsters.Monster;
@@ -79,6 +80,7 @@ public class DungeonLevel implements LocationMap {
 	/** References to Rooms. */
 	private Rooms rooms;
 
+	public final Command doClose;
 	public final Command doOpen;
 
 	public DungeonLevel(final RandomHelper random, final You you,
@@ -88,6 +90,7 @@ public class DungeonLevel implements LocationMap {
 		this.rectangles = new Rectangles(random);
 		this.dungeon = dungeon;
 
+		this.doClose = new DoClose(dungeon, you);
 		this.doOpen = new DoOpen(dungeon, you);
 
 		for (int x = 0; x < Webhack.COLNO; x++) {

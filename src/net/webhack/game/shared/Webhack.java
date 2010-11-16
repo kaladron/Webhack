@@ -81,8 +81,12 @@ public class Webhack {
 	public void moveLoop(final char c) {
 
 		switch (c) {
+		case 'c':
+			dungeon.dlevel.doClose.execute();
+			break;
 		case 'o':
 			dungeon.dlevel.doOpen.execute();
+			break;
 		}
 
 		final String sdir = "hykulnjb><";
