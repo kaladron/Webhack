@@ -30,11 +30,17 @@ public class DoClose extends Command {
 	@Override
 	public boolean callback(final char letter) {
 
+		// TODO(jeffbailey): We need to consume the movement character after
+		// it's used. Right now closing the door in a random direction where
+		// there isn't
+		// a door *also* moves the character. DoOpen gets this right.
+
+		dungeon.ui.setCommand(null);
+
 		final Coordinate cc = dungeon.dlevel.getAdjacentLoc(letter, null,
 				you.ux, you.uy);
 
 		if (cc == null) {
-			dungeon.ui.setCommand(null);
 			return true;
 		}
 		final Location door = dungeon.dlevel.getLoc(cc.x, cc.y);
@@ -43,7 +49,11 @@ public class DoClose extends Command {
 		final int y = you.uy + you.dy;
 		if ((x == you.ux) && (y == you.uy)) {
 			dungeon.ui.pline("You are in the way!");
-			dungeon.ui.setCommand(null);
+			return (false);
+		}
+
+		if (!door.typ.isDoor()) {
+			dungeon.ui.pline("You see no door there.");
 			return (false);
 		}
 
@@ -69,7 +79,6 @@ public class DoClose extends Command {
 		// TODO(jeffbailey): Remove this:
 		dungeon.ui.displayNhWindow(WindowType.MAP, false);
 
-		dungeon.ui.setCommand(null);
 		return true;
 	}
 
