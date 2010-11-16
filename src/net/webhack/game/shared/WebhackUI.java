@@ -1,5 +1,7 @@
 package net.webhack.game.shared;
 
+import net.webhack.game.shared.command.Command;
+
 public interface WebhackUI {
 	void clearNhWindow(Display.WindowType window);
 

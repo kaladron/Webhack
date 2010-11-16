@@ -11,7 +11,7 @@ package net.webhack.game.shared;
 public class Dungeon {
 
 	public final DungeonLevel dlevel;
-	final WebhackUI ui;
+	public final WebhackUI ui;
 	private final You you;
 
 	public Dungeon(final RandomHelper random, final You you,

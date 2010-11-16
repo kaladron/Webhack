@@ -83,7 +83,8 @@ public class You {
 		boolean questart;
 	}
 
-	int ux, uy;
+	public int ux;
+	public int uy;
 	/** direction of move (or zap or ... ) */
 	int dx, dy, dz;
 	/** direction of FF */

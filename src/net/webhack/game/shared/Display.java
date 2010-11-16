@@ -2,9 +2,14 @@ package net.webhack.game.shared;
 
 import java.util.EnumSet;
 
+import net.webhack.game.shared.command.Command;
 import net.webhack.game.shared.monsters.Monster;
 
 public abstract class Display implements WebhackUI {
+
+	public enum WindowType {
+		MESSAGE, STATUS, MAP, MENU, TEXT;
+	}
 
 	/**
 	 * Seen vector values. The seen vector is an array of 8 bits, one for each
@@ -30,10 +35,6 @@ public abstract class Display implements WebhackUI {
 
 		/** Initializes the entry to be a stone background */
 		public int glyph = cmap_to_glyph(S_stone);
-	}
-
-	protected enum WindowType {
-		MESSAGE, STATUS, MAP, MENU, TEXT;
 	}
 
 	protected Dungeon dungeon;

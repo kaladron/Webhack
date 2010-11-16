@@ -7,8 +7,9 @@ package net.webhack.game.shared;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.webhack.game.shared.Display.WindowType;
 import net.webhack.game.shared.LocationType.Door;
+import net.webhack.game.shared.command.Command;
+import net.webhack.game.shared.command.DoOpen;
 import net.webhack.game.shared.monsters.GridBug;
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.things.Boulder;
@@ -78,61 +79,7 @@ public class DungeonLevel implements LocationMap {
 	/** References to Rooms. */
 	private Rooms rooms;
 
-	public Command doOpen = new Command() {
-		@Stub
-		@Override
-		public boolean callback(final char letter) {
-
-			final Coordinate cc = getAdjacentLoc(letter, null, you.ux, you.uy);
-			if (cc == null) {
-				dungeon.ui.setCommand(null);
-				return true;
-			}
-			final Location door = locations[cc.x][cc.y];
-
-			if (!door.typ.isDoor()) {
-				dungeon.ui.pline("You see no door there.");
-				dungeon.ui.setCommand(null);
-				return true;
-			}
-
-			if (door.doormask != LocationType.Door.CLOSED) {
-				switch (door.doormask) {
-				case BROKEN:
-					dungeon.ui.pline("This door is broken.");
-					break;
-				case NODOOR:
-					dungeon.ui.pline("This doorway has no door.");
-					break;
-				case ISOPEN:
-					dungeon.ui.pline("This door is already open.");
-					break;
-				default:
-					dungeon.ui.pline("This door is locked");
-					break;
-				}
-				dungeon.ui.setCommand(null);
-				return true;
-			}
-
-			door.doormask = LocationType.Door.ISOPEN;
-			dungeon.ui.pline("The door opens.");
-			dungeon.ui.newsym(cc.x, cc.y);
-
-			// TODO(jeffbailey): Remove this:
-			dungeon.ui.displayNhWindow(WindowType.MAP, false);
-
-			dungeon.ui.setCommand(null);
-			return true;
-		}
-
-		@Override
-		public void execute() {
-			dungeon.ui.ynFunction("In what direction?", new char[] { 'a', 'b',
-					'c' }, 'a');
-			dungeon.ui.setCommand(this);
-		}
-	};
+	public final Command doOpen;
 
 	public DungeonLevel(final RandomHelper random, final You you,
 			final Dungeon dungeon) {
@@ -141,6 +88,8 @@ public class DungeonLevel implements LocationMap {
 		this.rectangles = new Rectangles(random);
 		this.dungeon = dungeon;
 
+		this.doOpen = new DoOpen(dungeon, you);
+
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
 				locations[x][y] = new Location();
@@ -148,6 +97,15 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		makeLevel();
+	}
+
+	public Coordinate getAdjacentLoc(final char letter, final String errorMsg,
+			final int x, final int y) {
+		if (!getdir(letter)) {
+			dungeon.ui.pline("Never mind.");
+			return null;
+		}
+		return new Coordinate(x + you.dx, y + you.dy);
 	}
 
 	public Location getLoc(final int x, final int y) {
@@ -347,7 +305,7 @@ public class DungeonLevel implements LocationMap {
 		final boolean rd = doChug(monster);
 
 		return rd;
-	}
+	};
 
 	void doDoor(final int x, final int y, final Room aroom) {
 		if (doorIndex >= Webhack.DOORMAX) {
@@ -357,7 +315,7 @@ public class DungeonLevel implements LocationMap {
 
 		dosDoor(x, y, aroom, random.oneIn(8) ? LocationType.SDOOR
 				: LocationType.DOOR);
-	};
+	}
 
 	void finddpos(final Coordinate cc, final int xl, final int yl,
 			final int xh, final int yh) {
@@ -404,15 +362,6 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		return null;
-	}
-
-	Coordinate getAdjacentLoc(final char letter, final String errorMsg,
-			final int x, final int y) {
-		if (!getdir(letter)) {
-			dungeon.ui.pline("Never mind.");
-			return null;
-		}
-		return new Coordinate(x + you.dx, y + you.dy);
 	}
 
 	void gotit(final Coordinate cc, final int x, final int y) {
