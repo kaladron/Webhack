@@ -4,18 +4,15 @@ import net.webhack.game.shared.Display;
 import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebhackGnomeLike extends Display {
+
 	private static Webhack webhack;
 
 	public static void onKeyDown(final NativeEvent event) {
@@ -526,42 +523,44 @@ public class WebhackGnomeLike extends Display {
 	}-*/;
 
 	public void initNhWindows(final Webhack webhack) {
+		final WebhackGnome webhackGnome = new WebhackGnome();
+		Document.get().getBody().appendChild(webhackGnome.getElement());
+
 		registerWebhack(webhack);
 		initKeyDown();
-		final VerticalPanel basePanel = new VerticalPanel();
-		basePanel.setWidth("100%");
-		basePanel.setHeight("100%");
-
-		addMenu(basePanel);
-
-		final HorizontalPanel statusPanel = new HorizontalPanel();
-
-		final SimplePanel textPanel = new SimplePanel();
-		textPanel.setHeight("8em");
-		textPanel.setWidth("60em");
-		final Element textDiv = textPanel.getElement();
-		textDiv.setId("gameDiv");
-
-		statusPanel.add(textPanel);
-
-		final VerticalPanel attributePanel = new VerticalPanel();
-		attributePanel.setStyleName("attributeDiv");
-		attributePanel.add(new Label("Attributes go here"));
-		statusPanel.add(attributePanel);
-
-		basePanel.add(statusPanel);
-
-		final SimplePanel gamePanel = new SimplePanel();
-		final Element gameDiv = gamePanel.getElement();
-		gameDiv.setId("gameDiv");
-		gameDiv.setInnerHTML("<canvas id=\"canvas\" width=\"1280\" height=\"336\" style=\"background-image: url('mapbg.png')\"></canvas>");
-		basePanel.add(gamePanel);
-
-		RootPanel.get().add(basePanel);
-
-		// Must be after the canvas has been put on the page.
 		initCanvas();
 
+		/*
+		 * registerWebhack(webhack); initKeyDown(); final VerticalPanel
+		 * basePanel = new VerticalPanel(); basePanel.setWidth("100%");
+		 * basePanel.setHeight("100%");
+		 * 
+		 * addMenu(basePanel);
+		 * 
+		 * final HorizontalPanel statusPanel = new HorizontalPanel();
+		 * 
+		 * final SimplePanel textPanel = new SimplePanel();
+		 * textPanel.setHeight("8em"); textPanel.setWidth("60em"); final Element
+		 * textDiv = textPanel.getElement(); textDiv.setId("gameDiv");
+		 * 
+		 * statusPanel.add(textPanel);
+		 * 
+		 * final VerticalPanel attributePanel = new VerticalPanel();
+		 * attributePanel.setStyleName("attributeDiv"); attributePanel.add(new
+		 * Label("Attributes go here")); statusPanel.add(attributePanel);
+		 * 
+		 * basePanel.add(statusPanel);
+		 * 
+		 * final SimplePanel gamePanel = new SimplePanel(); final Element
+		 * gameDiv = gamePanel.getElement(); gameDiv.setId("gameDiv");
+		 * gameDiv.setInnerHTML(
+		 * "<canvas id=\"canvas\" width=\"1280\" height=\"336\" style=\"background-image: url('mapbg.png')\"></canvas>"
+		 * ); basePanel.add(gamePanel);
+		 * 
+		 * RootPanel.get().add(basePanel);
+		 * 
+		 * // Must be after the canvas has been put on the page. initCanvas();
+		 */
 	}
 
 	@Override
