@@ -62,7 +62,7 @@ table {
 #status {
 	display: table-cell;
 	vertical-align: top;
-	width: 300px;
+	width: 400px;
 }
 
 #equipment {
@@ -73,6 +73,7 @@ table {
 
 #toppart {
 	display: table;
+	width: 100%;
 }
 
 .attributeDiv {
