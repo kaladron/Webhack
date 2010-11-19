@@ -2,12 +2,12 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'>
 <div id="gameDiv">
 <div id="toppart">
-<div id="pline">
-
+<div id="plineWindow">
+<div id="plineDiv"></div>
 </div>
 <div id="status">
-<div>Angie the Aspirant</div>
-<div>The Dungeons of Doom, level 1</div>
+<h1>Angie the Aspirant</h1>
+<h2>The Dungeons of Doom, level 1</h2>
 <hr/>
 <table width="100%">
 <tr>

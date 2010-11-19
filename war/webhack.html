@@ -12,11 +12,11 @@ var image = new Image();
 image.src = "x11tiles.png";
 
 var ctx;
-var gameDiv;
+var plineDiv;
 
 function initCanvas() {
 	ctx = document.getElementById('canvas').getContext("2d");
-	gameDiv = document.getElementById('gameDiv');
+	plineDiv = document.getElementById('plineDiv');
 }
 
 function keyDown(event) {
@@ -28,11 +28,11 @@ function putMessageText(line) {
 	var textDiv = document.createElement('div');
 	var text = document.createTextNode(line);
 	textDiv.appendChild(text);
-	gameDiv.appendChild(textDiv);
-	if (gameDiv.childNodes.length > 20) {
-		gameDiv.removeChild(gameDiv.firstChild);
+	plineDiv.appendChild(textDiv);
+	if (plineDiv.childNodes.length > 20) {
+		plineDiv.removeChild(plineDiv.firstChild);
 	}
-	gameDiv.scrollTop = gameDiv.scrollHeight;
+	plineDiv.scrollTop = plineDiv.scrollHeight;
 }
 
 
@@ -53,7 +53,7 @@ function putGlyph(x, y, glyph) {
 
     </script>
 <script src="webhack/webhack.nocache.js"></script>
-<script type="text/javascript">
+<script>
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-11943483-1']);
