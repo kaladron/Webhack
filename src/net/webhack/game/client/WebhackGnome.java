@@ -1,18 +1,27 @@
 package net.webhack.game.client;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.UIObject;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
 
-public class WebhackGnome extends UIObject {
-	interface MyUiBinder extends UiBinder<DivElement, WebhackGnome> {
+public class WebhackGnome extends Composite {
+	interface MyUiBinder extends UiBinder<Widget, WebhackGnome> {
 	}
+
+	@UiField
+	SpanElement heading1;
 
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
 	public WebhackGnome() {
-		setElement(uiBinder.createAndBindUi(this));
+		initWidget(uiBinder.createAndBindUi(this));
+	}
+
+	void setHeadingOne(final String in) {
+		heading1.setInnerText(in);
 	}
 
 }
