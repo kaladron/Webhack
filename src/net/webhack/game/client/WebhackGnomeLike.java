@@ -500,6 +500,12 @@ public class WebhackGnomeLike extends Display {
 		}
 	};
 
+	Command doSearch = new Command() {
+		public void execute() {
+			webhack.dungeon.dlevel.doSearch.execute();
+		}
+	};
+
 	public WebhackGnomeLike() {
 	}
 
@@ -626,7 +632,7 @@ public class WebhackGnomeLike extends Display {
 		actionMenu.addItem("Up", sayHello);
 		actionMenu.addItem("Down", sayHello);
 		actionMenu.addItem("Rest", sayHello);
-		actionMenu.addItem("Search", sayHello);
+		actionMenu.addItem("Search", doSearch);
 		actionMenu.addSeparator();
 		actionMenu.addItem("Chat", sayHello);
 		actionMenu.addItem("Pay", sayHello);

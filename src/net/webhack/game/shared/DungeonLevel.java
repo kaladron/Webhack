@@ -11,6 +11,7 @@ import net.webhack.game.shared.LocationType.Door;
 import net.webhack.game.shared.command.Command;
 import net.webhack.game.shared.command.DoClose;
 import net.webhack.game.shared.command.DoOpen;
+import net.webhack.game.shared.command.DoSearch;
 import net.webhack.game.shared.monsters.GridBug;
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.things.Boulder;
@@ -82,6 +83,7 @@ public class DungeonLevel implements LocationMap {
 
 	public final Command doClose;
 	public final Command doOpen;
+	public final Command doSearch;
 
 	public DungeonLevel(final RandomHelper random, final You you,
 			final Dungeon dungeon) {
@@ -92,6 +94,7 @@ public class DungeonLevel implements LocationMap {
 
 		this.doClose = new DoClose(dungeon, you);
 		this.doOpen = new DoOpen(dungeon, you);
+		this.doSearch = new DoSearch(dungeon);
 
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
@@ -133,6 +136,30 @@ public class DungeonLevel implements LocationMap {
 
 	public void onUpstairs() {
 		you.newPos(upstair);
+	}
+
+	/**
+	 * Searches the neighbouring squares.
+	 * 
+	 * @param autoSearch
+	 *            if searching as an attribute. Quenches sarcastic messages.
+	 */
+	@Stub
+	public boolean search(final boolean autoSearch) {
+		for (int x = you.ux - 1; x < you.ux + 2; x++) {
+			for (int y = you.uy - 1; y < you.uy + 2; y++) {
+				if (!isOk(x, y)) {
+					continue;
+				}
+				if (x != you.ux || y != you.uy) {
+					if (locations[x][y].typ == LocationType.SDOOR) {
+						locations[x][y].convertSdoorToDoor(); /* .typ = DOOR */
+						dungeon.ui.newsym(x, y);
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -593,11 +620,11 @@ public class DungeonLevel implements LocationMap {
 			// }
 			/* newsym(x,y); */
 		} else { /* SDOOR */
-			// if (shdoor || random.oneIn(5)) {
-			// locations[x][y].doormask = LocationType.Door.LOCKED;
-			// } else {
-			// locations[x][y].doormask = LocationType.Door.CLOSED;
-			// }
+			if (shdoor || random.oneIn(5)) {
+				locations[x][y].doormask = LocationType.Door.LOCKED;
+			} else {
+				locations[x][y].doormask = LocationType.Door.CLOSED;
+			}
 
 			// TODO(jeffbailey): STUB
 			// if (!shdoor && level_difficulty() >= 4 && random.oneIn(20)) {

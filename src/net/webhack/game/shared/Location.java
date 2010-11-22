@@ -58,4 +58,12 @@ public class Location {
 
 	List<ThingLocation> things = new LinkedList<ThingLocation>();
 	Monster monster = null;
+
+	/**
+	 * Converts a Secret Door to a Door. Used when discovering a hidden door.
+	 */
+	@Stub
+	void convertSdoorToDoor() {
+		typ = LocationType.DOOR;
+	}
 }

@@ -87,6 +87,9 @@ public class Webhack {
 		case 'o':
 			dungeon.dlevel.doOpen.execute();
 			break;
+		case 's':
+			dungeon.dlevel.doSearch.execute();
+			break;
 		}
 
 		final String sdir = "hykulnjb><";
