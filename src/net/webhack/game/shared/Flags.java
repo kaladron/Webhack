@@ -92,4 +92,7 @@ public class Flags {
 	int randomall; /* randomly assign everything not specified */
 	int pantheon; /* deity selection for priest character */
 
+	/** Player's name */
+	public String plname;
+
 }

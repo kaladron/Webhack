@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -27,6 +28,7 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 	final ListBox roleSelector;
 	final EnumSet<Role.Roles> roleSet;
 	final Webhack game;
+	final TextBox name;
 
 	public RoleRaceGender(final Webhack game) {
 		super(false);
@@ -36,6 +38,11 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 		this.game = game;
 
 		final VerticalPanel panel = new VerticalPanel();
+
+		name = new TextBox();
+		name.setText("Webhack Player");
+		panel.add(name);
+
 		panel.add(new Label("Choose Role"));
 
 		roleSet = EnumSet.allOf(Role.Roles.class);
@@ -61,6 +68,7 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 				.getSelectedIndex());
 		final Roles myRole = Role.Roles.valueOf(value);
 		game.flags.initrole = Role.newRole(myRole);
+		game.flags.plname = name.getText();
 
 		this.hide();
 
