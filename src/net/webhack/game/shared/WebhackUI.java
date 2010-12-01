@@ -21,6 +21,8 @@ public interface WebhackUI {
 
 	void setCommand(Command command);
 
+	void updateStats();
+
 	char ynFunction(String question, char[] choices, char theDefault);
 
 }

@@ -506,6 +506,8 @@ public class WebhackGnomeLike extends Display {
 		}
 	};
 
+	private WebhackGnome webhackGnome;
+
 	public WebhackGnomeLike() {
 	}
 
@@ -535,7 +537,7 @@ public class WebhackGnomeLike extends Display {
 
 		addMenu(basePanel);
 
-		final WebhackGnome webhackGnome = new WebhackGnome();
+		webhackGnome = new WebhackGnome();
 
 		basePanel.add(webhackGnome);
 
@@ -557,6 +559,13 @@ public class WebhackGnomeLike extends Display {
 		} else {
 			System.out.println(line);
 		}
+	}
+
+	@Stub
+	public void updateStats() {
+		final String line = flags.plname + " the "
+				+ webhack.you.role.title[0][0];
+		webhackGnome.setHeadingOne(line);
 	}
 
 	public char ynFunction(final String question, final char[] choices,

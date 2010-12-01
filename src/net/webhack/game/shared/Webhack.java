@@ -43,7 +43,7 @@ public class Webhack {
 	public static int MHPMAX = 500;
 
 	public Dungeon dungeon;
-	You you;
+	public You you;
 	public final Flags flags;
 	public final WebhackUI ui;
 
@@ -59,13 +59,9 @@ public class Webhack {
 	public void main() {
 		ui.initNhWindows(this);
 
-		// askname();
-		// player_selection();
-
 		newGame();
 
 		premove();
-		// moveloop();
 
 	}
 
@@ -120,6 +116,18 @@ public class Webhack {
 
 		dungeon.dlevel.moveMon();
 
+		/********************************/
+		/* once-per-turn things go here */
+		/********************************/
+
+		/****************************************/
+		/* once-per-player-input things go here */
+		/****************************************/
+
+		if (flags.botl || flags.botlx) {
+			bot();
+		}
+
 		ui.displayNhWindow(WindowType.MAP, false);
 	}
 
@@ -148,6 +156,17 @@ public class Webhack {
 		// youmonst.movement = NORMAL_SPEED; /* give the hero some movement
 		// points */
 
+		// Make sure status screen is updated with our character info.
+		bot();
+
+	}
+
+	/**
+	 * Updates attributes display
+	 */
+	private void bot() {
+		ui.updateStats();
+		flags.botl = flags.botlx = false;
 	}
 
 	private void newGame() {
@@ -156,6 +175,8 @@ public class Webhack {
 				: Role.getRandom(random), Race.getRandom(random),
 				Gender.getRandom(random));
 		dungeon = new Dungeon(random, you, ui, flags);
+
+		flags.botlx = true;
 
 		this.ui.docrt();
 
