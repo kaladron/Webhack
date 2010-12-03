@@ -14,12 +14,12 @@
 				<hr />
 				<table width="100%">
 					<tr>
-						<td>STR</td>
-						<td>DEX</td>
-						<td>CON</td>
-						<td>INT</td>
-						<td>WIS</td>
-						<td>CHA</td>
+						<td><img src="str.png" height="40" width="40"></img></td>
+						<td><img src="dex.png" height="40" width="40"></img></td>
+						<td><img src="con.png" height="40" width="40"></img></td>
+						<td><img src="int.png" height="40" width="40"></img></td>
+						<td><img src="wis.png" height="40" width="40"></img></td>
+						<td><img src="cha.png" height="40" width="40"></img></td>
 					</tr>
 					<tr>
 						<td>STR: 10</td>
