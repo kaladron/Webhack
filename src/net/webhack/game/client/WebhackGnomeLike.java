@@ -523,8 +523,6 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 		char a;
 
-		// TODO(jeffbailey): Find symbolic constants for these elsewhere!
-
 		switch (code) {
 		case KeyCodes.KEY_LEFT:
 			a = 'h';
@@ -539,8 +537,16 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 			a = 'j';
 			break;
 		default:
-			a = Character.toLowerCase((char) code);
+			if (!event.isShiftKeyDown()) {
+				a = Character.toLowerCase((char) code);
+			} else {
+				a = (char) code;
+			}
 		}
+
+		// if (event.isControlKeyDown()) {
+		// a &= 1f;
+		// }
 
 		if (!webhack.ui.command(a)) {
 			webhack.moveLoop(a);
