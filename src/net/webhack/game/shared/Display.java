@@ -262,9 +262,9 @@ public abstract class Display implements WebhackUI {
 
 	}
 
-	public boolean command(final char letter) {
+	public boolean command(final int cmdKey) {
 		if (command != null) {
-			return command.callback(letter);
+			return command.callback(cmdKey);
 		}
 		return false;
 	}

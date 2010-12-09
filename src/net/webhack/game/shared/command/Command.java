@@ -11,7 +11,7 @@ package net.webhack.game.shared.command;
 public abstract class Command {
 
 	/** Callback for multi-stage commands. */
-	public boolean callback(final char letter) {
+	public boolean callback(final int cmdKey) {
 		return false;
 	}
 

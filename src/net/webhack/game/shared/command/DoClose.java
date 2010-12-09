@@ -28,7 +28,7 @@ public class DoClose extends Command {
 
 	@Stub
 	@Override
-	public boolean callback(final char letter) {
+	public boolean callback(final int cmdKey) {
 
 		// TODO(jeffbailey): We need to consume the movement character after
 		// it's used. Right now closing the door in a random direction where
@@ -37,7 +37,7 @@ public class DoClose extends Command {
 
 		dungeon.ui.setCommand(null);
 
-		final Coordinate cc = dungeon.dlevel.getAdjacentLoc(letter, null,
+		final Coordinate cc = dungeon.dlevel.getAdjacentLoc(cmdKey, null,
 				you.ux, you.uy);
 
 		if (cc == null) {

@@ -28,10 +28,11 @@ public class DoOpen extends Command {
 
 	@Stub
 	@Override
-	public boolean callback(final char letter) {
+	public boolean callback(final int cmdKey) {
 
-		final Coordinate cc = dungeon.dlevel.getAdjacentLoc(letter, null, you.ux, you.uy);
-		
+		final Coordinate cc = dungeon.dlevel.getAdjacentLoc(cmdKey, null,
+				you.ux, you.uy);
+
 		if (cc == null) {
 			dungeon.ui.setCommand(null);
 			return true;

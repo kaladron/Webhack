@@ -521,35 +521,35 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 		final int code = event.getNativeKeyCode();
 
-		char a;
+		int cmdKey;
 
 		switch (code) {
 		case KeyCodes.KEY_LEFT:
-			a = 'h';
+			cmdKey = 'h';
 			break;
 		case KeyCodes.KEY_RIGHT:
-			a = 'l';
+			cmdKey = 'l';
 			break;
 		case KeyCodes.KEY_UP:
-			a = 'k';
+			cmdKey = 'k';
 			break;
 		case KeyCodes.KEY_DOWN:
-			a = 'j';
+			cmdKey = 'j';
 			break;
 		default:
 			if (!event.isShiftKeyDown()) {
-				a = Character.toLowerCase((char) code);
+				cmdKey = Character.toLowerCase((char) code);
 			} else {
-				a = (char) code;
+				cmdKey = code;
 			}
 		}
 
-		// if (event.isControlKeyDown()) {
-		// a &= 1f;
-		// }
+		if (event.isControlKeyDown()) {
+			cmdKey &= 0x1F;
+		}
 
-		if (!webhack.ui.command(a)) {
-			webhack.moveLoop(a);
+		if (!webhack.ui.command(cmdKey)) {
+			webhack.moveLoop(cmdKey);
 		}
 	}
 

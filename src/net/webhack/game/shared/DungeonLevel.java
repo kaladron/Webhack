@@ -105,9 +105,9 @@ public class DungeonLevel implements LocationMap {
 		makeLevel();
 	}
 
-	public Coordinate getAdjacentLoc(final char letter, final String errorMsg,
+	public Coordinate getAdjacentLoc(final int cmdKey, final String errorMsg,
 			final int x, final int y) {
-		if (!getdir(letter)) {
+		if (!getdir(cmdKey)) {
 			dungeon.ui.pline("Never mind.");
 			return null;
 		}
@@ -684,7 +684,7 @@ public class DungeonLevel implements LocationMap {
 		}
 	}
 
-	private boolean getdir(final char dirsym) {
+	private boolean getdir(final int dirsym) {
 		if (dirsym == '.' || dirsym == 's') {
 			you.dx = you.dy = you.dz = 0;
 		} else if (!movecmd(dirsym) && you.dz == 0) {
@@ -892,7 +892,7 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	@Stub
-	private boolean movecmd(final char c) {
+	private boolean movecmd(final int c) {
 		// TODO this is a dupe of what's in MoveLoop. They should be
 		// consolidated.
 

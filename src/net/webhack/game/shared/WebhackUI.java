@@ -5,7 +5,7 @@ import net.webhack.game.shared.command.Command;
 public interface WebhackUI {
 	void clearNhWindow(Display.WindowType window);
 
-	boolean command(char letter);
+	boolean command(int cmdKey);
 
 	void displayNhWindow(Display.WindowType window, boolean blocking);
 

@@ -51,6 +51,8 @@ public class Webhack {
 
 	static int XLIM = 4;
 
+	private final int CONTROL = 0x1F;
+
 	public Webhack(final WebhackUI ui, final Flags flags) {
 		this.flags = flags;
 		this.ui = ui;
@@ -74,7 +76,7 @@ public class Webhack {
 	 * we don't want to be performed on each action, so it's split out into
 	 * premove()
 	 */
-	public void moveLoop(final char c) {
+	public void moveLoop(final int c) {
 
 		switch (c) {
 		case 'c':
@@ -85,6 +87,9 @@ public class Webhack {
 			break;
 		case 's':
 			dungeon.dlevel.doSearch.execute();
+			break;
+		case 'd' & CONTROL:
+			System.out.println("Control D!");
 			break;
 		}
 
