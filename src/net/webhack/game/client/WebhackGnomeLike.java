@@ -4,51 +4,17 @@ import net.webhack.game.shared.Display;
 import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
-import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class WebhackGnomeLike extends Display {
-
-	private static Webhack webhack;
-
-	public static void onKeyDown(final NativeEvent event) {
-
-		final int code = event.getKeyCode();
-
-		char a;
-
-		// TODO(jeffbailey): Find symbolic constants for these elsewhere!
-
-		final int LEFT = 37;
-		final int RIGHT = 39;
-		final int UP = 38;
-		final int DOWN = 40;
-
-		switch (code) {
-		case LEFT:
-			a = 'h';
-			break;
-		case RIGHT:
-			a = 'l';
-			break;
-		case UP:
-			a = 'k';
-			break;
-		case DOWN:
-			a = 'j';
-			break;
-		default:
-			a = Character.toLowerCase((char) code);
-		}
-
-		if (!webhack.ui.command(a)) {
-			webhack.moveLoop(a);
-		}
-	}
+public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 	private final int glyph2tile[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 			12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29,
@@ -526,28 +492,59 @@ public class WebhackGnomeLike extends Display {
 		}
 	}
 
-	public native void initKeyDown() /*-{
-		$wnd.javaKeyDown = @net.webhack.game.client.WebhackGnomeLike::onKeyDown(Lcom/google/gwt/dom/client/NativeEvent;);
-	}-*/;
-
 	public void initNhWindows(final Webhack webhack) {
+
+		this.webhack = webhack;
+
 		final VerticalPanel basePanel = new VerticalPanel();
 		basePanel.setWidth("100%");
 		basePanel.setHeight("100%");
 
 		addMenu(basePanel);
 
+		final FocusPanel focusPanel = new FocusPanel();
 		webhackGnome = new WebhackGnome();
+		focusPanel.add(webhackGnome);
 
-		basePanel.add(webhackGnome);
+		focusPanel.addKeyDownHandler(this);
+
+		basePanel.add(focusPanel);
 
 		RootPanel.get().add(basePanel);
 
 		// Main webhack panel must already be in place.
-		registerWebhack(webhack);
-		initKeyDown();
 		initCanvas();
 
+	}
+
+	public void onKeyDown(final KeyDownEvent event) {
+
+		final int code = event.getNativeKeyCode();
+
+		char a;
+
+		// TODO(jeffbailey): Find symbolic constants for these elsewhere!
+
+		switch (code) {
+		case KeyCodes.KEY_LEFT:
+			a = 'h';
+			break;
+		case KeyCodes.KEY_RIGHT:
+			a = 'l';
+			break;
+		case KeyCodes.KEY_UP:
+			a = 'k';
+			break;
+		case KeyCodes.KEY_DOWN:
+			a = 'j';
+			break;
+		default:
+			a = Character.toLowerCase((char) code);
+		}
+
+		if (!webhack.ui.command(a)) {
+			webhack.moveLoop(a);
+		}
 	}
 
 	@Override
@@ -684,9 +681,5 @@ public class WebhackGnomeLike extends Display {
 	private native void putMessageText(String line) /*-{
 		$wnd.putMessageText(line);
 	}-*/;
-
-	private void registerWebhack(final Webhack webhack) {
-		WebhackGnomeLike.webhack = webhack;
-	}
 
 }

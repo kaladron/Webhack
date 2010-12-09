@@ -37,6 +37,8 @@ public abstract class Display implements WebhackUI {
 		public int glyph = cmap_to_glyph(S_stone);
 	}
 
+	protected Webhack webhack;
+
 	protected Dungeon dungeon;
 
 	protected You you;

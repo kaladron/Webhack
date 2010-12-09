@@ -5,70 +5,60 @@
 <link type="text/css" rel="stylesheet" href="webhack.css">
 <title>Webhack</title>
 <script>
-var DISPLAY_SQUARE = 16;
-var TILE_SQUARE = 16;
-var TILES_PER_ROW = 40;
-var image = new Image();
-image.src = "x11tiles.png";
+	var DISPLAY_SQUARE = 16;
+	var TILE_SQUARE = 16;
+	var TILES_PER_ROW = 40;
+	var image = new Image();
+	image.src = "x11tiles.png";
 
-var ctx;
-var plineDiv;
+	var ctx;
+	var plineDiv;
 
-function initCanvas() {
-	ctx = document.getElementById('canvas').getContext("2d");
-	plineDiv = document.getElementById('plineDiv');
-}
-
-function keyDown(event) {
-	javaKeyDown(event);
-	event.stopPropagation();
-}
-
-function putMessageText(line) {
-	var textDiv = document.createElement('div');
-	var text = document.createTextNode(line);
-	textDiv.appendChild(text);
-	plineDiv.appendChild(textDiv);
-	if (plineDiv.childNodes.length > 20) {
-		plineDiv.removeChild(plineDiv.firstChild);
+	function initCanvas() {
+		ctx = document.getElementById('canvas').getContext("2d");
+		plineDiv = document.getElementById('plineDiv');
 	}
-	plineDiv.scrollTop = plineDiv.scrollHeight;
-}
 
+	function putMessageText(line) {
+		var textDiv = document.createElement('div');
+		var text = document.createTextNode(line);
+		textDiv.appendChild(text);
+		plineDiv.appendChild(textDiv);
+		if (plineDiv.childNodes.length > 20) {
+			plineDiv.removeChild(plineDiv.firstChild);
+		}
+		plineDiv.scrollTop = plineDiv.scrollHeight;
+	}
 
-function putGlyph(x, y, glyph) {
+	function putGlyph(x, y, glyph) {
+		glyph_x = glyph % TILES_PER_ROW;
+		glyph_y = Math.floor(glyph / TILES_PER_ROW);
 
-   	  glyph_x = glyph % TILES_PER_ROW;
-   	  glyph_y = Math.floor(glyph / TILES_PER_ROW);
-
-   	  ctx.drawImage(image, glyph_x * TILE_SQUARE,
-   	                glyph_y * TILE_SQUARE,
-   	               TILE_SQUARE,
-   	               TILE_SQUARE,
-   	               x * DISPLAY_SQUARE,
-   	               y * DISPLAY_SQUARE,
-   	               DISPLAY_SQUARE,
-   	               DISPLAY_SQUARE);
-}
-
-    </script>
+		ctx.drawImage(image, glyph_x * TILE_SQUARE, glyph_y * TILE_SQUARE,
+				TILE_SQUARE, TILE_SQUARE, x * DISPLAY_SQUARE, y
+						* DISPLAY_SQUARE, DISPLAY_SQUARE, DISPLAY_SQUARE);
+	}
+</script>
 <script src="webhack/webhack.nocache.js"></script>
 <script>
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-11943483-1' ]);
+	_gaq.push([ '_setDomainName', '.webhack.net' ]);
+	_gaq.push([ '_trackPageview' ]);
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-11943483-1']);
-  _gaq.push(['_setDomainName', '.webhack.net']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
 </script>
 </head>
-<body onkeydown="keyDown(event);">
+<body>
 <!-- OPTIONAL: include this if you want history support -->
 <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
 	style="position: absolute; width: 0; height: 0; border: 0"></iframe>
