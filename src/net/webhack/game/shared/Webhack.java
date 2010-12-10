@@ -89,7 +89,7 @@ public class Webhack {
 			dungeon.dlevel.doSearch.execute();
 			break;
 		case 'd' & CONTROL:
-			System.out.println("Control D!");
+			dungeon.dlevel.doKick.execute();
 			break;
 		}
 

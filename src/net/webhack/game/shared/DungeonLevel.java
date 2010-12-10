@@ -10,6 +10,7 @@ import java.util.List;
 import net.webhack.game.shared.LocationType.Door;
 import net.webhack.game.shared.command.Command;
 import net.webhack.game.shared.command.DoClose;
+import net.webhack.game.shared.command.DoKick;
 import net.webhack.game.shared.command.DoOpen;
 import net.webhack.game.shared.command.DoSearch;
 import net.webhack.game.shared.monsters.GridBug;
@@ -84,6 +85,7 @@ public class DungeonLevel implements LocationMap {
 	public final Command doClose;
 	public final Command doOpen;
 	public final Command doSearch;
+	public final Command doKick;
 
 	public DungeonLevel(final RandomHelper random, final You you,
 			final Dungeon dungeon) {
@@ -95,6 +97,7 @@ public class DungeonLevel implements LocationMap {
 		this.doClose = new DoClose(dungeon, you);
 		this.doOpen = new DoOpen(dungeon, you);
 		this.doSearch = new DoSearch(dungeon);
+		this.doKick = new DoKick(dungeon, you);
 
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
