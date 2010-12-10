@@ -1,1 +1,4 @@
 doc
+war/webhack
+war/WEB-INF/deploy
+war/WEB-INF/lib
