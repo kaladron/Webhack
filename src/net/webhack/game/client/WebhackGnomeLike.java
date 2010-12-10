@@ -520,7 +520,6 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 	public void onKeyDown(final KeyDownEvent event) {
 
 		final int code = event.getNativeKeyCode();
-
 		int cmdKey;
 
 		switch (code) {
@@ -551,6 +550,10 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		if (!webhack.ui.command(cmdKey)) {
 			webhack.moveLoop(cmdKey);
 		}
+
+		event.stopPropagation();
+		event.preventDefault();
+
 	}
 
 	@Override
