@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.webhack.game.shared.Coordinate;
+import net.webhack.game.shared.DungeonLevel;
 import net.webhack.game.shared.Location;
 import net.webhack.game.shared.LocationMap;
 import net.webhack.game.shared.LocationType.Door;
@@ -52,8 +53,17 @@ public class Monster {
 	/** yet more boolean bitflags */
 	final int mflags3;
 
+	/** X Coordinate where the monster thinks it is. */
 	public int mx;
+
+	/** Y Coordinate where the monster thinks it is. */
 	public int my;
+
+	/** X Coordinate where the monster thinks you are. */
+	public int mux;
+
+	/** Y Coordinate where the monster thinks you are. */
+	public int muy;
 
 	public Monster(final int idx, final String mname, final char mlet,
 			final int mlevel, final int mmove, final int ac, final int mr,
@@ -127,6 +137,73 @@ public class Monster {
 			}
 		}
 		return aList;
+	}
+
+	/**
+	 * Return values: 0: did not move, but can still attack and do other stuff.
+	 * 1: moved, possibly can attack. 2: monster died. 3: did not move, and
+	 * can't do anything else either.
+	 * 
+	 * @param dungeonLevel
+	 *            TODO
+	 * @param after
+	 *            TODO
+	 */
+	@Stub
+	public int move(final DungeonLevel dungeonLevel, final int after) {
+		final int omx = mx;
+		final int omy = my;
+
+		dungeonLevel.set_apparxy(this);
+
+		final int gx = mux;
+		final int gy = muy;
+
+		int nix = omx;
+		int niy = omy;
+
+		final List<Coordinate> moveOptions = findPosition(dungeonLevel);
+		// pick one and move to it.
+		if (moveOptions.isEmpty()) {
+			return 0;
+		}
+
+		boolean mmoved = false;
+
+		int nidist = dist2(nix, niy, gx, gy);
+
+		for (final Coordinate option : moveOptions) {
+			final int nx = option.x;
+			final int ny = option.y;
+
+			final int ndist = dist2(nx, ny, gx, gy);
+
+			final boolean nearer = (ndist < nidist);
+
+			if (nearer) {
+				nix = nx;
+				niy = ny;
+				nidist = ndist;
+				mmoved = true;
+			}
+		}
+
+		if (mmoved) {
+			dungeonLevel.removeMonster(omx, omy);
+			dungeonLevel.placeMonster(this, nix, niy);
+
+			dungeonLevel.dungeon.ui.newsym(omx, omy); /* update the old position */
+
+			dungeonLevel.dungeon.ui.newsym(nix, niy);
+		}
+
+		return 1;
+	}
+
+	/** square of euclidean distance between pair of pts */
+	private int dist2(final int x0, final int y0, final int x1, final int y1) {
+		final int dx = x0 - x1, dy = y0 - y1;
+		return dx * dx + dy * dy;
 	}
 
 }

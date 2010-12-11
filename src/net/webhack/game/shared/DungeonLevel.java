@@ -70,9 +70,9 @@ public class DungeonLevel implements LocationMap {
 	/** Coordinates of up stairs */
 	private Coordinate upstair;
 
-	private final Dungeon dungeon;
+	public final Dungeon dungeon;
 
-	private final RandomHelper random;
+	public final RandomHelper random;
 
 	private final You you;
 
@@ -142,6 +142,23 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	/**
+	 * Helper for making a monster
+	 * 
+	 * @param monster
+	 * @param x
+	 * @param y
+	 */
+	public void placeMonster(final Monster monster, final int x, final int y) {
+		monster.mx = x;
+		monster.my = y;
+		locations[x][y].monster = monster;
+	}
+
+	public void removeMonster(final int x, final int y) {
+		locations[x][y].monster = null;
+	}
+
+	/**
 	 * Searches the neighbouring squares.
 	 * 
 	 * @param autoSearch
@@ -163,6 +180,15 @@ public class DungeonLevel implements LocationMap {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Decides where the monster thinks you are standing.
+	 */
+	@Stub
+	public void set_apparxy(final Monster mtmp) {
+		mtmp.mux = you.ux;
+		mtmp.muy = you.uy;
 	}
 
 	/**
@@ -212,7 +238,7 @@ public class DungeonLevel implements LocationMap {
 			}
 		}
 		return false;
-	}
+	};
 
 	boolean digCorridor(final Coordinate org, final Coordinate dest,
 			final boolean nxcor, final LocationType ftyp,
@@ -328,7 +354,7 @@ public class DungeonLevel implements LocationMap {
 	/** returns true if monster died moving, false otherwise */
 	@Stub
 	boolean doChug(final Monster monster) {
-		mMove(monster, 0);
+		monster.move(this, 0);
 
 		return false;
 	}
@@ -338,7 +364,7 @@ public class DungeonLevel implements LocationMap {
 		final boolean rd = doChug(monster);
 
 		return rd;
-	};
+	}
 
 	void doDoor(final int x, final int y, final Room aroom) {
 		if (doorIndex >= Webhack.DOORMAX) {
@@ -466,37 +492,6 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	/**
-	 * Return values: 0: did not move, but can still attack and do other stuff.
-	 * 1: moved, possibly can attack. 2: monster died. 3: did not move, and
-	 * can't do anything else either.
-	 */
-	@Stub
-	int mMove(final Monster monster, final int after) {
-		final int omx = monster.mx;
-		final int omy = monster.my;
-
-		final List<Coordinate> moveOptions = monster.findPosition(this);
-		// pick one and move to it.
-		if (moveOptions.isEmpty()) {
-			return 0;
-		}
-		final Coordinate moveTo = moveOptions
-				.get(random.rn2(moveOptions.size()));
-
-		final int nix = moveTo.x;
-		final int niy = moveTo.y;
-
-		removeMonster(omx, omy);
-		placeMonster(monster, nix, niy);
-
-		dungeon.ui.newsym(omx, omy); /* update the old position */
-
-		dungeon.ui.newsym(nix, niy);
-
-		return 1;
-	}
-
-	/**
 	 * Some of you may remember the former assertion here that because of deaths
 	 * and other actions, a simple one-pass algorithm wasn't possible for
 	 * movemon. Deaths are no longer removed to the separate list fdmon; they
@@ -532,23 +527,6 @@ public class DungeonLevel implements LocationMap {
 
 	void place_object(final Thing thing, final int x, final int y) {
 		locations[x][y].things.add(new ThingLocation(thing, x, y));
-	}
-
-	/**
-	 * Helper for making a monster
-	 * 
-	 * @param monster
-	 * @param x
-	 * @param y
-	 */
-	void placeMonster(final Monster monster, final int x, final int y) {
-		monster.mx = x;
-		monster.my = y;
-		locations[x][y].monster = monster;
-	}
-
-	void removeMonster(final int x, final int y) {
-		locations[x][y].monster = null;
 	}
 
 	boolean testMove(final int ux, final int uy, final int dx, final int dy,
