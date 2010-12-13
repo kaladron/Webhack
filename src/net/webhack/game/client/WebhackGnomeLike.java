@@ -515,6 +515,8 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		// Main webhack panel must already be in place.
 		initCanvas();
 
+		focusPanel.setFocus(true);
+
 	}
 
 	public void onKeyDown(final KeyDownEvent event) {
