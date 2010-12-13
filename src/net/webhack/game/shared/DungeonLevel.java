@@ -65,6 +65,8 @@ public class DungeonLevel implements LocationMap {
 	private final int doorIndex = 0;
 
 	/** Coordinates of down stairs */
+	@SuppressWarnings("unused")
+	// TODO(jeffbailey): Remove this!
 	private Coordinate dnstair;
 
 	/** Coordinates of up stairs */
