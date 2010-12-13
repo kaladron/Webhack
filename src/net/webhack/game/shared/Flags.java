@@ -1,5 +1,7 @@
 package net.webhack.game.shared;
 
+import net.webhack.game.shared.role.Role;
+
 public class Flags {
 	boolean autodig; /* MRKR: Automatically dig */
 	boolean autoquiver; /* Automatically fill quiver */

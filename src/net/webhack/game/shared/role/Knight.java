@@ -2,9 +2,18 @@
  * Copyright 2010 Google Inc.  Nethack Public License.
  */
 
-package net.webhack.game.shared;
+package net.webhack.game.shared.role;
 
 import java.util.EnumSet;
+
+import net.webhack.game.shared.Artifact;
+import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Gender;
+import net.webhack.game.shared.MonsterClass;
+import net.webhack.game.shared.ObjectName;
+import net.webhack.game.shared.PM;
+import net.webhack.game.shared.Race;
+import net.webhack.game.shared.You;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -34,7 +43,8 @@ public class Knight extends Role {
 		questNemisis = PM.IXOTH;
 
 		questEnemy = new PM[] { PM.QUASIT, PM.OCHRE_JELLY };
-		questMonsterClass = new MonsterClass[] { MonsterClass.IMP, MonsterClass.JELLY };
+		questMonsterClass = new MonsterClass[] { MonsterClass.IMP,
+				MonsterClass.JELLY };
 		questArtifact = Artifact.MAGIC_MIRROR_OF_MERLIN;
 		allowedRace = EnumSet.of(Race.HUMAN);
 		allowedGender = EnumSet.of(Gender.MALE, Gender.FEMALE);

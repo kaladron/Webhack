@@ -1,15 +1,24 @@
-package net.webhack.game.shared;
+package net.webhack.game.shared.role;
 
 import java.util.EnumSet;
+
+import net.webhack.game.shared.Artifact;
+import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Gender;
+import net.webhack.game.shared.MonsterClass;
+import net.webhack.game.shared.ObjectName;
+import net.webhack.game.shared.PM;
+import net.webhack.game.shared.Race;
+import net.webhack.game.shared.You;
 
 public class Archeologist extends Role {
 	public Archeologist() {
 		name = new String[] { "Archeologist", null };
-		title = new String[][] { { "Digger", null },
-				{ "Field Worker", null }, { "Investigator", null },
-				{ "Exhumer", null }, { "Excavator", null },
-				{ "Spelunker", null }, { "Speleologist", null },
-				{ "Collector", null }, { "Curator", null } };
+		title = new String[][] { { "Digger", null }, { "Field Worker", null },
+				{ "Investigator", null }, { "Exhumer", null },
+				{ "Excavator", null }, { "Spelunker", null },
+				{ "Speleologist", null }, { "Collector", null },
+				{ "Curator", null } };
 
 		/* Central American */
 		lgod = "Quetzalcoatl";
@@ -28,7 +37,8 @@ public class Archeologist extends Role {
 
 		questEnemy = new PM[] { null, PM.HUMAN_MUMMY };
 
-		questMonsterClass = new MonsterClass[] { MonsterClass.SNAKE, MonsterClass.MUMMY };
+		questMonsterClass = new MonsterClass[] { MonsterClass.SNAKE,
+				MonsterClass.MUMMY };
 		questArtifact = Artifact.ORB_OF_DETECTION;
 
 		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF, Race.GNOME);

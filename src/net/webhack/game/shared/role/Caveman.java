@@ -1,6 +1,15 @@
-package net.webhack.game.shared;
+package net.webhack.game.shared.role;
 
 import java.util.EnumSet;
+
+import net.webhack.game.shared.Artifact;
+import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Gender;
+import net.webhack.game.shared.MonsterClass;
+import net.webhack.game.shared.ObjectName;
+import net.webhack.game.shared.PM;
+import net.webhack.game.shared.Race;
+import net.webhack.game.shared.You;
 
 public class Caveman extends Role {
 	{
@@ -25,7 +34,8 @@ public class Caveman extends Role {
 		questLeader = PM.NEANDERTHAL;
 		questNemisis = PM.CHROMATIC_DRAGON;
 		questEnemy = new PM[] { PM.BUGBEAR, PM.HILL_GIANT };
-		questMonsterClass = new MonsterClass[] { MonsterClass.HUMANOID, MonsterClass.GIANT };
+		questMonsterClass = new MonsterClass[] { MonsterClass.HUMANOID,
+				MonsterClass.GIANT };
 		questArtifact = Artifact.SCEPTRE_OF_MIGHT;
 
 		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF, Race.GNOME);

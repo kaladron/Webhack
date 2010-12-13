@@ -1,6 +1,7 @@
 package net.webhack.game.shared;
 
 import net.webhack.game.shared.Display.WindowType;
+import net.webhack.game.shared.role.Role;
 
 public class Webhack {
 

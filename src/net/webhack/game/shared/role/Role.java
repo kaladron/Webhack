@@ -2,9 +2,19 @@
  * Copyright 2010 Google Inc.  Nethack Public License.
  */
 
-package net.webhack.game.shared;
+package net.webhack.game.shared.role;
 
 import java.util.EnumSet;
+
+import net.webhack.game.shared.Artifact;
+import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Gender;
+import net.webhack.game.shared.MonsterClass;
+import net.webhack.game.shared.ObjectName;
+import net.webhack.game.shared.PM;
+import net.webhack.game.shared.Race;
+import net.webhack.game.shared.RandomHelper;
+import net.webhack.game.shared.You;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -14,7 +24,8 @@ public abstract class Role {
 
 	public class Advance {
 		/* "fix" is the fixed amount, "rnd" is the random amount */
-		final int infix, inrnd; /* at character initialization */
+		public final int infix; /* at character initialization */
+		public final int inrnd;
 		final int lofix, lornd; /* gained per level < urole.xlev */
 		final int hifix, hirnd; /* gained per level >= urole.xlev */
 
@@ -110,7 +121,7 @@ public abstract class Role {
 	public String filecode;
 	public String homebase;
 	public String intermed;
-	PM[] monster;
+	public PM[] monster;
 	PM pet;
 
 	PM questLeader;
@@ -129,7 +140,7 @@ public abstract class Role {
 	Attributes attrbase;
 
 	Attributes attrdist;
-	Advance hpadv;
+	public Advance hpadv;
 
 	Advance enadv;
 	int maxLevel;

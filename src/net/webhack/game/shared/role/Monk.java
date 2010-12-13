@@ -2,9 +2,18 @@
  * Copyright 2010 Google Inc.  Nethack Public License.
  */
 
-package net.webhack.game.shared;
+package net.webhack.game.shared.role;
 
 import java.util.EnumSet;
+
+import net.webhack.game.shared.Artifact;
+import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Gender;
+import net.webhack.game.shared.MonsterClass;
+import net.webhack.game.shared.ObjectName;
+import net.webhack.game.shared.PM;
+import net.webhack.game.shared.Race;
+import net.webhack.game.shared.You;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -34,7 +43,8 @@ public class Monk extends Role {
 		questNemisis = PM.MASTER_KAEN;
 
 		questEnemy = new PM[] { PM.EARTH_ELEMENTAL, PM.XORN };
-		questMonsterClass = new MonsterClass[] { MonsterClass.ELEMENTAL, MonsterClass.XORN };
+		questMonsterClass = new MonsterClass[] { MonsterClass.ELEMENTAL,
+				MonsterClass.XORN };
 
 		questArtifact = Artifact.EYES_OF_THE_OVERWORLD;
 

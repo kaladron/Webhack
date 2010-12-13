@@ -6,8 +6,8 @@ package net.webhack.game.client;
 
 import java.util.EnumSet;
 
-import net.webhack.game.shared.Role;
-import net.webhack.game.shared.Role.Roles;
+import net.webhack.game.shared.role.Role;
+import net.webhack.game.shared.role.Role.Roles;
 import net.webhack.game.shared.Webhack;
 
 import com.google.gwt.event.dom.client.ClickEvent;
