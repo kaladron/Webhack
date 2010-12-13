@@ -6,6 +6,7 @@ package net.webhack.game.shared;
 
 import java.util.Date;
 
+import net.webhack.game.shared.race.Race;
 import net.webhack.game.shared.role.Role;
 
 /**

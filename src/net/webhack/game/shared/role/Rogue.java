@@ -12,8 +12,8 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.Race;
 import net.webhack.game.shared.You;
+import net.webhack.game.shared.race.Race;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -49,7 +49,7 @@ public class Rogue extends Role {
 
 		questArtifact = Artifact.MASTER_KEY_OF_THIEVERY;
 
-		allowedRace = EnumSet.of(Race.HUMAN, Race.ORC);
+		allowedRace = EnumSet.of(Race.Races.HUMAN, Race.Races.ORC);
 		allowedGender = EnumSet.of(Gender.MALE, Gender.FEMALE);
 		allowedAlignment = EnumSet.of(Alignment.CHAOTIC);
 		/* Str Int Wis Dex Con Cha */

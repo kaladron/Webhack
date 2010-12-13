@@ -12,8 +12,8 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.Race;
 import net.webhack.game.shared.You;
+import net.webhack.game.shared.race.Race;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -48,7 +48,7 @@ public class Priest extends Role {
 
 		questArtifact = Artifact.MITRE_OF_HOLINESS;
 
-		allowedRace = EnumSet.of(Race.HUMAN, Race.ELF);
+		allowedRace = EnumSet.of(Race.Races.HUMAN, Race.Races.ELF);
 		allowedGender = EnumSet.of(Gender.MALE, Gender.FEMALE);
 		allowedAlignment = EnumSet.of(Alignment.LAWFUL, Alignment.NEUTRAL,
 				Alignment.CHAOTIC);

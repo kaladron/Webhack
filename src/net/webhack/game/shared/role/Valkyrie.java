@@ -12,8 +12,8 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.Race;
 import net.webhack.game.shared.You;
+import net.webhack.game.shared.race.Race;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -48,7 +48,7 @@ public class Valkyrie extends Role {
 				MonsterClass.GIANT };
 		questArtifact = Artifact.ORB_OF_FATE;
 
-		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF);
+		allowedRace = EnumSet.of(Race.Races.HUMAN, Race.Races.DWARF);
 		allowedGender = EnumSet.of(Gender.FEMALE);
 		allowedAlignment = EnumSet.of(Alignment.LAWFUL, Alignment.NEUTRAL);
 		/* Str Int Wis Dex Con Cha */

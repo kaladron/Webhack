@@ -8,8 +8,8 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.Race;
 import net.webhack.game.shared.You;
+import net.webhack.game.shared.race.Race;
 
 public class Caveman extends Role {
 	{
@@ -38,7 +38,8 @@ public class Caveman extends Role {
 				MonsterClass.GIANT };
 		questArtifact = Artifact.SCEPTRE_OF_MIGHT;
 
-		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF, Race.GNOME);
+		allowedRace = EnumSet.of(Race.Races.HUMAN, Race.Races.DWARF,
+				Race.Races.GNOME);
 		allowedGender = EnumSet.of(Gender.MALE, Gender.FEMALE);
 		allowedAlignment = EnumSet.of(Alignment.LAWFUL, Alignment.NEUTRAL);
 		/* Str Int Wis Dex Con Cha */

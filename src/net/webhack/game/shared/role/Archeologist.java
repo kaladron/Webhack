@@ -8,8 +8,8 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.Race;
 import net.webhack.game.shared.You;
+import net.webhack.game.shared.race.Race;
 
 public class Archeologist extends Role {
 	public Archeologist() {
@@ -41,7 +41,8 @@ public class Archeologist extends Role {
 				MonsterClass.MUMMY };
 		questArtifact = Artifact.ORB_OF_DETECTION;
 
-		allowedRace = EnumSet.of(Race.HUMAN, Race.DWARF, Race.GNOME);
+		allowedRace = EnumSet.of(Race.Races.HUMAN, Race.Races.DWARF,
+				Race.Races.GNOME);
 		allowedGender = EnumSet.of(Gender.MALE, Gender.FEMALE);
 		allowedAlignment = EnumSet.of(Alignment.LAWFUL, Alignment.NEUTRAL);
 
