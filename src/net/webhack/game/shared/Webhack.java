@@ -178,7 +178,7 @@ public class Webhack {
 		final RandomHelper random = new WebhackRandom();
 		you = new You(flags.initrole != null ? flags.initrole
 				: Role.getRandom(random), Race.getRandom(random),
-				Gender.getRandom(random));
+				Gender.getRandom(random), random);
 		dungeon = new Dungeon(random, you, ui, flags);
 
 		flags.botlx = true;

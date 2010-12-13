@@ -192,7 +192,8 @@ public class You {
 	int uspellprot; /* protection by SPE_PROTECTION */
 	int usptime; /* #moves until uspellprot-- */
 	int uspmtime; /* #moves between uspellprot-- */
-	int uhp, uhpmax;
+	public int uhp;
+	public int uhpmax;
 	int uen, uenmax; /* magical energy - M. Stephenson */
 	int ugangr; /* if the gods are angry at you */
 	int ugifts; /* number of artifacts bestowed */
@@ -219,17 +220,44 @@ public class You {
 	public Role role;
 	Race race;
 	Gender gender;
+	private final RandomHelper random;
 
-	public You(final Role role, final Race race, final Gender gender) {
+	public You(final Role role, final Race race, final Gender gender,
+			final RandomHelper random) {
 		this.role = role;
 		this.race = race;
 		this.gender = gender;
+		this.random = random;
 		// artifacts_init
 		// u_init
 
 		// TODO(jeffbailey): STUB, access this through a gendered API
 		umonnum = umonster = role.monster[0];
 
+		uhp = uhpmax = newhp();
+
+	}
+
+	/**
+	 * Initializes hit points at character generation, gain level or lose level.
+	 * 
+	 * @return hit points
+	 */
+	@Stub
+	public int newhp() {
+		int hp;
+
+		if (ulevel == 0) {
+			hp = role.hpadv.infix; // + race.hpadv.infix;
+			if (role.hpadv.inrnd > 0) {
+				hp += random.rnd(role.hpadv.inrnd);
+			}
+			// if (urace.hpadv.inrnd > 0) hp += rnd(urace.hpadv.inrnd);
+
+			return hp;
+		}
+
+		return 0;
 	}
 
 	public void newPos(final Coordinate c) {

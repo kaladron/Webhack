@@ -572,6 +572,9 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		final String line = flags.plname + " the "
 				+ webhack.you.role.title[0][0];
 		webhackGnome.setHeadingOne(line);
+
+		final String hitpoints = you.uhp + "/" + you.uhpmax;
+		webhackGnome.setHitPoints(hitpoints);
 	}
 
 	public char ynFunction(final String question, final char[] choices,

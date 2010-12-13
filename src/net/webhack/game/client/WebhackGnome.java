@@ -14,6 +14,9 @@ public class WebhackGnome extends Composite {
 	@UiField
 	SpanElement heading1;
 
+	@UiField
+	SpanElement hitpoints;
+
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
 	public WebhackGnome() {
@@ -22,6 +25,10 @@ public class WebhackGnome extends Composite {
 
 	void setHeadingOne(final String in) {
 		heading1.setInnerText(in);
+	}
+
+	void setHitPoints(final String in) {
+		hitpoints.setInnerText(in);
 	}
 
 }
