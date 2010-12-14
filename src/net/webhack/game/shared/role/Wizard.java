@@ -57,8 +57,8 @@ public class Wizard extends Role {
 		attrbase = new Attributes(7, 10, 7, 7, 7, 7);
 		attrdist = new Attributes(10, 30, 10, 20, 20, 10);
 		/* Init Lower Higher */
-		/* Hit points */attrbase = new Attributes(10, 0, 0, 8, 1, 0);
-		/* Energy */attrdist = new Attributes(4, 3, 0, 2, 0, 3);
+		/* Hit points */hpadv = new Advance(10, 0, 0, 8, 1, 0);
+		/* Energy */enadv = new Advance(4, 3, 0, 2, 0, 3);
 
 		maxLevel = 12;
 		alignmentRecord = 0;
