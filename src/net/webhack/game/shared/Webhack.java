@@ -60,6 +60,44 @@ public class Webhack {
 		this.ui = ui;
 	}
 
+	@Stub
+	public void doMove() {
+		final int x = you.ux + you.dx;
+		final int y = you.uy + you.dy;
+
+		if (!dungeon.dlevel.isOk(x, y)) {
+			return;
+		}
+
+		final boolean mtmp = dungeon.dlevel.monAt(x, y);
+
+		you.ux0 = you.ux;
+		you.uy0 = you.uy;
+
+		/* attack monster */
+		if (mtmp) {
+			return;
+		}
+
+		if (!dungeon.dlevel.testMove(you.ux, you.uy, you.dx, you.dy, 1)) {
+			return;
+		}
+
+		/* now move the hero */
+		// mtmp = m_at(x, y);
+		you.ux += you.dx;
+		you.uy += you.dy;
+
+		if (you.ux0 != you.ux || you.uy0 != you.uy) {
+			you.umoved = true;
+			/* Clean old position -- vision_recalc() will print our new one. */
+			ui.newsym(you.ux0, you.uy0);
+			/* Since the hero has moved, adjust what can be seen/unseen. */
+			ui.vision_recalc(1); /* Do the work now in the recover time. */
+		}
+
+	}
+
 	public void main() {
 		ui.initNhWindows(this);
 
@@ -80,46 +118,7 @@ public class Webhack {
 	 */
 	public void moveLoop(final int c) {
 
-		switch (c) {
-		case 'c':
-			dungeon.dlevel.doClose.execute();
-			break;
-		case 'o':
-			dungeon.dlevel.doOpen.execute();
-			break;
-		case 's':
-			dungeon.dlevel.doSearch.execute();
-			break;
-		case 'd' & CONTROL:
-			dungeon.dlevel.doKick.execute();
-			break;
-		}
-
-		final String sdir = "hykulnjb><";
-		// final char ndir[] = {'4','7','8','9','6','3','2','1','>','<'}; /*
-		// number pad mode */
-		final int xdir[] = { -1, -1, 0, 1, 1, 1, 0, -1, 0, 0 };
-		final int ydir[] = { 0, -1, -1, -1, 0, 1, 1, 1, 0, 0 };
-		final int offset = sdir.indexOf(c);
-
-		if (offset != -1) {
-			you.ux0 = you.ux;
-			you.uy0 = you.uy;
-			you.uz0 = you.uz;
-
-			you.dx = xdir[offset];
-			you.dy = ydir[offset];
-
-			if (!dungeon.dlevel.testMove(you.ux, you.uy, you.dx, you.dy, 1)) {
-				return;
-			}
-
-			you.ux += you.dx;
-			you.uy += you.dy;
-			// you.uz += zdir[offset];
-			ui.newsym(you.ux, you.uy);
-			ui.newsym(you.ux0, you.uy0);
-		}
+		rhack(c);
 
 		dungeon.dlevel.moveMon();
 
@@ -176,6 +175,37 @@ public class Webhack {
 		flags.botl = flags.botlx = false;
 	}
 
+	/**
+	 * also sets u.dz, but returns false for level changes
+	 * 
+	 * @param c
+	 */
+	private boolean moveCmd(final int c) {
+		final String sdir = "hykulnjb><";
+		// final char ndir[] = {'4','7','8','9','6','3','2','1','>','<'}; /*
+		// number pad mode */
+		final int xdir[] = { -1, -1, 0, 1, 1, 1, 0, -1, 0, 0 };
+		final int ydir[] = { 0, -1, -1, -1, 0, 1, 1, 1, 0, 0 };
+		final int zdir[] = { 0, 0, 0, 0, 0, 0, 0, 0, 1, -1 };
+
+		final int offset = sdir.indexOf(c);
+
+		if (offset == -1) {
+			return false;
+		}
+
+		you.ux0 = you.ux;
+		you.uy0 = you.uy;
+		you.uz0 = you.uz;
+
+		you.dx = xdir[offset];
+		you.dy = ydir[offset];
+		you.dz = zdir[offset];
+
+		return you.dz == 0 ? true : false;
+
+	}
+
 	private void newGame() {
 		final RandomHelper random = new WebhackRandom();
 		you = new You(flags.initrole != null ? flags.initrole
@@ -188,6 +218,34 @@ public class Webhack {
 		this.ui.docrt();
 
 		welcome(true);
+	}
+
+	private void rhack(final int c) {
+
+		boolean doWalk = false;
+
+		switch (c) {
+		case 'c':
+			dungeon.dlevel.doClose.execute();
+			break;
+		case 'o':
+			dungeon.dlevel.doOpen.execute();
+			break;
+		case 's':
+			dungeon.dlevel.doSearch.execute();
+			break;
+		case 'd' & CONTROL:
+			dungeon.dlevel.doKick.execute();
+			break;
+		}
+
+		if (moveCmd(c)) {
+			doWalk = true;
+		}
+
+		if (doWalk) {
+			doMove();
+		}
 	}
 
 	/**
