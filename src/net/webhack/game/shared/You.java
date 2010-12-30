@@ -6,8 +6,10 @@ package net.webhack.game.shared;
 
 import java.util.Date;
 
+import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
 import net.webhack.game.shared.role.Role;
+import net.webhack.game.shared.things.Thing;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -225,6 +227,8 @@ public class You {
 	Gender gender;
 	private final RandomHelper random;
 
+	Monster youmonst;
+
 	public You(final Role role, final Race race, final Gender gender,
 			final RandomHelper random) {
 		this.role = role;
@@ -239,6 +243,35 @@ public class You {
 
 		uhp = uhpmax = newhp();
 
+	}
+
+	public void attack(final Monster mtmp) {
+		final int tmp = 1;
+		hitum(mtmp, tmp, youmonst.mattk);
+	}
+
+	public void hitum(final Monster mon, final int tmp,
+			final Monster.Attack uattk) {
+		final boolean mhit = true;
+		known_hitum(mon, mhit, uattk);
+	}
+
+	public void hmon(final Monster mon, final Thing obj, final boolean thrown) {
+		hmon_hitmon(mon, obj, thrown);
+	}
+
+	public void hmon_hitmon(final Monster mon, final Thing obj,
+			final boolean thrown) {
+		mon.mhp--;
+		if (mon.mhp < 1) {
+			xkilled(mon, 0);
+		}
+	}
+
+	public void known_hitum(final Monster mon, final boolean tmp,
+			final Monster.Attack uattk) {
+		final Thing uwep = null;
+		hmon(mon, uwep, false);
 	}
 
 	/**
@@ -266,6 +299,10 @@ public class You {
 	public void newPos(final Coordinate c) {
 		ux = c.x;
 		uy = c.y;
+	}
+
+	public void xkilled(final Monster mon, final int dest) {
+
 	}
 
 	boolean inEndGame() {

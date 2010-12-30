@@ -1,6 +1,7 @@
 package net.webhack.game.shared;
 
 import net.webhack.game.shared.Display.WindowType;
+import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
 import net.webhack.game.shared.role.Role;
 
@@ -69,13 +70,17 @@ public class Webhack {
 			return;
 		}
 
-		final boolean mtmp = dungeon.dlevel.monAt(x, y);
+		final Monster mtmp = dungeon.dlevel.mAt(x, y);
 
 		you.ux0 = you.ux;
 		you.uy0 = you.uy;
 
 		/* attack monster */
-		if (mtmp) {
+		if (mtmp != null) {
+			if (mtmp.mpeaceful) {
+				dungeon.ui.pline("You move right into " + mtmp.mname);
+			}
+			you.attack(mtmp);
 			return;
 		}
 

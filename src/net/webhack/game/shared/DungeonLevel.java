@@ -123,6 +123,10 @@ public class DungeonLevel implements LocationMap {
 		return locations[x][y];
 	}
 
+	public Monster mAt(final int x, final int y) {
+		return locations[x][y].monster;
+	}
+
 	/**
 	 * Checks if there's a monster at this location.
 	 * 
