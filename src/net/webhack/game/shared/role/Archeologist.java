@@ -8,11 +8,13 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
+import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.You;
 import net.webhack.game.shared.race.Race;
 
 public class Archeologist extends Role {
-	public Archeologist() {
+	public Archeologist(final RandomHelper random) {
+		this.random = random;
 		name = new String[] { "Archeologist", null };
 		title = new String[][] { { "Digger", null }, { "Field Worker", null },
 				{ "Investigator", null }, { "Exhumer", null },

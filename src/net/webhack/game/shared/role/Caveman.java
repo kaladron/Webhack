@@ -8,11 +8,13 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
+import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.You;
 import net.webhack.game.shared.race.Race;
 
 public class Caveman extends Role {
-	{
+	public Caveman(final RandomHelper random) {
+		this.random = random;
 		name = new String[] { "Caveman", "Cavewoman" };
 		title = new String[][] { { "Troglodyte", null }, { "Aborigine", null },
 				{ "Wanderer", null }, { "Vagrant", null },

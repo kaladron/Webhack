@@ -8,6 +8,7 @@ import net.webhack.game.shared.DungeonLevel;
 import net.webhack.game.shared.Location;
 import net.webhack.game.shared.LocationMap;
 import net.webhack.game.shared.LocationType.Door;
+import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
@@ -48,7 +49,7 @@ public class Monster {
 	/** creation/geno mask value */
 	final int geno;
 	/** attacks matrix */
-	public Attack mattk;
+	public Attack mattk = new Attack();
 	/** weight of corpse */
 	final int cwt;
 	/** its nutritional value */
@@ -66,6 +67,7 @@ public class Monster {
 
 	/** hit points */
 	public int mhp;
+	public int mhpmax;
 
 	/** is peaceful */
 	public boolean mpeaceful;
@@ -89,12 +91,13 @@ public class Monster {
 	/** Y Coordinate where the monster thinks you are. */
 	public int muy;
 
-	public Monster(final int idx, final String mname, final char mlet,
-			final int mlevel, final int mmove, final int ac, final int mr,
-			final int maligntyp, final int geno, final int cwt,
-			final int cnutrit, final int pxlth, final int msound,
-			final int msize, final int mresists, final int mconveys,
-			final int mflags1, final int mflags2, final int mflags3) {
+	public Monster(final RandomHelper random, final int idx,
+			final String mname, final char mlet, final int mlevel,
+			final int mmove, final int ac, final int mr, final int maligntyp,
+			final int geno, final int cwt, final int cnutrit, final int pxlth,
+			final int msound, final int msize, final int mresists,
+			final int mconveys, final int mflags1, final int mflags2,
+			final int mflags3) {
 		this.idx = idx;
 		this.mname = mname;
 		this.mlet = mlet;
@@ -115,6 +118,8 @@ public class Monster {
 		this.mflags1 = mflags1;
 		this.mflags2 = mflags2;
 		this.mflags3 = mflags3;
+
+		mhpmax = mhp = random.d(mlevel, 8);
 	}
 
 	/**

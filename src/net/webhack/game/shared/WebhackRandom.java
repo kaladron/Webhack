@@ -20,8 +20,11 @@ public class WebhackRandom implements RandomHelper {
 	 * @see net.webhack.game.shared.RandomHelper#d(int, int)
 	 */
 	public int d(final int n, final int x) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException();
+		int tmp = 0;
+		for (int i = n; i >= 0; i--) {
+			tmp += random.nextInt(x);
+		}
+		return tmp;
 	}
 
 	/*

@@ -49,6 +49,7 @@ public class Webhack {
 	public You you;
 	public final Flags flags;
 	public final WebhackUI ui;
+	public final RandomHelper random;
 
 	static int YLIM = 3;
 
@@ -59,6 +60,7 @@ public class Webhack {
 	public Webhack(final WebhackUI ui, final Flags flags) {
 		this.flags = flags;
 		this.ui = ui;
+		random = new WebhackRandom();
 	}
 
 	@Stub
@@ -212,7 +214,6 @@ public class Webhack {
 	}
 
 	private void newGame() {
-		final RandomHelper random = new WebhackRandom();
 		you = new You(flags.initrole != null ? flags.initrole
 				: Role.getRandom(random), Race.getRandom(random),
 				Gender.getRandom(random), random);

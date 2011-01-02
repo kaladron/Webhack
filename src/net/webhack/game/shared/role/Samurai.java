@@ -12,6 +12,7 @@ import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
+import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.You;
 import net.webhack.game.shared.race.Race;
 
@@ -20,7 +21,8 @@ import net.webhack.game.shared.race.Race;
  * 
  */
 public class Samurai extends Role {
-	{
+	public Samurai(final RandomHelper random) {
+		this.random = random;
 		name = new String[] { "Samurai", null };
 		title = new String[][] { { "Hatamoto", null }, /* Banner Knight */
 		{ "Ronin", null }, /* no allegiance */

@@ -6,9 +6,10 @@ package net.webhack.game.client;
 
 import java.util.EnumSet;
 
+import net.webhack.game.shared.RandomHelper;
+import net.webhack.game.shared.Webhack;
 import net.webhack.game.shared.role.Role;
 import net.webhack.game.shared.role.Role.Roles;
-import net.webhack.game.shared.Webhack;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -30,8 +31,11 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 	final Webhack game;
 	final TextBox name;
 
+	final RandomHelper random;
+
 	public RoleRaceGender(final Webhack game) {
 		super(false);
+		this.random = game.random;
 		setGlassEnabled(true);
 		this.center();
 
@@ -67,7 +71,7 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 		final String value = roleSelector.getValue(roleSelector
 				.getSelectedIndex());
 		final Roles myRole = Role.Roles.valueOf(value);
-		game.flags.initrole = Role.newRole(myRole);
+		game.flags.initrole = Role.newRole(random, myRole);
 		game.flags.plname = name.getText();
 
 		this.hide();

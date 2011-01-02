@@ -240,6 +240,7 @@ public class You {
 
 		// TODO(jeffbailey): STUB, access this through a gendered API
 		umonnum = umonster = role.monster[0];
+		youmonst = this.role.getMonster(gender);
 
 		uhp = uhpmax = newhp();
 
@@ -263,6 +264,7 @@ public class You {
 	public void hmon_hitmon(final Monster mon, final Thing obj,
 			final boolean thrown) {
 		mon.mhp--;
+		System.out.println(mon.mhp);
 		if (mon.mhp < 1) {
 			xkilled(mon, 0);
 		}
@@ -302,7 +304,7 @@ public class You {
 	}
 
 	public void xkilled(final Monster mon, final int dest) {
-
+		System.out.println("DeaD");
 	}
 
 	boolean inEndGame() {

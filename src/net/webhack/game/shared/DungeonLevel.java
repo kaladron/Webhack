@@ -639,7 +639,7 @@ public class DungeonLevel implements LocationMap {
 			if (random.oneIn(3)) {
 				final int x = room.someX(random);
 				final int y = room.someY(random);
-				final Monster monster = new GridBug();
+				final Monster monster = new GridBug(random);
 				monster.mx = x;
 				monster.my = y;
 				locations[x][y].monster = monster;
