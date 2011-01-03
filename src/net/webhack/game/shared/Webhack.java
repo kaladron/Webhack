@@ -47,9 +47,6 @@ public class Webhack {
 
 	public Dungeon dungeon;
 	public You you;
-	public final Flags flags;
-	public final WebhackUI ui;
-	public final RandomHelper random;
 
 	static int YLIM = 3;
 
@@ -57,10 +54,10 @@ public class Webhack {
 
 	private final int CONTROL = 0x1F;
 
+	public final Bindery bindery;
+
 	public Webhack(final WebhackUI ui, final Flags flags) {
-		this.flags = flags;
-		this.ui = ui;
-		random = new WebhackRandom();
+		this.bindery = new Bindery(this, new WebhackRandom(), ui, flags);
 	}
 
 	@Stub
@@ -98,15 +95,15 @@ public class Webhack {
 		if (you.ux0 != you.ux || you.uy0 != you.uy) {
 			you.umoved = true;
 			/* Clean old position -- vision_recalc() will print our new one. */
-			ui.newsym(you.ux0, you.uy0);
+			bindery.ui.newsym(you.ux0, you.uy0);
 			/* Since the hero has moved, adjust what can be seen/unseen. */
-			ui.vision_recalc(1); /* Do the work now in the recover time. */
+			bindery.ui.vision_recalc(1); /* Do the work now in the recover time. */
 		}
 
 	}
 
 	public void main() {
-		ui.initNhWindows(this);
+		bindery.ui.initNhWindows(this);
 
 		newGame();
 
@@ -137,11 +134,11 @@ public class Webhack {
 		/* once-per-player-input things go here */
 		/****************************************/
 
-		if (flags.botl || flags.botlx) {
+		if (bindery.flags.botl || bindery.flags.botlx) {
 			bot();
 		}
 
-		ui.displayNhWindow(WindowType.MAP, false);
+		bindery.ui.displayNhWindow(WindowType.MAP, false);
 	}
 
 	/**
@@ -149,7 +146,7 @@ public class Webhack {
 	 */
 	public void premove() {
 		// TODO(jeffbailey): STUB
-		ui.displayNhWindow(WindowType.MAP, false);
+		bindery.ui.displayNhWindow(WindowType.MAP, false);
 		// flags.moonphase = phase_of_the_moon();
 		// if(flags.moonphase == FULL_MOON) {
 		// You("are lucky!  Full moon tonight.");
@@ -178,8 +175,8 @@ public class Webhack {
 	 * Updates attributes display
 	 */
 	private void bot() {
-		ui.updateStats();
-		flags.botl = flags.botlx = false;
+		bindery.ui.updateStats();
+		bindery.flags.botl = bindery.flags.botlx = false;
 	}
 
 	/**
@@ -214,14 +211,15 @@ public class Webhack {
 	}
 
 	private void newGame() {
-		you = new You(flags.initrole != null ? flags.initrole
-				: Role.getRandom(random), Race.getRandom(random),
-				Gender.getRandom(random), random);
-		dungeon = new Dungeon(random, you, ui, flags);
+		you = new You(bindery.flags.initrole != null ? bindery.flags.initrole
+				: Role.getRandom(bindery.random),
+				Race.getRandom(bindery.random),
+				Gender.getRandom(bindery.random), bindery.random);
+		dungeon = new Dungeon(bindery.random, you, bindery.ui, bindery.flags);
 
-		flags.botlx = true;
+		bindery.flags.botlx = true;
 
-		this.ui.docrt();
+		bindery.ui.docrt();
 
 		welcome(true);
 	}
@@ -275,7 +273,7 @@ public class Webhack {
 			// params);
 		}
 
-		this.ui.pline("Hello, player, welcome to WebHack!  You are a "
+		bindery.ui.pline("Hello, player, welcome to WebHack!  You are a "
 				+ you.gender.name() + " " + you.race.name() + " "
 				+ you.role.name[0] + ".");
 		// this.ui.pline(welcome);

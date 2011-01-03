@@ -549,7 +549,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 			cmdKey &= 0x1F;
 		}
 
-		if (!webhack.ui.command(cmdKey)) {
+		if (!webhack.bindery.ui.command(cmdKey)) {
 			webhack.moveLoop(cmdKey);
 		}
 

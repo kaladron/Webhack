@@ -35,6 +35,6 @@ public class WebhackGwt implements EntryPoint {
 		final Webhack game = new Webhack(ui, flags);
 
 		// Determine Role, Race, Gender
-		new RoleRaceGender(game).show();
+		new RoleRaceGender(game.bindery).show();
 	}
 }
