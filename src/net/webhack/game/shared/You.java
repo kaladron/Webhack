@@ -264,7 +264,6 @@ public class You {
 	public void hmon_hitmon(final Monster mon, final Thing obj,
 			final boolean thrown) {
 		mon.mhp--;
-		System.out.println(mon.mhp);
 		if (mon.mhp < 1) {
 			xkilled(mon, 0);
 		}
@@ -304,12 +303,21 @@ public class You {
 	}
 
 	public void xkilled(final Monster mon, final int dest) {
-		System.out.println("DeaD");
+		// ui.pline("You kill it!");
+		mondead(mon);
 	}
 
 	boolean inEndGame() {
 		// TODO(jeffbailey): Stub!
 		return false;
+	}
+
+	private void mondead(final Monster mtmp) {
+		// Should call m_detach, instead we do:
+
+		// remove_monster(mtmp.mx, mtmp.my);
+		// ui.newsym(mtmp.mx, mtmp.my);
+
 	}
 
 }
