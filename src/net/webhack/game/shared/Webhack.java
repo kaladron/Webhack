@@ -214,7 +214,7 @@ public class Webhack {
 		you = new You(bindery.flags.initrole != null ? bindery.flags.initrole
 				: Role.getRandom(bindery.random),
 				Race.getRandom(bindery.random),
-				Gender.getRandom(bindery.random), bindery.random);
+				Gender.getRandom(bindery.random), bindery);
 		dungeon = new Dungeon(bindery.random, you, bindery.ui, bindery.flags);
 
 		bindery.flags.botlx = true;

@@ -15,6 +15,8 @@ import org.junit.Test;
  */
 public class RectanglesTest {
 
+	Bindery bindery = new Bindery(null, new WebhackRandom(), null, null);
+
 	@Test
 	public void addRectangle() {
 		final Rectangles rectangles = new Rectangles(new MockRandom());
@@ -37,7 +39,7 @@ public class RectanglesTest {
 
 	public void hugeTest() {
 		final RandomHelper random = new WebhackRandom();
-		new DungeonLevel(random, new You(null, null, null, random), null);
+		new DungeonLevel(random, new You(null, null, null, bindery), null);
 	}
 
 	/**

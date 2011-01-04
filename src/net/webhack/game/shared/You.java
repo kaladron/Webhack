@@ -225,16 +225,16 @@ public class You {
 	public Role role;
 	Race race;
 	Gender gender;
-	private final RandomHelper random;
 
 	Monster youmonst;
+	private final Bindery bindery;
 
 	public You(final Role role, final Race race, final Gender gender,
-			final RandomHelper random) {
+			final Bindery bindery) {
 		this.role = role;
 		this.race = race;
 		this.gender = gender;
-		this.random = random;
+		this.bindery = bindery;
 		// artifacts_init
 		// u_init
 
@@ -264,6 +264,7 @@ public class You {
 	public void hmon_hitmon(final Monster mon, final Thing obj,
 			final boolean thrown) {
 		mon.mhp--;
+		bindery.ui.pline("You hit the " + mon.mname);
 		if (mon.mhp < 1) {
 			xkilled(mon, 0);
 		}
@@ -287,7 +288,7 @@ public class You {
 		if (ulevel == 0) {
 			hp = role.hpadv.infix; // + race.hpadv.infix;
 			if (role.hpadv.inrnd > 0) {
-				hp += random.rnd(role.hpadv.inrnd);
+				hp += bindery.random.rnd(role.hpadv.inrnd);
 			}
 			// if (urace.hpadv.inrnd > 0) hp += rnd(urace.hpadv.inrnd);
 
@@ -302,21 +303,24 @@ public class You {
 		uy = c.y;
 	}
 
+	@Stub
 	public void xkilled(final Monster mon, final int dest) {
-		// ui.pline("You kill it!");
+		bindery.ui.pline("You kill it!");
 		mondead(mon);
 	}
 
+	@Stub
 	boolean inEndGame() {
-		// TODO(jeffbailey): Stub!
 		return false;
 	}
 
+	@Stub
 	private void mondead(final Monster mtmp) {
 		// Should call m_detach, instead we do:
 
-		// remove_monster(mtmp.mx, mtmp.my);
-		// ui.newsym(mtmp.mx, mtmp.my);
+		bindery.webhack.dungeon.dlevel.monlist.remove(mtmp);
+		bindery.webhack.dungeon.dlevel.removeMonster(mtmp.mx, mtmp.my);
+		bindery.ui.newsym(mtmp.mx, mtmp.my);
 
 	}
 
