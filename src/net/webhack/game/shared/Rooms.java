@@ -168,6 +168,10 @@ public class Rooms {
 		Collections.sort(rooms);
 	}
 
+	boolean createVault() {
+		return createRoom(-1, -1, 2, 2, -1, -1, Room.VAULT, true);
+	}
+
 	/**
 	 * @param lowx
 	 * @param lowy
@@ -286,7 +290,9 @@ public class Rooms {
 			if (rooms.size() >= (Webhack.MAXNROFROOMS / 6)
 					&& (random.rn2(2) != 0) && !tried_vault) {
 				tried_vault = true;
-				// TODO(jeffbailey): Create_vault stuff goes here.
+				if (createVault()) {
+					// TODO(jeffbailey): More vault processing.
+				}
 			} else {
 				if (!createRoom(-1, -1, -1, -1, -1, -1, Room.OROOM, null)) {
 					return;
