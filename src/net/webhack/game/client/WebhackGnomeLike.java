@@ -452,23 +452,23 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		}
 	};
 
+	// TODO(jeffbailey): This breaks if the player changes the letters with
+	// commands.
 	Command doOpen = new Command() {
-		// TODO(jeffbailey): We shouldn't have access to this level of the code
-		// from here.
 		public void execute() {
-			webhack.dungeon.dlevel.doOpen.execute();
+			webhack.rhack('o');
 		}
 	};
 
 	Command doClose = new Command() {
 		public void execute() {
-			webhack.dungeon.dlevel.doClose.execute();
+			webhack.rhack('c');
 		}
 	};
 
 	Command doSearch = new Command() {
 		public void execute() {
-			webhack.dungeon.dlevel.doSearch.execute();
+			webhack.rhack('s');
 		}
 	};
 

@@ -235,6 +235,7 @@ public class You {
 		this.race = race;
 		this.gender = gender;
 		this.bindery = bindery;
+		bindery.registerYou(this);
 		// artifacts_init
 		// u_init
 

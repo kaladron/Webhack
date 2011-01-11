@@ -1,18 +1,18 @@
 package net.webhack.game.shared.command;
 
-import net.webhack.game.shared.Dungeon;
+import net.webhack.game.shared.Bindery;
 
 public class DoSearch extends Command {
 
-	private final Dungeon dungeon;
+	private final Bindery bindery;
 
-	public DoSearch(final Dungeon dungeon) {
-		this.dungeon = dungeon;
+	public DoSearch(final Bindery bindery) {
+		this.bindery = bindery;
 	}
 
 	@Override
 	public void execute() {
-		dungeon.dlevel.search(false);
+		bindery.webhack.dungeon.dlevel.search(false);
 	}
 
 }

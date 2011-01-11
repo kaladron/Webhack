@@ -4,43 +4,41 @@
 
 package net.webhack.game.shared.command;
 
+import net.webhack.game.shared.Bindery;
 import net.webhack.game.shared.Coordinate;
 import net.webhack.game.shared.Display.WindowType;
-import net.webhack.game.shared.Dungeon;
 import net.webhack.game.shared.Location;
 import net.webhack.game.shared.LocationType;
 import net.webhack.game.shared.Stub;
-import net.webhack.game.shared.You;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
  */
 public class DoKick extends Command {
-	private final Dungeon dungeon;
-	private final You you;
+	private final Bindery bindery;
 
-	public DoKick(final Dungeon dungeon, final You you) {
-		this.dungeon = dungeon;
-		this.you = you;
+	public DoKick(final Bindery bindery) {
+		this.bindery = bindery;
 	}
 
 	@Stub
 	@Override
 	public boolean callback(final int cmdKey) {
 
-		dungeon.ui.setCommand(null);
+		bindery.ui.setCommand(null);
 
-		final Coordinate cc = dungeon.dlevel.getAdjacentLoc(cmdKey, null,
-				you.ux, you.uy);
+		final Coordinate cc = bindery.webhack.dungeon.dlevel.getAdjacentLoc(
+				cmdKey, null, bindery.you.ux, bindery.you.uy);
 
 		if (cc == null) {
 			return true;
 		}
-		final Location mapLoc = dungeon.dlevel.getLoc(cc.x, cc.y);
+		final Location mapLoc = bindery.webhack.dungeon.dlevel.getLoc(cc.x,
+				cc.y);
 
 		if (!mapLoc.typ.isDoor()) {
-			dungeon.ui.pline("You see no door there.");
+			bindery.ui.pline("You see no door there.");
 			return true;
 		}
 
@@ -48,25 +46,25 @@ public class DoKick extends Command {
 				|| mapLoc.doormask == LocationType.Door.BROKEN
 				|| mapLoc.doormask == LocationType.Door.NODOOR) {
 
-			dungeon.ui.pline("You kick at empty space.");
+			bindery.ui.pline("You kick at empty space.");
 			return false;
 		}
 
-		dungeon.ui.pline("As you kick the door, it crashes open!");
+		bindery.ui.pline("As you kick the door, it crashes open!");
 		mapLoc.doormask = LocationType.Door.BROKEN;
 
-		dungeon.ui.newsym(cc.x, cc.y);
+		bindery.ui.newsym(cc.x, cc.y);
 
 		// TODO(jeffbailey): Remove this:
-		dungeon.ui.displayNhWindow(WindowType.MAP, false);
+		bindery.ui.displayNhWindow(WindowType.MAP, false);
 
 		return true;
 	}
 
 	@Override
 	public void execute() {
-		dungeon.ui.ynFunction("In what direction?",
+		bindery.ui.ynFunction("In what direction?",
 				new char[] { 'a', 'b', 'c' }, 'a');
-		dungeon.ui.setCommand(this);
+		bindery.ui.setCommand(this);
 	}
 }

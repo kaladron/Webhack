@@ -1,6 +1,14 @@
 package net.webhack.game.shared;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.webhack.game.shared.Display.WindowType;
+import net.webhack.game.shared.command.Command;
+import net.webhack.game.shared.command.DoClose;
+import net.webhack.game.shared.command.DoKick;
+import net.webhack.game.shared.command.DoOpen;
+import net.webhack.game.shared.command.DoSearch;
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
 import net.webhack.game.shared.role.Role;
@@ -8,6 +16,19 @@ import net.webhack.game.shared.role.Role;
 public class Webhack {
 
 	// CONFIG Things go here for now.
+
+	class FuncTab {
+		public final Command command;
+		public final boolean canIfBuried;
+		public final String text;
+
+		FuncTab(final Command command, final boolean canIfBuried,
+				final String text) {
+			this.command = command;
+			this.canIfBuried = canIfBuried;
+			this.text = text;
+		}
+	}
 
 	/** Number of columns in the dungeon. */
 	public static int COLNO = 80;
@@ -44,8 +65,8 @@ public class Webhack {
 
 	/** maximum monster hp */
 	public static int MHPMAX = 500;
-
 	public Dungeon dungeon;
+
 	public You you;
 
 	static int YLIM = 3;
@@ -56,8 +77,12 @@ public class Webhack {
 
 	public final Bindery bindery;
 
+	private final Map<Integer, FuncTab> cmdMap = new HashMap<Integer, FuncTab>();
+
 	public Webhack(final WebhackUI ui, final Flags flags) {
 		this.bindery = new Bindery(this, new WebhackRandom(), ui, flags);
+
+		registerCommands();
 	}
 
 	@Stub
@@ -171,6 +196,33 @@ public class Webhack {
 
 	}
 
+	public void rhack(final int c) {
+
+		boolean doWalk = false;
+
+		if (cmdMap.containsKey(c)) {
+			cmdMap.get(c).command.execute();
+		}
+
+		if (moveCmd(c)) {
+			doWalk = true;
+		}
+
+		if (doWalk) {
+			doMove();
+		}
+	}
+
+	/**
+	 * Registers the keyboard commands
+	 */
+	void registerCommands() {
+		registerCommand('c', new DoClose(bindery));
+		registerCommand('o', new DoOpen(bindery));
+		registerCommand('s', new DoSearch(bindery));
+		registerCommand('d' & CONTROL, new DoKick(bindery));
+	}
+
 	/**
 	 * Updates attributes display
 	 */
@@ -224,32 +276,8 @@ public class Webhack {
 		welcome(true);
 	}
 
-	private void rhack(final int c) {
-
-		boolean doWalk = false;
-
-		switch (c) {
-		case 'c':
-			dungeon.dlevel.doClose.execute();
-			break;
-		case 'o':
-			dungeon.dlevel.doOpen.execute();
-			break;
-		case 's':
-			dungeon.dlevel.doSearch.execute();
-			break;
-		case 'd' & CONTROL:
-			dungeon.dlevel.doKick.execute();
-			break;
-		}
-
-		if (moveCmd(c)) {
-			doWalk = true;
-		}
-
-		if (doWalk) {
-			doMove();
-		}
+	private void registerCommand(final int letter, final Command command) {
+		cmdMap.put(letter, new FuncTab(command, false, ""));
 	}
 
 	/**
