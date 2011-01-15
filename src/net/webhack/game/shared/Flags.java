@@ -29,7 +29,7 @@ public class Flags {
 	boolean nap; /* `timed_delay' option for display effects */
 	boolean nopick; /* do not pickup objects (as when running) */
 	boolean perm_invent; /* keep full inventories up until dismissed */
-	boolean pickup; /* whether you pickup or move and look */
+	public boolean pickup; /* whether you pickup or move and look */
 
 	boolean pushweapon; /* When wielding, push old weapon into second slot */
 	boolean rest_on_space; /* space means rest */

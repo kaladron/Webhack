@@ -538,10 +538,44 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 			cmdKey = 'j';
 			break;
 		default:
-			if (!event.isShiftKeyDown()) {
-				cmdKey = Character.toLowerCase((char) code);
+			if (event.isShiftKeyDown()) {
+				switch (code) {
+				// TODO(jeffbailey): This assumes a US keyboard
+				case '1':
+					cmdKey = '!';
+					break;
+				case '2':
+					cmdKey = '@';
+					break;
+				case '3':
+					cmdKey = '#';
+					break;
+				case '4':
+					cmdKey = '$';
+					break;
+				case '5':
+					cmdKey = '%';
+					break;
+				case '6':
+					cmdKey = '^';
+					break;
+				case '7':
+					cmdKey = '&';
+					break;
+				case '8':
+					cmdKey = '*';
+					break;
+				case '9':
+					cmdKey = '(';
+					break;
+				case '0':
+					cmdKey = '0';
+					break;
+				default:
+					cmdKey = code;
+				}
 			} else {
-				cmdKey = code;
+				cmdKey = Character.toLowerCase((char) code);
 			}
 		}
 
