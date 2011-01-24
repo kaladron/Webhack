@@ -10,6 +10,7 @@ import net.webhack.game.shared.command.DoKick;
 import net.webhack.game.shared.command.DoOpen;
 import net.webhack.game.shared.command.DoSearch;
 import net.webhack.game.shared.command.DoTogglePickup;
+import net.webhack.game.shared.command.WizMap;
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
 import net.webhack.game.shared.role.Role;
@@ -219,6 +220,7 @@ public class Webhack {
 	 */
 	void registerCommands() {
 		registerCommand('d' & CONTROL, new DoKick(bindery));
+		registerCommand('f' & CONTROL, new WizMap(bindery));
 		registerCommand('c', new DoClose(bindery));
 		registerCommand('o', new DoOpen(bindery));
 		registerCommand('s', new DoSearch(bindery));

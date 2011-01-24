@@ -9,7 +9,7 @@ public class Flags {
 	boolean botl; /* partially redo status line */
 	boolean botlx; /* print an entirely new bottom line */
 	boolean confirm; /* confirm before hitting tame monsters */
-	boolean debug; /* in debugging mode */
+	public boolean debug; /* in debugging mode */
 	boolean end_own; /* list all own scores */
 	boolean explore; /* in exploration mode */
 	boolean female;
