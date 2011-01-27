@@ -384,6 +384,35 @@ public abstract class Display implements WebhackUI {
 		this.command = command;
 	}
 
+	@Stub
+	public void showMapSpot(final int x, final int y) {
+		Location lev;
+
+		// if (Confusion && rn2(7)) return;
+		lev = dungeon.getLevel().getLoc(x, y);
+
+		lev.seenv = EnumSet.allOf(Display.SeenVector.class);
+
+		/* Secret corridors are found, but not secret doors. */
+		if (lev.typ == LocationType.SCORR) {
+			lev.typ = LocationType.CORR;
+			// unblock_point(x,y);
+		}
+
+		/* if we don't remember an object or trap there, map it */
+		// if (lev.typ == LocationType.ROOM ?
+		// (glyph_is_cmap(lev.glyph) && !glyph_is_trap(lev.glyph) &&
+		// glyph_to_cmap(lev.glyph) != ROOM) :
+		// (!glyph_is_object(lev.glyph) && !glyph_is_trap(lev.glyph))) {
+		// if (level.flags.hero_memory) {
+		// magic_map_background(x,y,0);
+		newsym(x, y); /* show it, if not blocked */
+		// } else {
+		// magic_map_background(x,y,1); /* display it */
+		// }
+		// }
+	}
+
 	/*
 	 * Returns true if the hero can see her/himself.
 	 * 
@@ -441,9 +470,6 @@ public abstract class Display implements WebhackUI {
 		for (int y = 0; y < Webhack.ROWNO; y++) {
 			for (int x = 0; x < Webhack.COLNO; x++) {
 				final Location ptr = dungeon.getLevel().getLoc(x, y);
-				if (ptr.typ == LocationType.SCORR) {
-					ptr.typ = LocationType.CORR;
-				}
 
 				if (ptr.typ != LocationType.STONE) {
 					newsym(x, y);

@@ -21,6 +21,8 @@ public interface WebhackUI {
 
 	void setCommand(Command command);
 
+	void showMapSpot(int zx, int zy);
+
 	void updateStats();
 
 	void vision_recalc(final int control);

@@ -95,6 +95,26 @@ public class DungeonLevel implements LocationMap {
 		makeLevel();
 	}
 
+	public void doMapping() {
+		int zx, zy;
+		final boolean uw = you.uinwater;
+
+		you.uinwater = false;
+		for (zx = 1; zx < Webhack.COLNO; zx++) {
+			for (zy = 0; zy < Webhack.ROWNO; zy++) {
+				dungeon.ui.showMapSpot(zx, zy);
+			}
+		}
+		// exercise(A_WIS, TRUE);
+		you.uinwater = uw;
+		// if (!level.flags.hero_memory || Underwater) {
+		// dungeon.ui.flush_screen(1); /* flush temp screen */
+		// display_nhwindow(WIN_MAP, TRUE); /* wait */
+		dungeon.ui.docrt();
+		// }
+
+	}
+
 	public Coordinate getAdjacentLoc(final int cmdKey, final String errorMsg,
 			final int x, final int y) {
 		if (!getdir(cmdKey)) {
@@ -199,7 +219,7 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	void add_door(final int x, final int y, final Room aroom) {
-	}
+	};
 
 	boolean byDoor(final int x, final int y) {
 		LocationType typ;
@@ -229,7 +249,7 @@ public class DungeonLevel implements LocationMap {
 			}
 		}
 		return false;
-	};
+	}
 
 	boolean digCorridor(final Coordinate org, final Coordinate dest,
 			final boolean nxcor, final LocationType ftyp,
