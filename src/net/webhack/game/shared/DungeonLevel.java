@@ -299,7 +299,7 @@ public class DungeonLevel implements LocationMap {
 
 			crm = locations[xx][yy];
 			if (crm.typ == btyp) {
-				if (ftyp != LocationType.CORR || random.oneIn(100)) {
+				if (ftyp != LocationType.CORR || !random.oneIn(100)) {
 					crm.typ = ftyp;
 					if (nxcor && random.oneIn(50)) {
 						mksobj_at(new Boulder(), xx, yy, true, false);
