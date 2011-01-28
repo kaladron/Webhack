@@ -186,6 +186,9 @@ public class DungeonLevel implements LocationMap {
 					if (locations[x][y].typ == LocationType.SDOOR) {
 						locations[x][y].convertSdoorToDoor(); /* .typ = DOOR */
 						dungeon.ui.newsym(x, y);
+					} else if (locations[x][y].typ == LocationType.SCORR) {
+						locations[x][y].typ = LocationType.CORR;
+						dungeon.ui.newsym(x, y);
 					}
 				}
 			}
