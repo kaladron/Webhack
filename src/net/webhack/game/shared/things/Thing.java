@@ -7,7 +7,7 @@ import net.webhack.game.shared.Stub;
 
 public class Thing {
 	final public int idx;
-	final String name;
+	final public String name;
 	final String description;
 	final boolean isNameKnown;
 	final boolean shouldMerge;

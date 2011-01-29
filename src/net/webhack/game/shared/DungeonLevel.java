@@ -747,7 +747,7 @@ public class DungeonLevel implements LocationMap {
 		yy = cc.y;
 		tx = tt.x - dx;
 		ty = tt.y - dy;
-		if (nxcor && getLoc(xx + dx, yy + dy).typ != null) {
+		if (nxcor && getLoc(xx + dx, yy + dy).typ != LocationType.STONE) {
 			return;
 		}
 		if (okDoor(xx, yy) || !nxcor) {
@@ -782,7 +782,7 @@ public class DungeonLevel implements LocationMap {
 
 		for (int a = 0; a < rooms.rooms.size() - 1; a++) {
 			join(a, a + 1, false);
-			if (random.rn2(50) == 0) {
+			if (random.oneIn(50)) {
 				break; /* allow some randomness */
 			}
 		}
