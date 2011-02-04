@@ -558,9 +558,9 @@ public class DungeonLevel implements LocationMap {
 			return false;
 		}
 
-		// if (sobj_at(ObjectName.BOULDER,x,y)) {
-		// return false;
-		// }
+		if (sobj_at(ObjectName.BOULDER, x, y) != null) {
+			return false;
+		}
 
 		return true;
 	}
@@ -913,6 +913,18 @@ public class DungeonLevel implements LocationMap {
 			return true;
 		}
 		return false;
+	}
+
+	private Obj sobj_at(final ObjectName n, final int x, final int y) {
+		final List<Obj> things = locations[x][y].things;
+
+		for (final Obj thingloc : things) {
+			if (thingloc.otyp == n) {
+				return thingloc;
+			}
+		}
+
+		return null;
 	}
 
 }
