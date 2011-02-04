@@ -56,7 +56,7 @@ public class Location {
 	/** marks boundaries for special rooms */
 	boolean edge;
 
-	List<ThingLocation> things = new LinkedList<ThingLocation>();
+	List<Obj> things = new LinkedList<Obj>();
 	Monster monster = null;
 
 	/**

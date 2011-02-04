@@ -9,7 +9,6 @@ import java.util.Date;
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
 import net.webhack.game.shared.role.Role;
-import net.webhack.game.shared.things.Thing;
 
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
@@ -258,11 +257,11 @@ public class You {
 		known_hitum(mon, mhit, uattk);
 	}
 
-	public void hmon(final Monster mon, final Thing obj, final boolean thrown) {
+	public void hmon(final Monster mon, final Obj obj, final boolean thrown) {
 		hmon_hitmon(mon, obj, thrown);
 	}
 
-	public void hmon_hitmon(final Monster mon, final Thing obj,
+	public void hmon_hitmon(final Monster mon, final Obj obj,
 			final boolean thrown) {
 		mon.mhp--;
 		bindery.ui.pline("You hit the " + mon.mname);
@@ -273,7 +272,7 @@ public class You {
 
 	public void known_hitum(final Monster mon, final boolean tmp,
 			final Monster.Attack uattk) {
-		final Thing uwep = null;
+		final Obj uwep = null;
 		hmon(mon, uwep, false);
 	}
 

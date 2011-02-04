@@ -775,7 +775,9 @@ public enum ObjectName {
 
 	WAN_LIGHTNING,
 
-	GOLD_PIECE,
+	GOLD_PIECE(390, "gold piece", null, false, true, false, false, false,
+			false, false, false, false, false, 0, Skills.NONE, Material.GOLD,
+			0, ObjectClass.COIN, 1000, 0, 1, 1, 0, 0, 0, 0, 0),
 
 	DILITHIUM_CRYSTAL,
 
@@ -849,9 +851,9 @@ public enum ObjectName {
 
 	ROCK,
 
-	BOULDER(427, "boulder", null, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, Skills.NONE,
-			Material.MINERAL, 0, ObjectClass.ROCK, 100, 0, 6000, 0, 20, 20, 0,
-			0, 2000),
+	BOULDER(427, "boulder", null, true, false, false, false, false, false,
+			false, false, true, false, 0, Skills.NONE, Material.MINERAL, 0,
+			ObjectClass.ROCK, 100, 0, 6000, 0, 20, 20, 0, 0, 2000),
 
 	STATUE,
 
@@ -867,17 +869,77 @@ public enum ObjectName {
 
 	MAXSPELL;
 
+	public int idx;
+	public String name;
+	String description;
+	boolean isNameKnown;
+	boolean shouldMerge;
+	boolean useKnown;
+	boolean isContainer;
+	boolean isMagic;
+	boolean canCharge;
+	boolean isUnique;
+	boolean noWish;
+	boolean isBig;
+	boolean isTough;
+	int dir;
+	Skills sub;
+	Material mtrl;
+	int prp;
+	ObjectClass sym;
+	int prob;
+	int dly;
+	int wt;
+	int cost;
+	int sdam;
+	int ldam;
+	int oc1;
+	int oc2;
+	int nut;
+
+	public long quan;
+
 	ObjectName() {
 	}
 
 	ObjectName(final int idx, final String name, final String desc,
-			final int nmkn, final int mrg, final int uskn, final int ctnr,
-			final int mgc, final int chrg, final int uniq, final int nwsh,
-			final int big, final int tuf, final int dir, final Skills sub,
+			final boolean nmkn, final boolean mrg, final boolean uskn,
+			final boolean ctnr, final boolean mgc, final boolean chrg,
+			final boolean uniq, final boolean nwsh, final boolean big,
+			final boolean tuf, final int dir, final Skills sub,
 			final Material mtrl, final int prp, final ObjectClass sym,
 			final int prob, final int dly, final int wt, final int cost,
 			final int sdam, final int ldam, final int oc1, final int oc2,
 			final int nut) {
+
+		this.idx = idx;
+		this.name = name;
+		this.description = desc;
+		this.isNameKnown = nmkn;
+		this.shouldMerge = mrg;
+		this.useKnown = uskn;
+		this.isContainer = ctnr;
+		this.isMagic = mgc;
+		this.canCharge = chrg;
+		this.isUnique = uniq;
+		this.noWish = nwsh;
+		this.isBig = big;
+		this.isTough = tuf;
+		this.dir = dir;
+		this.sub = sub;
+		this.mtrl = mtrl;
+		this.prp = prp;
+		this.sym = sym;
+		this.prob = prob;
+		this.dly = dly;
+		this.wt = wt;
+		this.cost = cost;
+		this.sdam = sdam;
+		this.ldam = ldam;
+		this.oc1 = oc1;
+		this.oc2 = oc2;
+		this.nut = nut;
+
 	}
 
 }

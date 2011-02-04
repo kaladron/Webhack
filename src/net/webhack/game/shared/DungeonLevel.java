@@ -10,9 +10,6 @@ import java.util.List;
 import net.webhack.game.shared.LocationType.Door;
 import net.webhack.game.shared.monsters.GridBug;
 import net.webhack.game.shared.monsters.Monster;
-import net.webhack.game.shared.things.Boulder;
-import net.webhack.game.shared.things.Gold;
-import net.webhack.game.shared.things.Thing;
 
 /**
  * Routines defining a level within a Webhack Dungeon
@@ -302,7 +299,7 @@ public class DungeonLevel implements LocationMap {
 				if (ftyp != LocationType.CORR || !random.oneIn(100)) {
 					crm.typ = ftyp;
 					if (nxcor && random.oneIn(50)) {
-						mksobj_at(new Boulder(), xx, yy, true, false);
+						mksobj_at(ObjectName.BOULDER, xx, yy, true, false);
 					}
 				} else {
 					crm.typ = LocationType.SCORR;
@@ -425,12 +422,12 @@ public class DungeonLevel implements LocationMap {
 		return;
 	}
 
-	Gold g_at(final int x, final int y) {
-		final List<ThingLocation> things = locations[x][y].things;
+	Obj g_at(final int x, final int y) {
+		final List<Obj> things = locations[x][y].things;
 
-		for (final ThingLocation thingloc : things) {
-			if (thingloc.thing instanceof Gold) {
-				return (Gold) thingloc.thing;
+		for (final Obj thingloc : things) {
+			if (thingloc.otyp == ObjectName.GOLD_PIECE) {
+				return thingloc;
 			}
 		}
 
@@ -448,8 +445,8 @@ public class DungeonLevel implements LocationMap {
 				&& y <= Webhack.ROWNO - 1;
 	}
 
-	Thing mkgold(long amount, final int x, final int y) {
-		Thing gold = g_at(x, y);
+	Obj mkgold(long amount, final int x, final int y) {
+		Obj gold = g_at(x, y);
 
 		if (amount <= 0L) {
 			amount = (1 + random.rnd(dungeon.level_difficulty() + 2)
@@ -458,18 +455,18 @@ public class DungeonLevel implements LocationMap {
 		if (gold != null) {
 			gold.quan += amount;
 		} else {
-			gold = mksobj_at(new Gold(), x, y, true, false);
+			gold = mksobj_at(ObjectName.GOLD_PIECE, x, y, true, false);
 			gold.quan = amount;
 		}
 
-		return (gold);
+		return gold;
 	}
 
-	Thing mksobj_at(final Thing thing, final int x, final int y,
+	Obj mksobj_at(final ObjectName oType, final int x, final int y,
 			final boolean init, final boolean isArtifact) {
-		// final int otmp = mksobj(oType, init, isArtifact);
-		place_object(thing, x, y);
-		return thing;
+		final Obj otmp = new Obj(oType, init, isArtifact);
+		place_object(otmp, x, y);
+		return otmp;
 	}
 
 	/**
@@ -539,8 +536,10 @@ public class DungeonLevel implements LocationMap {
 				&& doorIndex < Webhack.DOORMAX && !near_door);
 	}
 
-	void place_object(final Thing thing, final int x, final int y) {
-		locations[x][y].things.add(new ThingLocation(thing, x, y));
+	void place_object(final Obj thing, final int x, final int y) {
+		thing.x = x;
+		thing.y = y;
+		locations[x][y].things.add(thing);
 	}
 
 	boolean testMove(final int ux, final int uy, final int dx, final int dy,
@@ -558,6 +557,10 @@ public class DungeonLevel implements LocationMap {
 				&& (loc.doormask == Door.CLOSED || loc.doormask == Door.LOCKED)) {
 			return false;
 		}
+
+		// if (sobj_at(ObjectName.BOULDER,x,y)) {
+		// return false;
+		// }
 
 		return true;
 	}
@@ -883,7 +886,7 @@ public class DungeonLevel implements LocationMap {
 
 	@Stub
 	private void mktrap(final int num, final boolean mazeflag, final Room room,
-			final Thing tm) {
+			final Obj tm) {
 	}
 
 	@Stub
