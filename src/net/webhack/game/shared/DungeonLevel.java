@@ -529,6 +529,13 @@ public class DungeonLevel implements LocationMap {
 		return true;
 	}
 
+	void movobj(final Obj obj, final int ox, final int oy) {
+		remove_object(obj);
+		dungeon.ui.newsym(obj.x, obj.y);
+		place_object(obj, ox, oy);
+		dungeon.ui.newsym(ox, oy);
+	}
+
 	boolean okDoor(final int x, final int y) {
 		final boolean near_door = byDoor(x, y);
 
@@ -540,6 +547,12 @@ public class DungeonLevel implements LocationMap {
 		thing.x = x;
 		thing.y = y;
 		locations[x][y].things.add(thing);
+	}
+
+	void remove_object(final Obj obj) {
+		final int x = obj.x;
+		final int y = obj.y;
+		locations[x][y].things.remove(obj);
 	}
 
 	boolean testMove(final int ux, final int uy, final int dx, final int dy,
@@ -559,7 +572,9 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		if (sobj_at(ObjectName.BOULDER, x, y) != null) {
-			return false;
+			if (!moverock()) {
+				return false;
+			}
 		}
 
 		return true;
@@ -913,6 +928,34 @@ public class DungeonLevel implements LocationMap {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 
+	 * @return true if the rock moved, false if not.
+	 */
+	private boolean moverock() {
+		/* boulder starting position */
+		final int sx = you.ux + you.dx;
+		final int sy = you.uy + you.dy;
+
+		Obj otmp;
+
+		while ((otmp = sobj_at(ObjectName.BOULDER, sx, sy)) != null) {
+			final int rx = you.ux + 2 * you.dx; /* boulder destination position */
+			final int ry = you.uy + 2 * you.dy;
+
+			if (isOk(rx, ry) && !locations[rx][ry].typ.isRock()) {
+				movobj(otmp, rx, ry);
+				dungeon.ui.newsym(sx, sy);
+			} else {
+				dungeon.ui.pline("Can't move the rock");
+				return false;
+			}
+
+		}
+
+		return true;
 	}
 
 	private Obj sobj_at(final ObjectName n, final int x, final int y) {
