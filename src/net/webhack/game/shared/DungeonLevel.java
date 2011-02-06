@@ -571,7 +571,7 @@ public class DungeonLevel implements LocationMap {
 			return false;
 		}
 
-		if (sobj_at(ObjectName.BOULDER, x, y) != null) {
+		if (loc.sobj_at(ObjectName.BOULDER) != null) {
 			if (!moverock()) {
 				return false;
 			}
@@ -941,11 +941,17 @@ public class DungeonLevel implements LocationMap {
 
 		Obj otmp;
 
-		while ((otmp = sobj_at(ObjectName.BOULDER, sx, sy)) != null) {
+		while ((otmp = locations[sx][sy].sobj_at(ObjectName.BOULDER)) != null) {
 			final int rx = you.ux + 2 * you.dx; /* boulder destination position */
 			final int ry = you.uy + 2 * you.dy;
 
-			if (isOk(rx, ry) && !locations[rx][ry].typ.isRock()) {
+			final Location l = locations[rx][ry];
+
+			// TODO(jeffbailey): Check for closed doors here.
+			if (isOk(rx, ry) && !l.typ.isRock()
+					&& l.typ != LocationType.IRONBARS
+					&& (!l.typ.isDoor() || !(you.dx != 0 && you.dy != 0))
+					&& l.sobj_at(ObjectName.BOULDER) == null) {
 				movobj(otmp, rx, ry);
 				dungeon.ui.newsym(sx, sy);
 			} else {
@@ -957,17 +963,4 @@ public class DungeonLevel implements LocationMap {
 
 		return true;
 	}
-
-	private Obj sobj_at(final ObjectName n, final int x, final int y) {
-		final List<Obj> things = locations[x][y].things;
-
-		for (final Obj thingloc : things) {
-			if (thingloc.otyp == n) {
-				return thingloc;
-			}
-		}
-
-		return null;
-	}
-
 }

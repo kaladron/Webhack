@@ -60,10 +60,37 @@ public class Location {
 	Monster monster = null;
 
 	/**
+	 * Check if there are objects at this location.
+	 * 
+	 * @return true if objects at this location
+	 */
+	public boolean obj_at() {
+		return !things.isEmpty();
+	}
+
+	/**
+	 * Look for a specified type of Object at the location
+	 * 
+	 * @param n
+	 *            Type of Object
+	 * @return Object or null if not found.
+	 */
+	public Obj sobj_at(final ObjectName n) {
+		for (final Obj thingloc : things) {
+			if (thingloc.otyp == n) {
+				return thingloc;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Converts a Secret Door to a Door. Used when discovering a hidden door.
 	 */
 	@Stub
 	void convertSdoorToDoor() {
 		typ = LocationType.DOOR;
 	}
+
 }

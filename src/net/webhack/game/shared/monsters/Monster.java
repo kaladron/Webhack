@@ -8,6 +8,7 @@ import net.webhack.game.shared.DungeonLevel;
 import net.webhack.game.shared.Location;
 import net.webhack.game.shared.LocationMap;
 import net.webhack.game.shared.LocationType.Door;
+import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
@@ -159,6 +160,12 @@ public class Monster {
 				}
 
 				if (map.monAt(nx, ny)) {
+					continue;
+				}
+
+				final boolean checkobj = loc.obj_at();
+
+				if (checkobj & loc.sobj_at(ObjectName.BOULDER) != null) {
 					continue;
 				}
 
