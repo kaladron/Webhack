@@ -8,11 +8,11 @@ import java.util.EnumSet;
 
 import net.webhack.game.shared.Artifact;
 import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Bindery;
 import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.You;
 import net.webhack.game.shared.race.Race;
 
@@ -21,8 +21,8 @@ import net.webhack.game.shared.race.Race;
  * 
  */
 public class Priest extends Role {
-	public Priest(final RandomHelper random) {
-		this.random = random;
+	public Priest(final Bindery bindery) {
+		this.bindery = bindery;
 		name = new String[] { "Priest", "Priestess" };
 		title = new String[][] { { "Aspirant", null }, { "Acolyte", null },
 				{ "Adept", null }, { "Priest", "Priestess" },

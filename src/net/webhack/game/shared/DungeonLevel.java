@@ -66,22 +66,27 @@ public class DungeonLevel implements LocationMap {
 
 	public final Dungeon dungeon;
 
-	public final RandomHelper random;
-
-	private final You you;
-
 	/** Rectangles for making room. */
 	private final Rectangles rectangles;
 
 	/** References to Rooms. */
 	private Rooms rooms;
 
-	public DungeonLevel(final RandomHelper random, final You you,
-			final Dungeon dungeon) {
-		this.random = random;
-		this.you = you;
-		this.rectangles = new Rectangles(random);
+	private final Bindery bindery;
+
+	private final You you;
+	private final WebhackRandom random;
+	private final WebhackUI ui;
+
+	public DungeonLevel(final Bindery bindery, final Dungeon dungeon) {
+		this.bindery = bindery;
+		this.rectangles = new Rectangles(bindery.random);
 		this.dungeon = dungeon;
+
+		// Helper shortcuts.
+		this.you = bindery.you;
+		this.random = bindery.random;
+		this.ui = bindery.ui;
 
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
@@ -99,7 +104,7 @@ public class DungeonLevel implements LocationMap {
 		you.uinwater = false;
 		for (zx = 1; zx < Webhack.COLNO; zx++) {
 			for (zy = 0; zy < Webhack.ROWNO; zy++) {
-				dungeon.ui.showMapSpot(zx, zy);
+				bindery.ui.showMapSpot(zx, zy);
 			}
 		}
 		// exercise(A_WIS, TRUE);
@@ -107,7 +112,7 @@ public class DungeonLevel implements LocationMap {
 		// if (!level.flags.hero_memory || Underwater) {
 		// dungeon.ui.flush_screen(1); /* flush temp screen */
 		// display_nhwindow(WIN_MAP, TRUE); /* wait */
-		dungeon.ui.docrt();
+		ui.docrt();
 		// }
 
 	}
@@ -115,7 +120,7 @@ public class DungeonLevel implements LocationMap {
 	public Coordinate getAdjacentLoc(final int cmdKey, final String errorMsg,
 			final int x, final int y) {
 		if (!getdir(cmdKey)) {
-			dungeon.ui.pline("Never mind.");
+			ui.pline("Never mind.");
 			return null;
 		}
 		return new Coordinate(x + you.dx, y + you.dy);
@@ -147,6 +152,32 @@ public class DungeonLevel implements LocationMap {
 
 	public void onUpstairs() {
 		you.newPos(upstair);
+	}
+
+	/**
+	 * 
+	 * 
+	 * @return True if tried to pick something up, regardless of success.
+	 */
+	@Stub
+	public boolean pickup() {
+
+		// TODO(jeffbailey): At the moment, we assume one object per square,
+		// and that the only object in the game is gold.
+
+		// This should go into pickup_object
+		final Obj obj = locations[you.ux][you.uy]
+				.sobj_at(ObjectName.GOLD_PIECE);
+
+		final long count = obj.quan;
+
+		if (obj.otyp == ObjectName.GOLD_PIECE) {
+			you.ugold += count;
+			bindery.flags.botl = true;
+			remove_object(obj);
+		}
+
+		return true;
 	}
 
 	/**
@@ -182,10 +213,10 @@ public class DungeonLevel implements LocationMap {
 				if (x != you.ux || y != you.uy) {
 					if (locations[x][y].typ == LocationType.SDOOR) {
 						locations[x][y].convertSdoorToDoor(); /* .typ = DOOR */
-						dungeon.ui.newsym(x, y);
+						ui.newsym(x, y);
 					} else if (locations[x][y].typ == LocationType.SCORR) {
 						locations[x][y].typ = LocationType.CORR;
-						dungeon.ui.newsym(x, y);
+						ui.newsym(x, y);
 					}
 				}
 			}
@@ -216,10 +247,10 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		return false;
-	}
+	};
 
 	void add_door(final int x, final int y, final Room aroom) {
-	};
+	}
 
 	boolean byDoor(final int x, final int y) {
 		LocationType typ;
@@ -531,9 +562,9 @@ public class DungeonLevel implements LocationMap {
 
 	void movobj(final Obj obj, final int ox, final int oy) {
 		remove_object(obj);
-		dungeon.ui.newsym(obj.x, obj.y);
+		ui.newsym(obj.x, obj.y);
 		place_object(obj, ox, oy);
-		dungeon.ui.newsym(ox, oy);
+		ui.newsym(ox, oy);
 	}
 
 	boolean okDoor(final int x, final int y) {
@@ -665,7 +696,7 @@ public class DungeonLevel implements LocationMap {
 			if (random.oneIn(3)) {
 				final int x = room.someX(random);
 				final int y = room.someY(random);
-				final Monster monster = new GridBug(random);
+				final Monster monster = new GridBug(bindery);
 				monster.mx = x;
 				monster.my = y;
 				locations[x][y].monster = monster;
@@ -952,10 +983,13 @@ public class DungeonLevel implements LocationMap {
 					&& l.typ != LocationType.IRONBARS
 					&& (!l.typ.isDoor() || !(you.dx != 0 && you.dy != 0))
 					&& l.sobj_at(ObjectName.BOULDER) == null) {
+
+				// mtmp = m_at(rx, ry);
+
 				movobj(otmp, rx, ry);
-				dungeon.ui.newsym(sx, sy);
+				ui.newsym(sx, sy);
 			} else {
-				dungeon.ui.pline("Can't move the rock");
+				ui.pline("Can't move the rock");
 				return false;
 			}
 

@@ -1,5 +1,6 @@
 package net.webhack.game.shared;
 
+
 public enum Gender {
 	/** Male gender */
 	MALE("male", "he", "him", "his", "Mal"),
@@ -10,9 +11,9 @@ public enum Gender {
 	/** Neuter Gender */
 	NEUTER("neuter", "it", "it", "its", "Ntr");
 
-	public static Gender getRandom(final RandomHelper random) {
+	public static Gender getRandom(final Bindery bindery) {
 		final Gender[] genders = Gender.values();
-		return genders[random.rn2(genders.length)];
+		return genders[bindery.random.rn2(genders.length)];
 	}
 
 	final String adj;

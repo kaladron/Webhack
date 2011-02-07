@@ -8,6 +8,7 @@ import net.webhack.game.shared.command.Command;
 import net.webhack.game.shared.command.DoClose;
 import net.webhack.game.shared.command.DoKick;
 import net.webhack.game.shared.command.DoOpen;
+import net.webhack.game.shared.command.DoPickup;
 import net.webhack.game.shared.command.DoSearch;
 import net.webhack.game.shared.command.DoTogglePickup;
 import net.webhack.game.shared.command.WizMap;
@@ -104,7 +105,7 @@ public class Webhack {
 		/* attack monster */
 		if (mtmp != null) {
 			if (mtmp.mpeaceful) {
-				dungeon.ui.pline("You move right into " + mtmp.mname);
+				bindery.ui.pline("You move right into " + mtmp.mname);
 			}
 			you.attack(mtmp);
 			return;
@@ -224,7 +225,9 @@ public class Webhack {
 		registerCommand('c', new DoClose(bindery));
 		registerCommand('o', new DoOpen(bindery));
 		registerCommand('s', new DoSearch(bindery));
+		registerCommand(',', new DoPickup(bindery));
 		registerCommand('@', new DoTogglePickup(bindery));
+
 	}
 
 	/**
@@ -268,10 +271,9 @@ public class Webhack {
 
 	private void newGame() {
 		you = new You(bindery.flags.initrole != null ? bindery.flags.initrole
-				: Role.getRandom(bindery.random),
-				Race.getRandom(bindery.random),
-				Gender.getRandom(bindery.random), bindery);
-		dungeon = new Dungeon(bindery.random, you, bindery.ui, bindery.flags);
+				: Role.getRandom(bindery), Race.getRandom(bindery),
+				Gender.getRandom(bindery), bindery);
+		dungeon = new Dungeon(bindery);
 
 		bindery.flags.botlx = true;
 

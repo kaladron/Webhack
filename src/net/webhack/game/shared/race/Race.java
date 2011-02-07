@@ -1,8 +1,8 @@
 package net.webhack.game.shared.race;
 
 import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Bindery;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.role.Role;
 
 public abstract class Race {
@@ -16,9 +16,9 @@ public abstract class Race {
 		String f;
 	}
 
-	public static Race getRandom(final RandomHelper random) {
+	public static Race getRandom(final Bindery bindery) {
 		final Races[] races = Races.values();
-		return newRace(races[random.rn2(races.length)]);
+		return newRace(races[bindery.random.rn2(races.length)]);
 	}
 
 	public static Race newRace(final Races race) {

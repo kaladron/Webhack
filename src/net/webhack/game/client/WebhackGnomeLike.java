@@ -522,6 +522,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 	public void onKeyDown(final KeyDownEvent event) {
 
 		final int code = event.getNativeKeyCode();
+
 		int cmdKey;
 
 		switch (code) {
@@ -536,6 +537,10 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 			break;
 		case KeyCodes.KEY_DOWN:
 			cmdKey = 'j';
+			break;
+		// TODO(jeffbailey): Switch to a KeyPressEvent after we move to GWT 2.2
+		case 188:
+			cmdKey = ',';
 			break;
 		default:
 			if (event.isShiftKeyDown()) {
@@ -611,6 +616,8 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 		final String hitpoints = you.uhp + "/" + you.uhpmax;
 		webhackGnome.setHitPoints(hitpoints);
+
+		webhackGnome.setGold(you.ugold);
 	}
 
 	public char ynFunction(final String question, final char[] choices,

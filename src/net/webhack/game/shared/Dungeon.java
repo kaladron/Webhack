@@ -11,16 +11,13 @@ package net.webhack.game.shared;
 public class Dungeon {
 
 	public final DungeonLevel dlevel;
-	public final WebhackUI ui;
-	private final You you;
+	private final Bindery bindery;
 
-	public Dungeon(final RandomHelper random, final You you,
-			final WebhackUI ui, final Flags flags) {
-		this.you = you;
-		this.ui = ui;
+	public Dungeon(final Bindery bindery) {
+		this.bindery = bindery;
 		// TODO(jeffbailey): Figure out better bootstrapping
-		ui.init(this, you, flags);
-		dlevel = new DungeonLevel(random, you, this);
+		bindery.ui.init(this, bindery.you, bindery.flags);
+		dlevel = new DungeonLevel(bindery, this);
 		dlevel.onUpstairs();
 	}
 
@@ -39,14 +36,14 @@ public class Dungeon {
 	 */
 	int level_difficulty() {
 		// TODO(jeffbailey): STUB!
-		if (you.inEndGame()) {
+		if (bindery.you.inEndGame()) {
 			// return((xchar)(depth(&sanctum_level) + u.ulevel/2));
 			return 1;
-		} else if (you.youHave.amulet) {
+		} else if (bindery.you.youHave.amulet) {
 			// return(deepest_lev_reached(FALSE));
 			return 1;
 		} else {
-			return depth(you.uz);
+			return depth(bindery.you.uz);
 		}
 	}
 

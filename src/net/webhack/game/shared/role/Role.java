@@ -8,11 +8,11 @@ import java.util.EnumSet;
 
 import net.webhack.game.shared.Artifact;
 import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Bindery;
 import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.You;
 import net.webhack.game.shared.monsters.GridBug;
@@ -26,7 +26,7 @@ import net.webhack.game.shared.race.Race;
 public abstract class Role {
 
 	public class Advance {
-		/* "fix" is the fixed amount, "rnd" is the random amount */
+		/* "fix" is the fixed amount, "rnd" is the bindery amount */
 		public final int infix; /* at character initialization */
 		public final int inrnd;
 		final int lofix, lornd; /* gained per level < urole.xlev */
@@ -75,46 +75,46 @@ public abstract class Role {
 		WIZARD
 	}
 
-	public static Role getRandom(final RandomHelper random) {
+	public static Role getRandom(final Bindery bindery) {
 		// TODO(jeffbailey): STUB!
-		// return roles[random.rn2(roles.length)];
-		return new Archeologist(random);
+		// return roles[bindery.rn2(roles.length)];
+		return new Archeologist(bindery);
 	}
 
-	public static Role newRole(final RandomHelper random, final Roles role) {
+	public static Role newRole(final Bindery bindery, final Roles role) {
 		switch (role) {
 		case ARCHEOLOGIST:
-			return new Archeologist(random);
+			return new Archeologist(bindery);
 		case BARBARIAN:
-			return new Barbarian(random);
+			return new Barbarian(bindery);
 		case CAVEMAN:
-			return new Caveman(random);
+			return new Caveman(bindery);
 		case HEALER:
-			return new Healer(random);
+			return new Healer(bindery);
 		case KNIGHT:
-			return new Knight(random);
+			return new Knight(bindery);
 		case MONK:
-			return new Monk(random);
+			return new Monk(bindery);
 		case PRIEST:
-			return new Priest(random);
+			return new Priest(bindery);
 		case RANGER:
-			return new Ranger(random);
+			return new Ranger(bindery);
 		case ROGUE:
-			return new Rogue(random);
+			return new Rogue(bindery);
 		case SAMURAI:
-			return new Samurai(random);
+			return new Samurai(bindery);
 		case TOURIST:
-			return new Tourist(random);
+			return new Tourist(bindery);
 		case VALKYRIE:
-			return new Valkyrie(random);
+			return new Valkyrie(bindery);
 		case WIZARD:
-			return new Wizard(random);
+			return new Wizard(bindery);
 		default:
 			return null;
 		}
 	}
 
-	protected RandomHelper random;
+	protected Bindery bindery;
 
 	public String[] name;
 
@@ -170,7 +170,7 @@ public abstract class Role {
 
 	@Stub
 	public Monster getMonster(final Gender gender) {
-		return new GridBug(random);
+		return new GridBug(bindery);
 	}
 
 }

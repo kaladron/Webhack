@@ -3,13 +3,13 @@ package net.webhack.game.shared.monsters;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.webhack.game.shared.Bindery;
 import net.webhack.game.shared.Coordinate;
 import net.webhack.game.shared.DungeonLevel;
 import net.webhack.game.shared.Location;
 import net.webhack.game.shared.LocationMap;
 import net.webhack.game.shared.LocationType.Door;
 import net.webhack.game.shared.ObjectName;
-import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
@@ -91,14 +91,14 @@ public class Monster {
 
 	/** Y Coordinate where the monster thinks you are. */
 	public int muy;
+	private final Bindery bindery;
 
-	public Monster(final RandomHelper random, final int idx,
-			final String mname, final char mlet, final int mlevel,
-			final int mmove, final int ac, final int mr, final int maligntyp,
-			final int geno, final int cwt, final int cnutrit, final int pxlth,
-			final int msound, final int msize, final int mresists,
-			final int mconveys, final int mflags1, final int mflags2,
-			final int mflags3) {
+	public Monster(final Bindery bindery, final int idx, final String mname,
+			final char mlet, final int mlevel, final int mmove, final int ac,
+			final int mr, final int maligntyp, final int geno, final int cwt,
+			final int cnutrit, final int pxlth, final int msound,
+			final int msize, final int mresists, final int mconveys,
+			final int mflags1, final int mflags2, final int mflags3) {
 		this.idx = idx;
 		this.mname = mname;
 		this.mlet = mlet;
@@ -120,7 +120,9 @@ public class Monster {
 		this.mflags2 = mflags2;
 		this.mflags3 = mflags3;
 
-		mhpmax = mhp = random.d(mlevel, 8);
+		this.bindery = bindery;
+
+		mhpmax = mhp = bindery.random.d(mlevel, 8);
 	}
 
 	/**
@@ -228,9 +230,9 @@ public class Monster {
 			dungeonLevel.removeMonster(omx, omy);
 			dungeonLevel.placeMonster(this, nix, niy);
 
-			dungeonLevel.dungeon.ui.newsym(omx, omy); /* update the old position */
+			bindery.ui.newsym(omx, omy); /* update the old position */
 
-			dungeonLevel.dungeon.ui.newsym(nix, niy);
+			bindery.ui.newsym(nix, niy);
 		}
 
 		return 1;

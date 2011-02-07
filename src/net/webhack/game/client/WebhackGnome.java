@@ -17,10 +17,17 @@ public class WebhackGnome extends Composite {
 	@UiField
 	SpanElement hitpoints;
 
+	@UiField
+	SpanElement gold;
+
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
 	public WebhackGnome() {
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+
+	void setGold(final Long in) {
+		gold.setInnerText(in.toString());
 	}
 
 	void setHeadingOne(final String in) {
@@ -30,5 +37,4 @@ public class WebhackGnome extends Composite {
 	void setHitPoints(final String in) {
 		hitpoints.setInnerText(in);
 	}
-
 }

@@ -8,11 +8,11 @@ import java.util.EnumSet;
 
 import net.webhack.game.shared.Artifact;
 import net.webhack.game.shared.Attributes;
+import net.webhack.game.shared.Bindery;
 import net.webhack.game.shared.Gender;
 import net.webhack.game.shared.MonsterClass;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.PM;
-import net.webhack.game.shared.RandomHelper;
 import net.webhack.game.shared.You;
 import net.webhack.game.shared.race.Race;
 
@@ -21,8 +21,8 @@ import net.webhack.game.shared.race.Race;
  * 
  */
 public class Knight extends Role {
-	public Knight(final RandomHelper random) {
-		this.random = random;
+	public Knight(final Bindery bindery) {
+		this.bindery = bindery;
 		name = new String[] { "Knight", null };
 		title = new String[][] { { "Gallant", null }, { "Esquire", null },
 				{ "Bachelor", null }, { "Sergeant", null }, { "Knight", null },

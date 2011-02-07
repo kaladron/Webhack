@@ -66,7 +66,7 @@ public class RoleRaceGender extends PopupPanel implements ClickHandler {
 		final String value = roleSelector.getValue(roleSelector
 				.getSelectedIndex());
 		final Roles myRole = Role.Roles.valueOf(value);
-		bindery.flags.initrole = Role.newRole(bindery.random, myRole);
+		bindery.flags.initrole = Role.newRole(bindery, myRole);
 		bindery.flags.plname = name.getText();
 
 		this.hide();

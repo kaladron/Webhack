@@ -221,6 +221,8 @@ public class You {
 	// struct skills weapon_skills[P_NUM_SKILLS];
 	boolean twoweap; /* KMH -- Using two-weapon combat */
 
+	public long ugold;
+
 	public Role role;
 	Race race;
 	Gender gender;

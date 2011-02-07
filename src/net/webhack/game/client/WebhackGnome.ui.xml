@@ -36,7 +36,7 @@
 						<td>HP: <span ui:field='hitpoints'>999/999</span></td>
 						<td>AC: 7</td>
 						<td>Power: 8/8</td>
-						<td>Au: 0</td>
+						<td>Au: <span ui:field='gold'>0</span></td>
 					</tr>
 				</table>
 				<hr />
