@@ -84,7 +84,7 @@ public class Webhack {
 
 	public Webhack(final WebhackUI ui, final Flags flags) {
 		this.bindery = new Bindery(this, new WebhackRandom(), ui, flags);
-
+		ui.setBindery(bindery);
 		registerCommands();
 	}
 

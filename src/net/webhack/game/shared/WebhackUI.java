@@ -19,6 +19,8 @@ public interface WebhackUI {
 
 	void pline(String line);
 
+	void setBindery(Bindery bindery);
+
 	void setCommand(Command command);
 
 	void showMapSpot(int zx, int zy);

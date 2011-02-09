@@ -27,7 +27,7 @@ public abstract class Display implements WebhackUI {
 	 */
 
 	enum SeenVector {
-		SV1, SV2, SV3, SV4, SV5, SV6, SV7;
+		SV0, SV1, SV2, SV3, SV4, SV5, SV6, SV7;
 	}
 
 	protected class Gbuf {
@@ -245,6 +245,8 @@ public abstract class Display implements WebhackUI {
 	protected Flags flags;
 	Command command;
 
+	protected Bindery bindery;
+
 	public Display() {
 		clear_glyph_buffer();
 	}
@@ -314,7 +316,7 @@ public abstract class Display implements WebhackUI {
 		/* overlay with monsters */
 		see_monsters();
 
-		// flags.botlx = 1; /* force a redraw of the bottom line */
+		bindery.flags.botlx = true; /* force a redraw of the bottom line */
 
 	}
 
@@ -378,6 +380,10 @@ public abstract class Display implements WebhackUI {
 		if (you.steed == null) {
 			newsym(you.ux, you.uy);
 		}
+	}
+
+	public void setBindery(final Bindery bindery) {
+		this.bindery = bindery;
 	}
 
 	public void setCommand(final Command command) {
@@ -467,17 +473,15 @@ public abstract class Display implements WebhackUI {
 		// At this point, we're just making everything visible to the hero. Want
 		// to make the game playable soonish.
 
-		for (int y = 0; y < Webhack.ROWNO; y++) {
-			for (int x = 0; x < Webhack.COLNO; x++) {
-				final Location ptr = dungeon.getLevel().getLoc(x, y);
-
-				if (ptr.typ != LocationType.STONE) {
-					newsym(x, y);
-				}
-
-			}
-		}
-
+		// for (int y = 0; y < Webhack.ROWNO; y++) {
+		// for (int x = 0; x < Webhack.COLNO; x++) {
+		// final Location ptr = dungeon.getLevel().getLoc(x, y);
+		// if (ptr.typ != LocationType.STONE) {
+		// newsym(x, y);
+		// }
+		// }
+		// }
+		newsym(you.ux, you.uy);
 	}
 
 	/**
