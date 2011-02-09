@@ -97,7 +97,7 @@ public class Room implements Comparable<Room> {
 	 * @param random
 	 * @return
 	 */
-	public int someX(final RandomHelper random) {
+	public int someX(final WebhackRandom random) {
 		return random.rn2(hx - lx + 1) + lx;
 	}
 
@@ -107,11 +107,11 @@ public class Room implements Comparable<Room> {
 	 * @param random
 	 * @return
 	 */
-	public int someY(final RandomHelper random) {
+	public int someY(final WebhackRandom random) {
 		return random.rn2(hy - ly + 1) + ly;
 	}
 
-	Coordinate someXY(final RandomHelper random) {
+	Coordinate someXY(final WebhackRandom random) {
 		if (nsubrooms == 0) {
 			final int x = someX(random);
 			final int y = someY(random);

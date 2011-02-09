@@ -19,7 +19,7 @@ public class RectanglesTest {
 
 	@Test
 	public void addRectangle() {
-		final Rectangles rectangles = new Rectangles(new MockRandom());
+		final Rectangles rectangles = new Rectangles(new WebhackRandom());
 		final Rectangle r = new Rectangle(10, 20, 30, 40);
 		Rectangle s = rectangles.getRect(r);
 		assertEquals(s, null);
@@ -49,7 +49,7 @@ public class RectanglesTest {
 	 */
 	@Test
 	public void initialRectangle() {
-		final Rectangles rectangles = new Rectangles(new MockRandom());
+		final Rectangles rectangles = new Rectangles(new WebhackRandom());
 		final Rectangle r = rectangles.rndRect();
 		// Initial rectangle should be the size of the level.
 		final Rectangle s = new Rectangle(0, 0, Webhack.COLNO - 1,
@@ -59,7 +59,7 @@ public class RectanglesTest {
 
 	@Test
 	public void removeRectangle() {
-		final Rectangles rectangles = new Rectangles(new MockRandom());
+		final Rectangles rectangles = new Rectangles(new WebhackRandom());
 		final Rectangle r = new Rectangle(10, 20, 30, 40);
 		rectangles.addRect(r);
 		Rectangle s = rectangles.getRect(r);
@@ -71,7 +71,7 @@ public class RectanglesTest {
 
 	@Test
 	public void splitRects() {
-		final Rectangles rects = new Rectangles(new MockRandom());
+		final Rectangles rects = new Rectangles(new WebhackRandom());
 		// Always just the first one here.
 		final Rectangle r = rects.rndRect();
 		final Rectangle s = new Rectangle(1, 1, 10, 10);

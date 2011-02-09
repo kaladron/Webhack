@@ -12,9 +12,9 @@ class Rectangles {
 	private static int MAX_RECT = 50;
 	public int rectCnt;
 	public Rectangle[] rect = new Rectangle[MAX_RECT];
-	private final RandomHelper random;
+	private final WebhackRandom random;
 
-	Rectangles(RandomHelper random) {
+	Rectangles(final WebhackRandom random) {
 		this.random = random;
 		rect[0] = new Rectangle();
 		rectCnt = 1;
@@ -31,11 +31,11 @@ class Rectangles {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Add a Rectangle to the list.
 	 */
-	void addRect(Rectangle r) {
+	void addRect(final Rectangle r) {
 		if (rectCnt >= MAX_RECT) {
 			return;
 		}
@@ -55,10 +55,10 @@ class Rectangles {
 	 * 
 	 * @return Rectangle or null if not found.
 	 */
-	Rectangle getRect(Rectangle r) {
+	Rectangle getRect(final Rectangle r) {
 		for (int i = 0; i < rectCnt; i++) {
-			if (r.lowX >= rect[i].lowX && r.lowY >= rect[i].lowY && r.highX <= rect[i].highX
-					&& r.highY <= rect[i].highY) {
+			if (r.lowX >= rect[i].lowX && r.lowY >= rect[i].lowY
+					&& r.highX <= rect[i].highX && r.highY <= rect[i].highY) {
 				return rect[i];
 			}
 		}
@@ -71,8 +71,8 @@ class Rectangles {
 	 * @param r
 	 *            Rectangle to remove.
 	 */
-	void removeRect(Rectangle r) {
-		int ind = getRectInd(r);
+	void removeRect(final Rectangle r) {
+		final int ind = getRectInd(r);
 		if (ind >= 0) {
 			rect[ind] = rect[--rectCnt];
 		}
@@ -97,13 +97,13 @@ class Rectangles {
 	 * @param r2
 	 *            Sub-rectangle to sub split out of r1
 	 */
-	void splitRects(Rectangle r1, Rectangle r2) {
-		Rectangle old_r = new Rectangle(r1);
+	void splitRects(final Rectangle r1, final Rectangle r2) {
+		final Rectangle old_r = new Rectangle(r1);
 		removeRect(r1);
 
 		/* Walk down since rect_cnt & rect[] will change... */
 		for (int i = rectCnt - 1; i >= 0; i--) {
-			Rectangle r = new Rectangle();
+			final Rectangle r = new Rectangle();
 			if (intersect(rect[i], r2, r)) {
 				splitRects(rect[i], r);
 			}
@@ -111,25 +111,25 @@ class Rectangles {
 
 		if (r2.lowY - old_r.lowY - 1 > (old_r.highY < Webhack.ROWNO - 1 ? 2 * Webhack.YLIM
 				: Webhack.YLIM + 1) + 4) {
-			Rectangle r = new Rectangle(old_r);
+			final Rectangle r = new Rectangle(old_r);
 			r.highY = r2.lowY - 2;
 			addRect(r);
 		}
 		if (r2.lowX - old_r.lowX - 1 > (old_r.highX < Webhack.COLNO - 1 ? 2 * Webhack.XLIM
 				: Webhack.XLIM + 1) + 4) {
-			Rectangle r = new Rectangle(old_r);
+			final Rectangle r = new Rectangle(old_r);
 			r.highX = r2.lowX - 2;
 			addRect(r);
 		}
 		if (old_r.highY - r2.highY - 1 > (old_r.lowY > 0 ? 2 * Webhack.YLIM
 				: Webhack.YLIM + 1) + 4) {
-			Rectangle r = new Rectangle(old_r);
+			final Rectangle r = new Rectangle(old_r);
 			r.lowY = r2.highY + 2;
 			addRect(r);
 		}
 		if (old_r.highX - r2.highX - 1 > (old_r.lowX > 0 ? 2 * Webhack.XLIM
 				: Webhack.XLIM + 1) + 4) {
-			Rectangle r = new Rectangle(old_r);
+			final Rectangle r = new Rectangle(old_r);
 			r.lowX = r2.highX + 2;
 			addRect(r);
 		}
@@ -142,10 +142,10 @@ class Rectangles {
 	 *            Rectangle to search for.
 	 * @return Index number or -1 if not found.
 	 */
-	private int getRectInd(Rectangle r) {
+	private int getRectInd(final Rectangle r) {
 		for (int i = 0; i < rectCnt; i++) {
-			if (r.lowX == rect[i].lowX && r.lowY == rect[i].lowY && r.highX == rect[i].highX
-					&& r.highY == rect[i].highY) {
+			if (r.lowX == rect[i].lowX && r.lowY == rect[i].lowY
+					&& r.highX == rect[i].highX && r.highY == rect[i].highY) {
 				return i;
 			}
 		}
@@ -165,8 +165,10 @@ class Rectangles {
 	 * @return True if intersection exist and put it in r3. otherwise returns
 	 *         false
 	 */
-	private boolean intersect(Rectangle r1, Rectangle r2, Rectangle r3) {
-		if (r2.lowX > r1.highX || r2.lowY > r1.highY || r2.highX < r1.lowX || r2.highY < r1.lowY) {
+	private boolean intersect(final Rectangle r1, final Rectangle r2,
+			final Rectangle r3) {
+		if (r2.lowX > r1.highX || r2.lowY > r1.highY || r2.highX < r1.lowX
+				|| r2.highY < r1.lowY) {
 			return false;
 		}
 

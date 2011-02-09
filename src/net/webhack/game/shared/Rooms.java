@@ -21,11 +21,11 @@ public class Rooms {
 
 	private final int doorindex = 0;
 
-	private final RandomHelper random;
+	private final WebhackRandom random;
 
 	private final LocationMap locMap;
 
-	public Rooms(final Rectangles rectangles, final RandomHelper random,
+	public Rooms(final Rectangles rectangles, final WebhackRandom random,
 			final LocationMap lmap) {
 		this.rectangles = rectangles;
 		this.random = random;

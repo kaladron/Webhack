@@ -10,7 +10,7 @@ import java.util.Random;
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
  */
-public class WebhackRandom implements RandomHelper {
+public class WebhackRandom {
 
 	private final Random random = new Random();
 
