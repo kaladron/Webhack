@@ -705,6 +705,36 @@ public abstract class Display implements WebhackUI {
 		return true;
 	}
 
+	int set_corner(final Location lev, final int which,
+			final EnumSet<SeenVector> outer, final SeenVector inner,
+			final String name) {
+		int idx;
+
+		// TODO(jeffbailey): HACK
+		final int WM_C_OUTER = 1;
+		final int WM_C_INNER = 2;
+
+		// switch (lev.wall_info & WM_MASK) {
+		switch (0) {
+		case 0:
+			idx = which;
+			break;
+		case WM_C_OUTER:
+			idx = outer.contains(lev.seenv) ? which : S_stone;
+			break;
+		case WM_C_INNER:
+			idx = !lev.seenv.contains(inner) ? which : S_stone;
+			break;
+		default:
+			// impossible("wall_angle: unknown %s mode %d", name, lev.wall_info
+			// & WM_MASK);
+			idx = S_stone;
+			break;
+		}
+
+		return idx;
+	}
+
 	void show_glyph(final int x, final int y, final int glyph) {
 		// TODO(jeffbailey): STUB
 		if (gbuf[y][x].glyph != glyph) {
@@ -804,6 +834,9 @@ public abstract class Display implements WebhackUI {
 	 */
 	@Stub
 	private int wall_angle(final Location lev) {
+
+		int idx;
+
 		switch (lev.typ) {
 		case TUWALL:
 
@@ -812,14 +845,39 @@ public abstract class Display implements WebhackUI {
 			/* fall through */
 
 		case VWALL:
-			return S_vwall;
+			idx = S_vwall;
+			break;
 
 		case HWALL:
-			return S_hwall;
+			idx = S_hwall;
+			break;
+
+		case TLCORNER:
+			idx = set_corner(lev, S_tlcorn,
+					EnumSet.of(SeenVector.SV3, SeenVector.SV4, SeenVector.SV5),
+					SeenVector.SV4, "tlcorn");
+			break;
+		case TRCORNER:
+			idx = set_corner(lev, S_trcorn,
+					EnumSet.of(SeenVector.SV5, SeenVector.SV6, SeenVector.SV7),
+					SeenVector.SV6, "trcorn");
+			break;
+		case BLCORNER:
+			idx = set_corner(lev, S_blcorn,
+					EnumSet.of(SeenVector.SV1, SeenVector.SV2, SeenVector.SV3),
+					SeenVector.SV2, "blcorn");
+			break;
+		case BRCORNER:
+			idx = set_corner(lev, S_brcorn,
+					EnumSet.of(SeenVector.SV7, SeenVector.SV0, SeenVector.SV5),
+					SeenVector.SV0, "brcorn");
+			break;
 
 		default:
-			return S_stone;
+			idx = S_stone;
 		}
+
+		return idx;
 	}
 
 }
