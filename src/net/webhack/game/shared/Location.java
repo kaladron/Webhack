@@ -15,6 +15,26 @@ import net.webhack.game.shared.monsters.Monster;
  * 
  */
 public class Location {
+
+	public static final int WM_W_LEFT = 1; /* vertical or horizontal wall */
+	public static final int WM_W_RIGHT = 2;
+	public static final int WM_W_TOP = WM_W_LEFT;
+	public static final int WM_W_BOTTOM = WM_W_RIGHT;
+
+	public static final int WM_C_OUTER = 1; /* corner wall */
+	public static final int WM_C_INNER = 2;
+
+	public static final int WM_T_LONG = 1; /* T wall */
+	public static final int WM_T_BL = 2;
+	public static final int WM_T_BR = 3;
+
+	public static final int WM_X_TL = 1; /* cross wall */
+	public static final int WM_X_TR = 2;
+	public static final int WM_X_BL = 3;
+	public static final int WM_X_BR = 4;
+	public static final int WM_X_TLBR = 5;
+	public static final int WM_X_BLTR = 6;
+
 	/*
 	 * The structure describing a coordinate position. Before adding fields,
 	 * remember that this will significantly affect the size of temporary files
@@ -38,11 +58,15 @@ public class Location {
 
 	// More things that eventually provide typ information
 	public LocationType.Door doormask;
-	// #define altarmask flags
-	// #define wall_info flags
-	// #define drawbridgemask flags
-	// #define looted flags
-	// #define icedpool flags
+	// public final int altarmask flags
+
+	// TODO(jeffbailey): Some type safety would be nice here.
+	int wall_info;
+
+	// public final int wall_info flags
+	// public final int drawbridgemask flags
+	// public final int looted flags
+	// public final int icedpool flags
 
 	/** wall/door/etc is horiz. (more typ info) */
 	boolean horizontal;

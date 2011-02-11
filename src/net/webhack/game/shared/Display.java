@@ -652,6 +652,11 @@ public abstract class Display implements WebhackUI {
 
 	}
 
+	void impossible(final String in) {
+		System.out.println(in);
+		pline("Program in disorder - perhaps you'd better #quit.");
+	}
+
 	/**
 	 * Make the real background part of our map. This routine assumes that the
 	 * hero can physically see the location. Update the screen if directed.
@@ -710,24 +715,18 @@ public abstract class Display implements WebhackUI {
 			final String name) {
 		int idx;
 
-		// TODO(jeffbailey): HACK
-		final int WM_C_OUTER = 1;
-		final int WM_C_INNER = 2;
-
-		// switch (lev.wall_info & WM_MASK) {
-		switch (0) {
+		switch (lev.wall_info) {
 		case 0:
 			idx = which;
 			break;
-		case WM_C_OUTER:
+		case Location.WM_C_OUTER:
 			idx = outer.contains(lev.seenv) ? which : S_stone;
 			break;
-		case WM_C_INNER:
+		case Location.WM_C_INNER:
 			idx = !lev.seenv.contains(inner) ? which : S_stone;
 			break;
 		default:
-			// impossible("wall_angle: unknown %s mode %d", name, lev.wall_info
-			// & WM_MASK);
+			impossible("wall_angle: unknown " + name + " mode " + lev.wall_info);
 			idx = S_stone;
 			break;
 		}
