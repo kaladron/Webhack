@@ -1,6 +1,8 @@
 package net.webhack.game.client;
 
 import net.webhack.game.shared.Flags;
+import net.webhack.game.shared.Vision;
+import net.webhack.game.shared.VisionSimple;
 import net.webhack.game.shared.Webhack;
 import net.webhack.game.shared.WebhackUI;
 
@@ -31,8 +33,11 @@ public class WebhackGwt implements EntryPoint {
 		// Init UI
 		final WebhackUI ui = new WebhackGnomeLike();
 
+		// Init Vision
+		final Vision vision = new VisionSimple();
+
 		// Init game
-		final Webhack game = new Webhack(ui, flags);
+		final Webhack game = new Webhack(ui, flags, vision);
 
 		// Determine Role, Race, Gender
 		new RoleRaceGender(game.bindery).show();

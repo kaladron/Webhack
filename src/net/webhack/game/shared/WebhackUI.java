@@ -27,8 +27,6 @@ public interface WebhackUI {
 
 	void updateStats();
 
-	void vision_recalc(final int control);
-
 	char ynFunction(String question, char[] choices, char theDefault);
 
 }

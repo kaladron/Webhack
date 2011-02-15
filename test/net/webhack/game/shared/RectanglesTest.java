@@ -15,7 +15,7 @@ import org.junit.Test;
  */
 public class RectanglesTest {
 
-	Bindery bindery = new Bindery(null, new WebhackRandom(), null, null);
+	Bindery bindery = new Bindery(null, new WebhackRandom(), null, null, null);
 
 	@Test
 	public void addRectangle() {

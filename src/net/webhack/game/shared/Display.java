@@ -7,6 +7,15 @@ import net.webhack.game.shared.monsters.Monster;
 
 public abstract class Display implements WebhackUI {
 
+	public enum Sight {
+		/** location could be seen, if it were lit */
+		COULD_SEE,
+		/** location can be seen */
+		IN_SIGHT,
+		/** location is temporarily lit */
+		TEMP_LIT
+	}
+
 	public enum WindowType {
 		MESSAGE, STATUS, MAP, MENU, TEXT;
 	}
@@ -311,7 +320,7 @@ public abstract class Display implements WebhackUI {
 		}
 
 		/* see what is to be seen */
-		vision_recalc(0);
+		bindery.vision.vision_recalc(0);
 
 		/* overlay with monsters */
 		see_monsters();
@@ -335,21 +344,24 @@ public abstract class Display implements WebhackUI {
 	public void newsym(final int x, final int y) {
 		final Location ptr = dungeon.getLevel().getLoc(x, y);
 
-		// TODO(jeffbailey): stub
-		if (x == you.ux && y == you.uy) {
-			if (senseself()) {
-				map_location(x, y, false); /* map *under* self */
-				display_self();
+		if (bindery.vision.cansee(x, y)) {
+
+			// TODO(jeffbailey): stub
+			if (x == you.ux && y == you.uy) {
+				if (senseself()) {
+					map_location(x, y, false); /* map *under* self */
+					display_self();
+				} else {
+					/* we can see what is there */
+					map_location(x, y, true);
+				}
 			} else {
-				/* we can see what is there */
-				map_location(x, y, true);
-			}
-		} else {
-			if (ptr.monster != null) {
-				map_location(x, y, false);
-				display_monster(x, y, ptr.monster);
-			} else {
-				map_location(x, y, true);
+				if (ptr.monster != null) {
+					map_location(x, y, false);
+					display_monster(x, y, ptr.monster);
+				} else {
+					map_location(x, y, true);
+				}
 			}
 		}
 	}
@@ -417,71 +429,6 @@ public abstract class Display implements WebhackUI {
 		// magic_map_background(x,y,1); /* display it */
 		// }
 		// }
-	}
-
-	/*
-	 * Returns true if the hero can see her/himself.
-	 * 
-	 * The u.uswallow check assumes that you can see yourself even if you are
-	 * invisible. If not, then we don't need the check.
-	 */
-	/**
-	 * * Do all of the heavy vision work. Recalculate all locations that could
-	 * possibly be seen by the hero --- if the location were lit, etc. Note
-	 * which locations are actually seen because of lighting. Then add to this
-	 * all locations that be seen by hero due to night vision and x-ray vision.
-	 * Finally, compare with what the hero was able to see previously. Update
-	 * the difference.
-	 * 
-	 * This function is usually called only when the variable
-	 * 'vision_full_recalc' is set. The following is a list of places where this
-	 * function is called, with three valid values for the control flag
-	 * parameter:
-	 * 
-	 * Control flag = 0. A complete vision recalculation. Generate the vision
-	 * tables from scratch. This is necessary to correctly set what the hero can
-	 * see. (1) and (2) call this routine for synchronization purposes, (3)
-	 * calls this routine so it can operate correctly.
-	 * 
-	 * + After the monster move, before input from the player. [moveloop()] + At
-	 * end of moveloop. [moveloop() ??? not sure why this is here] + Right
-	 * before something is printed. [pline()] + Right before we do a vision
-	 * based operation. [do_clear_area()] + screen redraw, so we can renew all
-	 * positions in sight. [docrt()]
-	 * 
-	 * Control flag = 1. An adjacent vision recalculation. The hero has moved
-	 * one square. Knowing this, it might be possible to optimize the vision
-	 * recalculation using the current knowledge. This is presently
-	 * unimplemented and is treated as a control = 0 call.
-	 * 
-	 * + Right after the hero moves. [domove()]
-	 * 
-	 * Control flag = 2. Turn off the vision system. Nothing new will be
-	 * displayed, since nothing is seen. This is usually done when you need a
-	 * newsym() run on all locations in sight, or on some locations but you
-	 * don't know which ones.
-	 * 
-	 * + Before a screen redraw, so all positions are renewed. [docrt()] + Right
-	 * before the hero arrives on a new level. [goto_level()] + Right after a
-	 * scroll of light is read. [litroom()] + After an option has changed that
-	 * affects vision [parseoptions()] + Right after the hero is swallowed.
-	 * [gulpmu()] + Just before bubbles are moved. [movebubbles()]
-	 */
-	public void vision_recalc(final int control) {
-		// TODO(jeffbailey): STUB
-
-		// At this point, we're just making everything visible to the hero. Want
-		// to make the game playable soonish.
-
-		// for (int y = 0; y < Webhack.ROWNO; y++) {
-		// for (int x = 0; x < Webhack.COLNO; x++) {
-		// final Location ptr = dungeon.getLevel().getLoc(x, y);
-		// if (ptr.typ != LocationType.STONE) {
-		// newsym(x, y);
-		// }
-		// }
-		// }
-		newsym(you.ux, you.uy);
 	}
 
 	/**

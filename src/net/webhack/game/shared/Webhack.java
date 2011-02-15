@@ -82,9 +82,10 @@ public class Webhack {
 
 	private final Map<Integer, FuncTab> cmdMap = new HashMap<Integer, FuncTab>();
 
-	public Webhack(final WebhackUI ui, final Flags flags) {
-		this.bindery = new Bindery(this, new WebhackRandom(), ui, flags);
+	public Webhack(final WebhackUI ui, final Flags flags, final Vision vision) {
+		this.bindery = new Bindery(this, new WebhackRandom(), ui, flags, vision);
 		ui.setBindery(bindery);
+		vision.setBindery(bindery);
 		registerCommands();
 	}
 
@@ -125,7 +126,10 @@ public class Webhack {
 			/* Clean old position -- vision_recalc() will print our new one. */
 			bindery.ui.newsym(you.ux0, you.uy0);
 			/* Since the hero has moved, adjust what can be seen/unseen. */
-			bindery.ui.vision_recalc(1); /* Do the work now in the recover time. */
+			bindery.vision.vision_recalc(1); /*
+											 * Do the work now in the recover
+											 * time.
+											 */
 		}
 
 	}
