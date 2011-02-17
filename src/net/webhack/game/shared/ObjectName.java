@@ -9,6 +9,7 @@ package net.webhack.game.shared;
  * 
  */
 public enum ObjectName {
+
 	STRANGE_OBJECT,
 
 	ARROW,
@@ -775,9 +776,7 @@ public enum ObjectName {
 
 	WAN_LIGHTNING,
 
-	GOLD_PIECE(390, "gold piece", null, false, true, false, false, false,
-			false, false, false, false, false, 0, Skills.NONE, Material.GOLD,
-			0, ObjectClass.COIN, 1000, 0, 1, 1, 0, 0, 0, 0, 0),
+	GOLD_PIECE(new Coin(), 390, "gold piece", 1000, Material.GOLD, 1),
 
 	DILITHIUM_CRYSTAL,
 
@@ -869,6 +868,9 @@ public enum ObjectName {
 
 	MAXSPELL;
 
+	private static class Coin {
+	}
+
 	public int idx;
 	public String name;
 	String description;
@@ -895,11 +897,29 @@ public enum ObjectName {
 	int ldam;
 	int oc1;
 	int oc2;
+
 	int nut;
 
 	public long quan;
 
 	ObjectName() {
+	}
+
+	/**
+	 * Constructor for Coin Class items.
+	 * 
+	 * @param coin
+	 * @param idx
+	 * @param name
+	 * @param prob
+	 * @param metal
+	 * @param worth
+	 */
+	ObjectName(final Coin coin, final int idx, final String name,
+			final int prob, final Material metal, final int worth) {
+		this(idx, name, null, false, true, false, false, false, false, false,
+				false, false, false, 0, Skills.NONE, metal, 0,
+				ObjectClass.COIN, prob, 0, 1, worth, 0, 0, 0, 0, 0);
 	}
 
 	ObjectName(final int idx, final String name, final String desc,
