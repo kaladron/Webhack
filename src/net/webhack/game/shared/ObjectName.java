@@ -488,64 +488,91 @@ public enum ObjectName {
 
 	BELL_OF_OPENING,
 
+	/* Comestibles ... */
+
+	/* meat */
+
 	TRIPE_RATION(new Food(), 239, "tripe ration", 140, 2, 10, false,
 			Material.FLESH, 200),
 
-	CORPSE,
+	CORPSE(new Food(), 240, "corpse", 0, 1, 0, false, Material.FLESH, 0),
 
-	EGG,
+	EGG(new Food(), 241, "egg", 85, 1, 1, true, Material.FLESH, 80),
 
-	MEATBALL,
+	MEATBALL(new Food(), 242, "meatball", 0, 1, 1, false, Material.FLESH, 5),
 
-	MEAT_STICK,
+	MEAT_STICK(new Food(), 243, "meat stick", 0, 1, 1, false, Material.FLESH, 5),
 
-	HUGE_CHUNK_OF_MEAT,
+	HUGE_CHUNK_OF_MEAT(new Food(), 244, "huge chunk of meat", 0, 20, 400,
+			false, Material.FLESH, 2000),
 
-	MEAT_RING,
+	/* special case because it's not mergable */
 
-	KELP_FROND,
+	MEAT_RING(245, "meat ring", null, true, false, false, false, false, false,
+			false, false, false, false, 0, Skills.NONE, Material.FLESH, 0,
+			ObjectClass.FOOD, 0, 1, 5, 1, 0, 0, 0, 0, 5),
 
-	EUCALYPTUS_LEAF,
+	/* fruits & veggies */
 
-	APPLE,
+	KELP_FROND(new Food(), 246, "kelp frond", 0, 1, 1, false, Material.VEGGY,
+			30),
 
-	ORANGE,
+	EUCALYPTUS_LEAF(new Food(), 247, "eucalyptus leaf", 3, 1, 1, false,
+			Material.VEGGY, 30),
 
-	PEAR,
+	APPLE(new Food(), 248, "apple", 15, 1, 2, false, Material.VEGGY, 50),
 
-	MELON,
+	ORANGE(new Food(), 249, "orange", 10, 1, 2, false, Material.VEGGY, 80),
 
-	BANANA,
+	PEAR(new Food(), 250, "pear", 10, 1, 2, false, Material.VEGGY, 50),
 
-	CARROT,
+	MELON(new Food(), 251, "melon", 10, 1, 5, false, Material.VEGGY, 100),
 
-	SPRIG_OF_WOLFSBANE,
+	BANANA(new Food(), 252, "banana", 10, 1, 2, false, Material.VEGGY, 80),
 
-	CLOVE_OF_GARLIC,
+	CARROT(new Food(), 253, "carrot", 15, 1, 2, false, Material.VEGGY, 50),
 
-	SLIME_MOLD,
+	SPRIG_OF_WOLFSBANE(new Food(), 254, "sprig of wolfsbane", 7, 1, 1, false,
+			Material.VEGGY, 40),
 
-	LUMP_OF_ROYAL_JELLY,
+	CLOVE_OF_GARLIC(new Food(), 255, "clove of garlic", 7, 1, 1, false,
+			Material.VEGGY, 40),
 
-	CREAM_PIE,
+	SLIME_MOLD(new Food(), 256, "slime mold", 75, 1, 5, false, Material.VEGGY,
+			250),
 
-	CANDY_BAR,
+	/* people food */
 
-	FORTUNE_COOKIE,
+	LUMP_OF_ROYAL_JELLY(new Food(), 257, "lump of royal jelly", 0, 1, 2, false,
+			Material.VEGGY, 200),
 
-	PANCAKE,
+	CREAM_PIE(new Food(), 258, "cream pie", 25, 1, 10, false, Material.VEGGY,
+			100),
 
-	LEMBAS_WAFER,
+	CANDY_BAR(new Food(), 259, "candy bar", 13, 1, 2, false, Material.VEGGY,
+			100),
 
-	CRAM_RATION,
+	FORTUNE_COOKIE(new Food(), 260, "fortune cookie", 55, 1, 1, false,
+			Material.VEGGY, 40),
 
-	FOOD_RATION,
+	PANCAKE(new Food(), 261, "pancake", 25, 2, 2, false, Material.VEGGY, 200),
 
-	K_RATION,
+	LEMBAS_WAFER(new Food(), 262, "lembas wafer", 20, 2, 5, false,
+			Material.VEGGY, 800),
 
-	C_RATION,
+	CRAM_RATION(new Food(), 263, "cram ration", 20, 3, 15, false,
+			Material.VEGGY, 600),
 
-	TIN,
+	FOOD_RATION(new Food(), 264, "food ration", 380, 5, 20, false,
+			Material.VEGGY, 800),
+
+	K_RATION(new Food(), 265, "K-ration", 0, 1, 10, false, Material.VEGGY, 400),
+
+	C_RATION(new Food(), 266, "C-ration", 0, 1, 10, false, Material.VEGGY, 300),
+
+	TIN(new Food(), 267, "tin", 75, 0, 10, true, Material.METAL, 0),
+
+	/* potions ... */
 
 	POT_GAIN_ABILITY,
 
