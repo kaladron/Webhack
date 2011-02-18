@@ -725,6 +725,19 @@ public class DungeonLevel implements LocationMap {
 			if (random.oneIn(60)) {
 				mkaltar(room);
 			}
+
+			if (random.oneIn(3)) {
+				mkobj_at(0, room.someX(random), room.someY(random), true);
+				int tryct = 0;
+				while (random.oneIn(5)) {
+					if (++tryct > 100) {
+						// impossible("tryct overflow4");
+						break;
+					}
+					mkobj_at(0, room.someX(random), room.someY(random), true);
+				}
+			}
+
 		}
 	}
 
@@ -918,6 +931,12 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		locations[c.x][c.y].typ = LocationType.FOUNTAIN;
+	}
+
+	@Stub
+	private void mkobj_at(final int i, final int someX, final int someY,
+			final boolean artif) {
+		mksobj_at(ObjectName.TRIPE_RATION, someX, someY, true, artif);
 	}
 
 	@Stub

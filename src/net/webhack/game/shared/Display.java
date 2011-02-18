@@ -424,9 +424,9 @@ public abstract class Display implements WebhackUI {
 		// (!glyph_is_object(lev.glyph) && !glyph_is_trap(lev.glyph))) {
 		// if (level.flags.hero_memory) {
 		// magic_map_background(x,y,0);
-		newsym(x, y); /* show it, if not blocked */
+		// newsym(x, y); /* show it, if not blocked */
 		// } else {
-		// magic_map_background(x,y,1); /* display it */
+		magic_map_background(x, y, true); /* display it */
 		// }
 		// }
 	}
@@ -602,6 +602,35 @@ public abstract class Display implements WebhackUI {
 	void impossible(final String in) {
 		System.out.println(in);
 		pline("Program in disorder - perhaps you'd better #quit.");
+	}
+
+	/**
+	 * This function is similar to map_background (see below) except we pay
+	 * attention to and correct unexplored, lit ROOM and CORR spots.
+	 */
+	void magic_map_background(final int x, final int y, final boolean show) {
+		int glyph = back_to_glyph(x, y); /* assumes hero can see x,y */
+		final Location lev = dungeon.getLevel().getLoc(x, y);
+
+		/*
+		 * Correct for out of sight lit corridors and rooms that the hero
+		 * doesn't remember as lit.
+		 */
+		if (!bindery.vision.cansee(x, y) && !lev.waslit) {
+			/* Floor spaces are dark if unlit. Corridors are dark if unlit. */
+			if (lev.typ == LocationType.ROOM && glyph == cmap_to_glyph(S_room)) {
+				glyph = cmap_to_glyph(S_stone);
+			} else if (lev.typ == LocationType.CORR
+					&& glyph == cmap_to_glyph(S_litcorr)) {
+				glyph = cmap_to_glyph(S_corr);
+			}
+		}
+		if (dungeon.getLevel().hero_memory) {
+			lev.glyph = glyph;
+		}
+		if (show) {
+			show_glyph(x, y, glyph);
+		}
 	}
 
 	/**

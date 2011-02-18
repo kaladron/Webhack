@@ -488,7 +488,8 @@ public enum ObjectName {
 
 	BELL_OF_OPENING,
 
-	TRIPE_RATION,
+	TRIPE_RATION(new Food(), 239, "tripe ration", 140, 2, 10, false,
+			Material.FLESH, 200),
 
 	CORPSE,
 
@@ -871,6 +872,9 @@ public enum ObjectName {
 	private static class Coin {
 	}
 
+	private static class Food {
+	}
+
 	public int idx;
 	public String name;
 	String description;
@@ -920,6 +924,14 @@ public enum ObjectName {
 		this(idx, name, null, false, true, false, false, false, false, false,
 				false, false, false, 0, Skills.NONE, metal, 0,
 				ObjectClass.COIN, prob, 0, 1, worth, 0, 0, 0, 0, 0);
+	}
+
+	ObjectName(final Food food, final int idx, final String name,
+			final int prob, final int delay, final int wt, final boolean unk,
+			final Material tin, final int nutrition) {
+		this(idx, name, null, true, true, unk, false, false, false, false,
+				false, false, false, 0, Skills.NONE, tin, 0, ObjectClass.FOOD,
+				prob, delay, wt, nutrition / 20 + 5, 0, 0, 0, 0, nutrition);
 	}
 
 	ObjectName(final int idx, final String name, final String desc,
