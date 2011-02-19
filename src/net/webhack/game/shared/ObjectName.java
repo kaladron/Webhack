@@ -313,61 +313,95 @@ public enum ObjectName {
 
 	LEVITATION_BOOTS,
 
-	RIN_ADORNMENT,
+	RIN_ADORNMENT(new Ring(), 150, "adornment", Property.ADORNED, "wooden",
+			100, true, true, 2, Material.WOOD),
 
-	RIN_GAIN_STRENGTH,
+	RIN_GAIN_STRENGTH(new Ring(), 151, "gain strength", null, "granite", 150,
+			true, true, 7, Material.MINERAL),
 
-	RIN_GAIN_CONSTITUTION,
+	RIN_GAIN_CONSTITUTION(new Ring(), 152, "gain constitution", null, "opal",
+			150, true, true, 7, Material.MINERAL),
 
-	RIN_INCREASE_ACCURACY,
+	RIN_INCREASE_ACCURACY(new Ring(), 153, "increase accuracy", null, "clay",
+			150, true, true, 4, Material.MINERAL),
 
-	RIN_INCREASE_DAMAGE,
+	RIN_INCREASE_DAMAGE(new Ring(), 154, "increase damage", null, "coral", 150,
+			true, true, 4, Material.MINERAL),
 
-	RIN_PROTECTION,
+	RIN_PROTECTION(new Ring(), 155, "protection", Property.PROTECTION,
+			"black onyx", 100, true, true, 7, Material.MINERAL),
 
-	RIN_REGENERATION,
+	RIN_REGENERATION(new Ring(), 156, "regeneration", Property.REGENERATION,
+			"moonstone", 200, true, false, 6, Material.MINERAL),
 
-	RIN_SEARCHING,
+	RIN_SEARCHING(new Ring(), 157, "searching", Property.SEARCHING,
+			"tiger eye", 200, true, false, 6, Material.GEMSTONE),
 
-	RIN_STEALTH,
+	RIN_STEALTH(new Ring(), 158, "stealth", Property.STEALTH, "jade", 100,
+			true, false, 6, Material.GEMSTONE),
 
-	RIN_SUSTAIN_ABILITY,
+	RIN_SUSTAIN_ABILITY(new Ring(), 159, "sustain ability",
+			Property.FIXED_ABIL, "bronze", 100, true, false, 4, Material.COPPER),
 
-	RIN_LEVITATION,
+	RIN_LEVITATION(new Ring(), 160, "levitation", Property.LEVITATION, "agate",
+			200, true, false, 7, Material.GEMSTONE),
 
-	RIN_HUNGER,
+	RIN_HUNGER(new Ring(), 161, "hunger", Property.HUNGER, "topaz", 100, true,
+			false, 8, Material.GEMSTONE),
 
-	RIN_AGGRAVATE_MONSTER,
+	RIN_AGGRAVATE_MONSTER(new Ring(), 162, "aggravate monster",
+			Property.AGGRAVATE_MONSTER, "sapphire", 150, true, false, 9,
+			Material.GEMSTONE),
 
-	RIN_CONFLICT,
+	RIN_CONFLICT(new Ring(), 163, "conflict", Property.CONFLICT, "ruby", 300,
+			true, false, 9, Material.GEMSTONE),
 
-	RIN_WARNING,
+	RIN_WARNING(new Ring(), 164, "warning", Property.WARNING, "diamond", 100,
+			true, false, 10, Material.GEMSTONE),
 
-	RIN_POISON_RESISTANCE,
+	RIN_POISON_RESISTANCE(new Ring(), 165, "poison resistance",
+			Property.POISON_RES, "pearl", 150, true, false, 4, Material.IRON),
 
-	RIN_FIRE_RESISTANCE,
+	RIN_FIRE_RESISTANCE(new Ring(), 166, "fire resistance", Property.FIRE_RES,
+			"iron", 200, true, false, 5, Material.IRON),
 
-	RIN_COLD_RESISTANCE,
+	RIN_COLD_RESISTANCE(new Ring(), 167, "cold resistance", Property.COLD_RES,
+			"brass", 150, true, false, 4, Material.COPPER),
 
-	RIN_SHOCK_RESISTANCE,
+	RIN_SHOCK_RESISTANCE(new Ring(), 168, "shock resistance",
+			Property.SHOCK_RES, "copper", 150, true, false, 3, Material.COPPER),
 
-	RIN_FREE_ACTION,
+	RIN_FREE_ACTION(new Ring(), 169, "free action", Property.FREE_ACTION,
+			"twisted", 200, true, false, 6, Material.IRON),
 
-	RIN_SLOW_DIGESTION,
+	RIN_SLOW_DIGESTION(new Ring(), 170, "slow digestion",
+			Property.SLOW_DIGESTION, "steel", 200, true, false, 8,
+			Material.IRON),
 
-	RIN_TELEPORTATION,
+	RIN_TELEPORTATION(new Ring(), 171, "teleportation", Property.TELEPORT,
+			"silver", 200, true, false, 3, Material.SILVER),
 
-	RIN_TELEPORT_CONTROL,
+	RIN_TELEPORT_CONTROL(new Ring(), 172, "teleport control",
+			Property.TELEPORT_CONTROL, "gold", 300, true, false, 3,
+			Material.GOLD),
 
-	RIN_POLYMORPH,
+	RIN_POLYMORPH(new Ring(), 173, "polymorph", Property.POLYMORPH, "ivory",
+			300, true, false, 4, Material.BONE),
 
-	RIN_POLYMORPH_CONTROL,
+	RIN_POLYMORPH_CONTROL(new Ring(), 174, "polymorph control",
+			Property.POLYMORPH_CONTROL, "emerald", 300, true, false, 8,
+			Material.GEMSTONE),
 
-	RIN_INVISIBILITY,
+	RIN_INVISIBILITY(new Ring(), 175, "invisibility", Property.INVIS, "wire",
+			150, true, false, 5, Material.IRON),
 
-	RIN_SEE_INVISIBLE,
+	RIN_SEE_INVISIBLE(new Ring(), 176, "see invisible", Property.SEE_INVIS,
+			"engagement", 150, true, false, 5, Material.IRON),
 
-	RIN_PROTECTION_FROM_SHAPE_CHAN,
+	RIN_PROTECTION_FROM_SHAPE_CHAN(new Ring(), 177,
+			"protection from shape changers",
+			Property.PROT_FROM_SHAPE_CHANGERS, "shiny", 100, true, false, 5,
+			Material.IRON),
 
 	AMULET_OF_ESP,
 
@@ -512,7 +546,7 @@ public enum ObjectName {
 	/* special case because it's not mergable */
 
 	MEAT_RING(245, "meat ring", null, true, false, false, false, false, false,
-			false, false, false, false, 0, Skills.NONE, Material.FLESH, 0,
+			false, false, false, false, 0, Skills.NONE, Material.FLESH, null,
 			ObjectClass.FOOD, 0, 1, 5, 1, 0, 0, 0, 0, 5),
 
 	/* fruits & veggies */
@@ -882,7 +916,7 @@ public enum ObjectName {
 	ROCK,
 
 	BOULDER(427, "boulder", null, true, false, false, false, false, false,
-			false, false, true, false, 0, Skills.NONE, Material.MINERAL, 0,
+			false, false, true, false, 0, Skills.NONE, Material.MINERAL, null,
 			ObjectClass.ROCK, 100, 0, 6000, 0, 20, 20, 0, 0, 2000),
 
 	STATUE,
@@ -903,6 +937,9 @@ public enum ObjectName {
 	}
 
 	private static class Food {
+	}
+
+	private static class Ring {
 	}
 
 	@Stub
@@ -940,7 +977,7 @@ public enum ObjectName {
 	int dir;
 	Skills sub;
 	Material mtrl;
-	int prp;
+	Property prp;
 	ObjectClass sym;
 	int prob;
 	int dly;
@@ -955,6 +992,8 @@ public enum ObjectName {
 	int nut;
 
 	public long quan;
+
+	final static int HARDGEM = 8;
 
 	ObjectName() {
 	}
@@ -972,7 +1011,7 @@ public enum ObjectName {
 	ObjectName(final Coin coin, final int idx, final String name,
 			final int prob, final Material metal, final int worth) {
 		this(idx, name, null, false, true, false, false, false, false, false,
-				false, false, false, 0, Skills.NONE, metal, 0,
+				false, false, false, 0, Skills.NONE, metal, null,
 				ObjectClass.COIN, prob, 0, 1, worth, 0, 0, 0, 0, 0);
 	}
 
@@ -980,8 +1019,9 @@ public enum ObjectName {
 			final int prob, final int delay, final int wt, final boolean unk,
 			final Material tin, final int nutrition) {
 		this(idx, name, null, true, true, unk, false, false, false, false,
-				false, false, false, 0, Skills.NONE, tin, 0, ObjectClass.FOOD,
-				prob, delay, wt, nutrition / 20 + 5, 0, 0, 0, 0, nutrition);
+				false, false, false, 0, Skills.NONE, tin, null,
+				ObjectClass.FOOD, prob, delay, wt, nutrition / 20 + 5, 0, 0, 0,
+				0, nutrition);
 	}
 
 	ObjectName(final int idx, final String name, final String desc,
@@ -989,7 +1029,7 @@ public enum ObjectName {
 			final boolean ctnr, final boolean mgc, final boolean chrg,
 			final boolean uniq, final boolean nwsh, final boolean big,
 			final boolean tuf, final int dir, final Skills sub,
-			final Material mtrl, final int prp, final ObjectClass sym,
+			final Material mtrl, final Property prp, final ObjectClass sym,
 			final int prob, final int dly, final int wt, final int cost,
 			final int sdam, final int ldam, final int oc1, final int oc2,
 			final int nut) {
@@ -1022,6 +1062,15 @@ public enum ObjectName {
 		this.oc2 = oc2;
 		this.nut = nut;
 
+	}
+
+	ObjectName(final Ring ring, final int idx, final String name,
+			final Property power, final String stone, final int cost,
+			final boolean mgc, final boolean spec, final int mohs,
+			final Material metal) {
+		this(idx, name, stone, false, false, spec, false, mgc, spec, false,
+				false, false, (mohs >= HARDGEM), 0, Skills.NONE, metal, power,
+				ObjectClass.RING, 0, 0, 3, cost, 0, 0, 0, 0, 15);
 	}
 
 }
