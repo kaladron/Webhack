@@ -4,6 +4,9 @@
 
 package net.webhack.game.shared;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 /**
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
@@ -902,6 +905,25 @@ public enum ObjectName {
 	private static class Food {
 	}
 
+	@Stub
+	public static ObjectName getRandom(final ObjectClass aClass,
+			final WebhackRandom random) {
+		// Assume food for now
+		int prob = random.rnd(1000);
+
+		// while((prob -= objects[i].oc_prob) > 0) i++;
+		final Set<ObjectName> s = EnumSet.range(TRIPE_RATION, TIN);
+		for (final ObjectName o : s) {
+			prob -= o.prob;
+			if (prob > 0) {
+				continue;
+			}
+			return o;
+		}
+
+		return TIN;
+	}
+
 	public int idx;
 	public String name;
 	String description;
@@ -927,6 +949,7 @@ public enum ObjectName {
 	int sdam;
 	int ldam;
 	int oc1;
+
 	int oc2;
 
 	int nut;
