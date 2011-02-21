@@ -493,13 +493,9 @@ public class DungeonLevel implements LocationMap {
 		return gold;
 	}
 
-	Obj mkobj(ObjectClass oClass, final boolean isArtifact) {
+	Obj mkobj(final ObjectClass oClass, final boolean isArtifact) {
 
 		ObjectName oType;
-
-		if (oClass == null) {
-			oClass = ObjectClass.FOOD;
-		}
 
 		oType = ObjectName.getRandom(oClass, random);
 

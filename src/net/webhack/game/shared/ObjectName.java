@@ -945,11 +945,31 @@ public enum ObjectName {
 	@Stub
 	public static ObjectName getRandom(final ObjectClass aClass,
 			final WebhackRandom random) {
-		// Assume food for now
-		int prob = random.rnd(1000);
+		final int prob = random.rnd(1000);
 
-		// while((prob -= objects[i].oc_prob) > 0) i++;
-		final Set<ObjectName> s = EnumSet.range(TRIPE_RATION, TIN);
+		if (aClass == null) {
+			switch (random.rn2(2)) {
+			case 0:
+				return getRandom(ObjectClass.RING, random);
+			case 1:
+				return getRandom(ObjectClass.FOOD, random);
+			}
+		}
+
+		switch (aClass) {
+		case FOOD:
+			return randomInRange(prob, TRIPE_RATION, TIN);
+		case RING:
+			return randomInRange(prob, RIN_ADORNMENT,
+					RIN_PROTECTION_FROM_SHAPE_CHAN);
+		}
+
+		return null;
+	}
+
+	private static ObjectName randomInRange(int prob, final ObjectName start,
+			final ObjectName finish) {
+		final Set<ObjectName> s = EnumSet.range(start, finish);
 		for (final ObjectName o : s) {
 			prob -= o.prob;
 			if (prob > 0) {
@@ -957,8 +977,7 @@ public enum ObjectName {
 			}
 			return o;
 		}
-
-		return TIN;
+		return finish;
 	}
 
 	public int idx;
