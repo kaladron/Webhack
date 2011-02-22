@@ -18,7 +18,7 @@ public class DoPickup extends Command {
 			return;
 		}
 
-		bindery.webhack.dungeon.dlevel.pickup();
+		bindery.webhack.dungeon.dlevel.pickup(0);
 		return;
 	}
 

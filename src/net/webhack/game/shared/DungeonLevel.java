@@ -155,26 +155,54 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	/**
+	 * Have the hero pick things from the ground or a monster's inventory if
+	 * swallowed.
+	 * 
+	 * Arg what:
+	 * 
+	 * >0 autopickup
+	 * 
+	 * =0 interactive
+	 * 
+	 * <0 pickup count of something
+	 * 
+	 * Returns 1 if tried to pick something up, whether or not it succeeded.
 	 * 
 	 * 
 	 * @return True if tried to pick something up, regardless of success.
 	 */
 	@Stub
-	public boolean pickup() {
+	public boolean pickup(final int what) {
 
-		// TODO(jeffbailey): At the moment, we assume one object per square,
-		// and that the only object in the game is gold.
+		List<Obj> objchain;
+		int n_picked = 0;
+		long lcount;
 
-		// This should go into pickup_object
-		final Obj obj = locations[you.ux][you.uy]
-				.sobj_at(ObjectName.GOLD_PIECE);
+		if (what < 0) {
+		} else {
+		}
 
-		final long count = obj.quan;
+		if (!you.uswallow) {
 
-		if (obj.otyp == ObjectName.GOLD_PIECE) {
-			you.ugold += count;
-			bindery.flags.botl = true;
-			remove_object(obj);
+			objchain = locations[you.ux][you.uy].things;
+
+			Obj obj = null;
+
+			/* if only one thing, then pick it */
+			if (objchain.size() == 1) {
+				obj = objchain.remove(0);
+			}
+
+			lcount = -1;
+
+			if (lcount == -1L) {
+				lcount = obj.quan;
+			}
+
+			if (pickup_object(obj, lcount, false) > 0) {
+				n_picked++; /* picked something */
+			}
+
 		}
 
 		return true;
@@ -247,10 +275,10 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		return false;
-	};
+	}
 
 	void add_door(final int x, final int y, final Room aroom) {
-	}
+	};
 
 	boolean byDoor(final int x, final int y) {
 		LocationType typ;
@@ -1027,5 +1055,29 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Pick up <count> of obj from the ground and add it to the hero's
+	 * inventory. Returns -1 if caller should break out of its loop, 0 if
+	 * nothing picked up, 1 if otherwise.
+	 */
+
+	private int pickup_object(final Obj obj, final long count,
+			final boolean telekinesis) {
+
+		if (obj.otyp == ObjectName.GOLD_PIECE) {
+			you.ugold += count;
+			bindery.flags.botl = true;
+			if (count == obj.quan) {
+				remove_object(obj);
+			} else {
+				obj.quan -= count;
+			}
+
+			return 1;
+		}
+
+		return 0;
 	}
 }
