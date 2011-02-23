@@ -933,13 +933,22 @@ public enum ObjectName {
 
 	MAXSPELL;
 
+	private class Bow {
+	}
+
 	private static class Coin {
 	}
 
 	private static class Food {
 	}
 
+	private class Projectile {
+	}
+
 	private static class Ring {
+	}
+
+	private class Weapon {
 	}
 
 	@Stub
@@ -1002,8 +1011,11 @@ public enum ObjectName {
 	int dly;
 	int wt;
 	int cost;
+
 	int sdam;
+
 	int ldam;
+
 	int oc1;
 
 	int oc2;
@@ -1015,6 +1027,15 @@ public enum ObjectName {
 	final static int HARDGEM = 8;
 
 	ObjectName() {
+	}
+
+	ObjectName(final Bow bow, final int idx, final String name,
+			final String app, final boolean kn, final int prob, final int wt,
+			final int cost, final int hitbon, final Material metal,
+			final Skills sub) {
+		this(idx, name, app, kn, false, true, false, false, true, false, false,
+				false, false, 0, sub, metal, null, ObjectClass.WEAPON, prob, 0,
+				wt, cost, 2, 2, hitbon, 0, wt);
 	}
 
 	/**
@@ -1083,6 +1104,19 @@ public enum ObjectName {
 
 	}
 
+	ObjectName(final Projectile projectile, final int idx, final String name,
+			final String app, final boolean kn, final int prob, final int wt,
+			final int cost, final int sdam, final int ldam, final int hitbon,
+			final Material metal, final Skills sub) {
+		// TODO(jeffbailey): Make this an Enum
+		// final int PIERCE = 1;
+
+		this(idx, name, app, kn, true, true, false, false, true, false, false,
+				false, false, 1 /* PIERCE */, sub, metal, null,
+				ObjectClass.WEAPON, prob, 0, wt, cost, sdam, ldam, hitbon, 0,
+				wt);
+	}
+
 	ObjectName(final Ring ring, final int idx, final String name,
 			final Property power, final String stone, final int cost,
 			final boolean mgc, final boolean spec, final int mohs,
@@ -1090,6 +1124,16 @@ public enum ObjectName {
 		this(idx, name, stone, false, false, spec, false, mgc, spec, false,
 				false, false, (mohs >= HARDGEM), 0, Skills.NONE, metal, power,
 				ObjectClass.RING, 0, 0, 3, cost, 0, 0, 0, 0, 15);
+	}
+
+	ObjectName(final Weapon weapon, final int idx, final String name,
+			final String app, final boolean kn, final boolean mg,
+			final boolean bi, final int prob, final int wt, final int cost,
+			final int sdam, final int ldam, final int hitbon, final int typ,
+			final Skills sub, final Material metal) {
+		this(idx, name, app, kn, mg, true, false, false, true, false, false,
+				bi, false, typ, sub, metal, null, ObjectClass.WEAPON, prob, 0,
+				wt, cost, sdam, ldam, hitbon, 0, wt);
 	}
 
 }
