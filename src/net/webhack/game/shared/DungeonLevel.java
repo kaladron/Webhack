@@ -1068,6 +1068,8 @@ public class DungeonLevel implements LocationMap {
 
 		if (obj.otyp == ObjectName.GOLD_PIECE) {
 			you.ugold += count;
+			ui.pline(count + " gold pieces");
+
 			bindery.flags.botl = true;
 			if (count == obj.quan) {
 				remove_object(obj);
