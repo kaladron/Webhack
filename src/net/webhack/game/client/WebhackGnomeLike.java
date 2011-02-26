@@ -4,6 +4,7 @@ import net.webhack.game.shared.Display;
 import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
+import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -474,6 +475,8 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 	private WebhackGnome webhackGnome;
 
+	private Context2d ctx;
+
 	public WebhackGnomeLike() {
 	}
 
@@ -486,7 +489,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
 				if (gbuf[y][x].updated) {
-					putGlyph(x, y, glyph2tile[gbuf[y][x].glyph]);
+					putGlyph(x, y, glyph2tile[gbuf[y][x].glyph], ctx);
 				}
 			}
 		}
@@ -514,6 +517,8 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 		// Main webhack panel must already be in place.
 		initCanvas();
+
+		ctx = webhackGnome.canvas.getContext2d();
 
 		focusPanel.setFocus(true);
 
@@ -632,8 +637,9 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		$wnd.initCanvas();
 	}-*/;
 
-	native void putGlyph(final int x, final int y, final int glyph) /*-{
-		$wnd.putGlyph(x, y, glyph);
+	native void putGlyph(final int x, final int y, final int glyph,
+			final Context2d ctx) /*-{
+		$wnd.putGlyph(x, y, glyph, ctx);
 	}-*/;
 
 	private void addMenu(final VerticalPanel basePanel) {

@@ -11,11 +11,9 @@
 	var image = new Image();
 	image.src = "x11tiles.png";
 
-	var ctx;
 	var plineDiv;
 
 	function initCanvas() {
-		ctx = document.getElementById('canvas').getContext("2d");
 		plineDiv = document.getElementById('plineDiv');
 	}
 
@@ -30,7 +28,7 @@
 		plineDiv.scrollTop = plineDiv.scrollHeight;
 	}
 
-	function putGlyph(x, y, glyph) {
+	function putGlyph(x, y, glyph, ctx) {
 		glyph_x = glyph % TILES_PER_ROW;
 		glyph_y = Math.floor(glyph / TILES_PER_ROW);
 

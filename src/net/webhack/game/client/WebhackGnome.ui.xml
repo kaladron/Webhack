@@ -57,7 +57,7 @@
 		</div>
 
 		<div id="bottompart">
-			<canvas id="canvas" width="1280" height="336"
+			<canvas ui:field="canvas" width="1280" height="336"
 				style="background-image: url('mapbg.png')"></canvas>
 		</div>
 	</g:HTMLPanel>
