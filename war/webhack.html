@@ -4,20 +4,6 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link type="text/css" rel="stylesheet" href="webhack.css">
 <title>Webhack</title>
-<script>
-	function putMessageText(line, plineDiv) {
-		var textDiv = document.createElement('div');
-		var text = document.createTextNode(line);
-		textDiv.appendChild(text);
-		plineDiv.appendChild(textDiv);
-		if (plineDiv.childNodes.length > 20) {
-			plineDiv.removeChild(plineDiv.firstChild);
-		}
-		plineDiv.scrollTop = plineDiv.scrollHeight;
-	}
-
-
-</script>
 <script src="webhack/webhack.nocache.js"></script>
 <script>
 	var _gaq = _gaq || [];

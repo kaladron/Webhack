@@ -6,6 +6,8 @@ import net.webhack.game.shared.Webhack;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -773,8 +775,15 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		basePanel.add(menu);
 	}
 
-	private native void putMessageText(String line, DivElement plineDiv) /*-{
-		$wnd.putMessageText(line, plineDiv);
-	}-*/;
+	private void putMessageText(final String line, final DivElement plineDiv) {
+		final Document document = Document.get();
+		final Element textDiv = document.createElement("div");
+		textDiv.setInnerText(line);
+		plineDiv.appendChild(textDiv);
+		if (plineDiv.getChildNodes().getLength() > 20) {
+			plineDiv.removeChild(plineDiv.getFirstChild());
+		}
+		plineDiv.setScrollTop(plineDiv.getScrollHeight());
+	}
 
 }
