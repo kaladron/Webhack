@@ -5,14 +5,7 @@
 <link type="text/css" rel="stylesheet" href="webhack.css">
 <title>Webhack</title>
 <script>
-
-	var plineDiv;
-
-	function initCanvas() {
-		plineDiv = document.getElementById('plineDiv');
-	}
-
-	function putMessageText(line) {
+	function putMessageText(line, plineDiv) {
 		var textDiv = document.createElement('div');
 		var text = document.createTextNode(line);
 		textDiv.appendChild(text);

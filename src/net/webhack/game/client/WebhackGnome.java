@@ -2,6 +2,7 @@ package net.webhack.game.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.CanvasElement;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -23,6 +24,9 @@ public class WebhackGnome extends Composite {
 
 	@UiField
 	CanvasElement canvas;
+
+	@UiField
+	DivElement plineDiv;
 
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 

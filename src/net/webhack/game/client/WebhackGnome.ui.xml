@@ -4,7 +4,7 @@
 	<g:HTMLPanel>
 		<div id="toppart">
 			<div id="plineWindow">
-				<div id="plineDiv"></div>
+				<div ui:field="plineDiv"></div>
 			</div>
 			<div id="status">
 				<h1>
@@ -14,12 +14,24 @@
 				<hr />
 				<table width="100%">
 					<tr>
-						<td><img src="str.png" height="40" width="40"></img></td>
-						<td><img src="dex.png" height="40" width="40"></img></td>
-						<td><img src="con.png" height="40" width="40"></img></td>
-						<td><img src="int.png" height="40" width="40"></img></td>
-						<td><img src="wis.png" height="40" width="40"></img></td>
-						<td><img src="cha.png" height="40" width="40"></img></td>
+						<td>
+							<img src="str.png" height="40" width="40"></img>
+						</td>
+						<td>
+							<img src="dex.png" height="40" width="40"></img>
+						</td>
+						<td>
+							<img src="con.png" height="40" width="40"></img>
+						</td>
+						<td>
+							<img src="int.png" height="40" width="40"></img>
+						</td>
+						<td>
+							<img src="wis.png" height="40" width="40"></img>
+						</td>
+						<td>
+							<img src="cha.png" height="40" width="40"></img>
+						</td>
 					</tr>
 					<tr>
 						<td>STR: 10</td>
@@ -33,10 +45,16 @@
 				<hr />
 				<table width="100%">
 					<tr>
-						<td>HP: <span ui:field='hitpoints'>999/999</span></td>
+						<td>
+							HP:
+							<span ui:field='hitpoints'>999/999</span>
+						</td>
 						<td>AC: 7</td>
 						<td>Power: 8/8</td>
-						<td>Au: <span ui:field='gold'>0</span></td>
+						<td>
+							Au:
+							<span ui:field='gold'>0</span>
+						</td>
 					</tr>
 				</table>
 				<hr />

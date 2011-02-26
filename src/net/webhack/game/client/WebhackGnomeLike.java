@@ -5,6 +5,7 @@ import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -491,6 +492,8 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 	final int TILES_PER_ROW = 40;
 
+	private DivElement plineDiv;
+
 	public WebhackGnomeLike() {
 	}
 
@@ -529,9 +532,6 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 		RootPanel.get().add(basePanel);
 
-		// Main webhack panel must already be in place.
-		initCanvas();
-
 		// init image
 		iconImg = new Image("x11tiles.png");
 		iconImg.addLoadHandler(new LoadHandler() {
@@ -544,6 +544,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		RootPanel.get().add(iconImg); // image must be on page to fire load
 
 		ctx = webhackGnome.canvas.getContext2d();
+		plineDiv = webhackGnome.plineDiv;
 
 		focusPanel.setFocus(true);
 
@@ -632,7 +633,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 	public void putstr(final Display.WindowType window, final int i,
 			final String line) {
 		if (window == WindowType.MESSAGE) {
-			putMessageText(line);
+			putMessageText(line, plineDiv);
 		} else {
 			System.out.println(line);
 		}
@@ -657,10 +658,6 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 		return theDefault;
 	}
-
-	native void initCanvas() /*-{
-		$wnd.initCanvas();
-	}-*/;
 
 	void putGlyph(final int x, final int y, final int glyph,
 			final Context2d ctx, final Image iconImg) {
@@ -776,8 +773,8 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		basePanel.add(menu);
 	}
 
-	private native void putMessageText(String line) /*-{
-		$wnd.putMessageText(line);
+	private native void putMessageText(String line, DivElement plineDiv) /*-{
+		$wnd.putMessageText(line, plineDiv);
 	}-*/;
 
 }
