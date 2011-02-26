@@ -5,12 +5,16 @@ import net.webhack.game.shared.Stub;
 import net.webhack.game.shared.Webhack;
 
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.LoadEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FocusPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -477,6 +481,16 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 	private Context2d ctx;
 
+	boolean imageLoaded = false;
+
+	private Image iconImg;
+
+	final int DISPLAY_SQUARE = 16;
+
+	final int TILE_SQUARE = 16;
+
+	final int TILES_PER_ROW = 40;
+
 	public WebhackGnomeLike() {
 	}
 
@@ -489,7 +503,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		for (int x = 0; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
 				if (gbuf[y][x].updated) {
-					putGlyph(x, y, glyph2tile[gbuf[y][x].glyph], ctx);
+					putGlyph(x, y, glyph2tile[gbuf[y][x].glyph], ctx, iconImg);
 				}
 			}
 		}
@@ -517,6 +531,17 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 
 		// Main webhack panel must already be in place.
 		initCanvas();
+
+		// init image
+		iconImg = new Image("x11tiles.png");
+		iconImg.addLoadHandler(new LoadHandler() {
+			public void onLoad(final LoadEvent event) {
+				imageLoaded = true;
+				docrt();
+			}
+		});
+		iconImg.setVisible(false);
+		RootPanel.get().add(iconImg); // image must be on page to fire load
 
 		ctx = webhackGnome.canvas.getContext2d();
 
@@ -637,10 +662,22 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		$wnd.initCanvas();
 	}-*/;
 
-	native void putGlyph(final int x, final int y, final int glyph,
-			final Context2d ctx) /*-{
-		$wnd.putGlyph(x, y, glyph, ctx);
-	}-*/;
+	void putGlyph(final int x, final int y, final int glyph,
+			final Context2d ctx, final Image iconImg) {
+		if (!imageLoaded) {
+			return;
+		}
+
+		final int glyph_x = glyph % TILES_PER_ROW;
+		final int glyph_y = (int) Math.floor(glyph / TILES_PER_ROW);
+
+		final ImageElement imageElement = (ImageElement) iconImg.getElement()
+				.cast();
+
+		ctx.drawImage(imageElement, glyph_x * TILE_SQUARE, glyph_y
+				* TILE_SQUARE, TILE_SQUARE, TILE_SQUARE, x * DISPLAY_SQUARE, y
+				* DISPLAY_SQUARE, DISPLAY_SQUARE, DISPLAY_SQUARE);
+	}
 
 	private void addMenu(final VerticalPanel basePanel) {
 		final MenuBar gameMenu = new MenuBar(true);

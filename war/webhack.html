@@ -5,11 +5,6 @@
 <link type="text/css" rel="stylesheet" href="webhack.css">
 <title>Webhack</title>
 <script>
-	var DISPLAY_SQUARE = 16;
-	var TILE_SQUARE = 16;
-	var TILES_PER_ROW = 40;
-	var image = new Image();
-	image.src = "x11tiles.png";
 
 	var plineDiv;
 
@@ -28,14 +23,7 @@
 		plineDiv.scrollTop = plineDiv.scrollHeight;
 	}
 
-	function putGlyph(x, y, glyph, ctx) {
-		glyph_x = glyph % TILES_PER_ROW;
-		glyph_y = Math.floor(glyph / TILES_PER_ROW);
 
-		ctx.drawImage(image, glyph_x * TILE_SQUARE, glyph_y * TILE_SQUARE,
-				TILE_SQUARE, TILE_SQUARE, x * DISPLAY_SQUARE, y
-						* DISPLAY_SQUARE, DISPLAY_SQUARE, DISPLAY_SQUARE);
-	}
 </script>
 <script src="webhack/webhack.nocache.js"></script>
 <script>
