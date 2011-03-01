@@ -7,6 +7,7 @@ import net.webhack.game.shared.Display.WindowType;
 import net.webhack.game.shared.command.Command;
 import net.webhack.game.shared.command.DoClose;
 import net.webhack.game.shared.command.DoKick;
+import net.webhack.game.shared.command.DoLook;
 import net.webhack.game.shared.command.DoOpen;
 import net.webhack.game.shared.command.DoPickup;
 import net.webhack.game.shared.command.DoSearch;
@@ -231,6 +232,7 @@ public class Webhack {
 		registerCommand('s', new DoSearch(bindery));
 		registerCommand(',', new DoPickup(bindery));
 		registerCommand('@', new DoTogglePickup(bindery));
+		registerCommand(':', new DoLook(bindery));
 
 	}
 

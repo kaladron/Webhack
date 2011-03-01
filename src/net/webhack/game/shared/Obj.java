@@ -10,4 +10,9 @@ public class Obj {
 		this.otyp = otyp;
 	}
 
+	@Stub
+	String doName() {
+		return otyp.name;
+	}
+
 }

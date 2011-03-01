@@ -575,6 +575,9 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		case 188:
 			cmdKey = ',';
 			break;
+		case 186:
+			cmdKey = ':';
+			break;
 		default:
 			if (event.isShiftKeyDown()) {
 				switch (code) {

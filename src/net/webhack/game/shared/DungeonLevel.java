@@ -18,17 +18,16 @@ import net.webhack.game.shared.monsters.Monster;
  * 
  */
 public class DungeonLevel implements LocationMap {
-
 	Location[][] locations = new Location[Webhack.COLNO][Webhack.ROWNO];
 	List<Monster> monlist = new LinkedList<Monster>();
-
 	/** number of fountains on level */
 	int nfountains;
+
 	/** number of sinks on the level */
 	int nsinks;
-
 	/* Several flags that give hints about what's on the level */
 	boolean has_shop;
+
 	boolean has_vault;
 	boolean has_zoo;
 	boolean has_court;
@@ -36,8 +35,8 @@ public class DungeonLevel implements LocationMap {
 	boolean has_beehive;
 	boolean has_barracks;
 	boolean has_temple;
-
 	boolean has_swamp;
+
 	boolean noteleport;
 	boolean hardfloor;
 	boolean nommap;
@@ -48,11 +47,10 @@ public class DungeonLevel implements LocationMap {
 	/** has_morgue, but remains set */
 	boolean graveyard;
 	boolean is_maze_lev;
-
 	boolean is_cavernous_lev;
+
 	/** Trees replace rock */
 	boolean arboreal;
-
 	/** Number of doors */
 	private final int doorIndex = 0;
 
@@ -75,6 +73,7 @@ public class DungeonLevel implements LocationMap {
 	private final Bindery bindery;
 
 	private final You you;
+
 	private final WebhackRandom random;
 	private final WebhackUI ui;
 
@@ -128,6 +127,35 @@ public class DungeonLevel implements LocationMap {
 
 	public Location getLoc(final int x, final int y) {
 		return locations[x][y];
+	}
+
+	/**
+	 * look at what is here; if there are many objects (5 or more), don't show
+	 * them unless obj_cnt is 0
+	 * 
+	 * >0 objCnt implies autopickup in progress
+	 * 
+	 * @param objCnt
+	 * @param pickedSome
+	 */
+	@Stub
+	public void lookHere(final int objCnt, final boolean pickedSome) {
+		final String verb = "see";
+
+		final List<Obj> otmp = locations[you.ux][you.uy].things;
+
+		if (otmp.isEmpty()) {
+			ui.pline("You " + verb + " no objects here.");
+			return;
+		}
+
+		/* we know there is something here */
+
+		// Assume only one object per square
+		if (otmp.size() == 1) {
+			ui.pline("You " + verb + " here " + otmp.get(0).doName() + ".");
+		}
+
 	}
 
 	public Monster mAt(final int x, final int y) {
