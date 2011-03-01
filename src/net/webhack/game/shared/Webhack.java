@@ -133,6 +133,8 @@ public class Webhack {
 											 */
 		}
 
+		spoteffects(true);
+
 	}
 
 	public void main() {
@@ -219,6 +221,19 @@ public class Webhack {
 		if (doWalk) {
 			doMove();
 		}
+	}
+
+	/**
+	 * What happens after a move?
+	 * 
+	 * @param pick
+	 *            if an autopickup should be attempted
+	 */
+	public void spoteffects(final boolean pick) {
+		if (pick) {
+			dungeon.dlevel.pickup(1);
+		}
+
 	}
 
 	/**

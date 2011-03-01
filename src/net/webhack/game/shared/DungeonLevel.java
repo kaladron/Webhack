@@ -206,11 +206,22 @@ public class DungeonLevel implements LocationMap {
 		int n_picked = 0;
 		long lcount;
 
+		final boolean autopickup = what > 0;
+
 		if (what < 0) {
 		} else {
 		}
 
 		if (!you.uswallow) {
+
+			if (autopickup && !locations[you.ux][you.uy].obj_at()) {
+				return false;
+			}
+
+			if (autopickup && !bindery.flags.pickup) {
+				check_here(false);
+				return false;
+			}
 
 			objchain = locations[you.ux][you.uy].things;
 
@@ -306,7 +317,7 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	void add_door(final int x, final int y, final Room aroom) {
-	};
+	}
 
 	boolean byDoor(final int x, final int y) {
 		LocationType typ;
@@ -336,7 +347,7 @@ public class DungeonLevel implements LocationMap {
 			}
 		}
 		return false;
-	}
+	};
 
 	boolean digCorridor(final Coordinate org, final Coordinate dest,
 			final boolean nxcor, final LocationType ftyp,
@@ -683,6 +694,13 @@ public class DungeonLevel implements LocationMap {
 		}
 
 		return true;
+	}
+
+	private void check_here(final boolean picked_some) {
+		if (!locations[you.ux][you.uy].things.isEmpty()) {
+			lookHere(locations[you.ux][you.uy].things.size(), picked_some);
+		}
+
 	}
 
 	private void dosDoor(final int x, final int y, final Room aroom,
