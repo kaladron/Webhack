@@ -546,7 +546,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		RootPanel.get().add(iconImg); // image must be on page to fire load
 
 		ctx = webhackGnome.canvas.getContext2d();
-		plineDiv = webhackGnome.plineDiv;
+		plineDiv = webhackGnome.plineContainer;
 
 		focusPanel.setFocus(true);
 

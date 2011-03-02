@@ -26,7 +26,7 @@ public class WebhackGnome extends Composite {
 	CanvasElement canvas;
 
 	@UiField
-	DivElement plineDiv;
+	DivElement plineContainer;
 
 	private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
