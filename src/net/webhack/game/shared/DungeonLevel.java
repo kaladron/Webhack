@@ -229,7 +229,7 @@ public class DungeonLevel implements LocationMap {
 
 			/* if only one thing, then pick it */
 			if (objchain.size() == 1) {
-				obj = objchain.remove(0);
+				obj = objchain.get(0);
 			}
 
 			lcount = -1;
@@ -566,7 +566,7 @@ public class DungeonLevel implements LocationMap {
 
 		oType = ObjectName.getRandom(oClass, random);
 
-		return new Obj(oType, true, isArtifact);
+		return new Obj(bindery, oType, true, isArtifact);
 	}
 
 	@Stub
@@ -580,7 +580,7 @@ public class DungeonLevel implements LocationMap {
 
 	Obj mksobj_at(final ObjectName oType, final int x, final int y,
 			final boolean init, final boolean isArtifact) {
-		final Obj otmp = new Obj(oType, init, isArtifact);
+		final Obj otmp = new Obj(bindery, oType, init, isArtifact);
 		place_object(otmp, x, y);
 		return otmp;
 	}
@@ -657,6 +657,20 @@ public class DungeonLevel implements LocationMap {
 
 		return ((locations[x][y].typ == LocationType.HWALL || locations[x][y].typ == LocationType.VWALL)
 				&& doorIndex < Webhack.DOORMAX && !near_door);
+	}
+
+	/**
+	 * Do the actual work of picking otmp from the floor or monster's interior
+	 * and putting it in the hero's inventory. Take care of billing. Return a
+	 * pointer to the object where otmp ends up. This may be different from otmp
+	 * because of merging.
+	 * 
+	 * Gold never reaches this routine unless GOLDOBJ is defined.
+	 */
+	@Stub
+	Obj pick_obj(final Obj otmp) {
+		otmp.extract_self();
+		return you.addInv(otmp);
 	}
 
 	void place_object(final Obj thing, final int x, final int y) {
@@ -1108,8 +1122,8 @@ public class DungeonLevel implements LocationMap {
 	 * inventory. Returns -1 if caller should break out of its loop, 0 if
 	 * nothing picked up, 1 if otherwise.
 	 */
-
-	private int pickup_object(final Obj obj, final long count,
+	@Stub
+	private int pickup_object(Obj obj, final long count,
 			final boolean telekinesis) {
 
 		if (obj.otyp == ObjectName.GOLD_PIECE) {
@@ -1125,6 +1139,8 @@ public class DungeonLevel implements LocationMap {
 
 			return 1;
 		}
+
+		obj = pick_obj(obj);
 
 		return 0;
 	}

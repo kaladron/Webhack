@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.webhack.game.shared.Display.WindowType;
 import net.webhack.game.shared.command.Command;
+import net.webhack.game.shared.command.DDoInv;
 import net.webhack.game.shared.command.DoClose;
 import net.webhack.game.shared.command.DoKick;
 import net.webhack.game.shared.command.DoLook;
@@ -88,6 +89,14 @@ public class Webhack {
 		ui.setBindery(bindery);
 		vision.setBindery(bindery);
 		registerCommands();
+	}
+
+	@Stub
+	public void display_inventory() {
+		for (final Obj item : you.invent) {
+			bindery.ui.pline(item.doName());
+		}
+
 	}
 
 	@Stub
@@ -243,6 +252,7 @@ public class Webhack {
 		registerCommand('d' & CONTROL, new DoKick(bindery));
 		registerCommand('f' & CONTROL, new WizMap(bindery));
 		registerCommand('c', new DoClose(bindery));
+		registerCommand('i', new DDoInv(bindery));
 		registerCommand('o', new DoOpen(bindery));
 		registerCommand('s', new DoSearch(bindery));
 		registerCommand(',', new DoPickup(bindery));

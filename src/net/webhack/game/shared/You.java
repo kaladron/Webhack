@@ -5,6 +5,8 @@
 package net.webhack.game.shared;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
@@ -230,6 +232,8 @@ public class You {
 	Monster youmonst;
 	private final Bindery bindery;
 
+	List<Obj> invent = new LinkedList<Obj>();
+
 	public You(final Role role, final Race race, final Gender gender,
 			final Bindery bindery) {
 		this.role = role;
@@ -309,6 +313,12 @@ public class You {
 	public void xkilled(final Monster mon, final int dest) {
 		bindery.ui.pline("You kill it!");
 		mondead(mon);
+	}
+
+	@Stub
+	Obj addInv(final Obj obj) {
+		invent.add(obj);
+		return obj;
 	}
 
 	@Stub
