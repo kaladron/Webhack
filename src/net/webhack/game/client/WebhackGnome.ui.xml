@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
-	<ui:style>
+	<ui:style type='net.webhack.game.client.WebhackGnome.WebhackStyle'>
 		.plineWindow {
 			display: table-cell;
 			vertical-align: top;
@@ -29,6 +29,10 @@
 		.toppart {
 			display: table;
 			width: 100%;
+		}
+		
+		.gameCanvas {
+			background-image: url('mapbg.png');	
 		}
 	</ui:style>
 
@@ -105,9 +109,6 @@
 			</div>
 		</div>
 
-		<div id="bottompart">
-			<canvas ui:field="canvas" width="1280" height="336"
-				style="background-image: url('mapbg.png')"></canvas>
-		</div>
+		<g:FocusPanel ui:field="bottompart"/>
 	</g:HTMLPanel>
 </ui:UiBinder>
