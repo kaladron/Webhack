@@ -9,6 +9,8 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -22,7 +24,8 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class WebhackGnomeLike extends Display implements KeyDownHandler {
+public class WebhackGnomeLike extends Display implements KeyDownHandler,
+		ClickHandler {
 
 	private final int glyph2tile[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 			12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29,
@@ -545,11 +548,27 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler {
 		iconImg.setVisible(false);
 		RootPanel.get().add(iconImg); // image must be on page to fire load
 
+		webhackGnome.gameCanvas.addClickHandler(this);
+
 		ctx = webhackGnome.gameCanvas.getContext2d();
 		plineDiv = webhackGnome.plineContainer;
 
 		focusPanel.setFocus(true);
 
+	}
+
+	public void onClick(final ClickEvent event) {
+		final int pixX = event.getX();
+		final int pixY = event.getY();
+		final int x = Math.round(pixX / DISPLAY_SQUARE);
+		final int y = Math.round(pixY / DISPLAY_SQUARE);
+		bindery.you.tx = x;
+		bindery.you.ty = y;
+
+		// TODO(jeffbailey): Make this a magic constant.
+		final int cmdKey = Webhack.CMD_TRAVEL;
+
+		webhack.moveLoop(cmdKey);
 	}
 
 	public void onKeyDown(final KeyDownEvent event) {

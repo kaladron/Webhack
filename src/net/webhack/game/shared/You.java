@@ -98,7 +98,8 @@ public class You {
 	/** direction of FF */
 	int di;
 	/** destination of travel */
-	int tx, ty;
+	public int tx;
+	public int ty;
 	/** initial position FF */
 	int ux0, uy0;
 	/** your level on this turn */

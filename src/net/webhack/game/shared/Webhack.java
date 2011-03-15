@@ -35,6 +35,8 @@ public class Webhack {
 		}
 	}
 
+	public static final int CMD_TRAVEL = 0x90;
+
 	/** Number of columns in the dungeon. */
 	public static int COLNO = 80;
 
