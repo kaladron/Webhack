@@ -347,7 +347,7 @@ public class DungeonLevel implements LocationMap {
 			}
 		}
 		return false;
-	};
+	}
 
 	boolean digCorridor(final Coordinate org, final Coordinate dest,
 			final boolean nxcor, final LocationType ftyp,
@@ -458,6 +458,22 @@ public class DungeonLevel implements LocationMap {
 			dx = -dx;
 		}
 		return true;
+	};
+
+	/** distance between two points, in moves */
+	int distmin(final int x0, final int y0, final int x1, final int y1) {
+		int dx = x0 - x1, dy = y0 - y1;
+		if (dx < 0) {
+			dx = -dx;
+		}
+		if (dy < 0) {
+			dy = -dy;
+		}
+		/*
+		 * The minimum number of moves to get from (x0,y0) to (x1,y1) is the :
+		 * larger of the [absolute value of the] two deltas.
+		 */
+		return (dx < dy) ? dy : dx;
 	}
 
 	/** returns true if monster died moving, false otherwise */

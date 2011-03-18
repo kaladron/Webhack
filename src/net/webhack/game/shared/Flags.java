@@ -27,7 +27,7 @@ public class Flags {
 	boolean mv;
 	boolean bypasses; /* bypass flag is set on at least one fobj */
 	boolean nap; /* `timed_delay' option for display effects */
-	boolean nopick; /* do not pickup objects (as when running) */
+	public boolean nopick; /* do not pickup objects (as when running) */
 	boolean perm_invent; /* keep full inventories up until dismissed */
 	public boolean pickup; /* whether you pickup or move and look */
 
@@ -49,8 +49,8 @@ public class Flags {
 	int moonphase;
 	long suppress_alert;
 	int no_of_wizards; /* 0, 1 or 2 (wizard and his shadow) */
-	boolean travel; /* find way automatically to u.tx,u.ty */
-	int run; /* 0: h (etc), 1: H (etc), 2: fh (etc) */
+	public boolean travel; /* find way automatically to u.tx,u.ty */
+	public int run; /* 0: h (etc), 1: H (etc), 2: fh (etc) */
 	/* 3: FH, 4: ff+, 5: ff-, 6: FF+, 7: FF- */
 	/* 8: travel */
 	long warntype; /* warn_of_mon monster type M2 */

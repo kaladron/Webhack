@@ -5,6 +5,7 @@ public class Bindery {
 	final public WebhackRandom random;
 	final public WebhackUI ui;
 	final public Flags flags;
+	final public InstanceFlags iflags = new InstanceFlags();
 	public You you;
 	final public Vision vision;
 

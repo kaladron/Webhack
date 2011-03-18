@@ -103,6 +103,14 @@ public class Webhack {
 
 	@Stub
 	public void doMove() {
+
+		if (bindery.flags.travel) {
+			if (!findtravelpath(false)) {
+				findtravelpath(true);
+			}
+			bindery.iflags.travel1 = false;
+		}
+
 		final int x = you.ux + you.dx;
 		final int y = you.uy + you.dy;
 
@@ -217,12 +225,20 @@ public class Webhack {
 
 	}
 
+	@Stub
 	public void rhack(final int c) {
 
-		boolean doWalk = false;
-
+		boolean doWalk = false, doRush = false;
 		if (cmdMap.containsKey(c)) {
 			cmdMap.get(c).command.execute();
+		}
+
+		if (c == CMD_TRAVEL) {
+			bindery.flags.travel = true;
+			bindery.iflags.travel1 = true;
+			bindery.flags.run = 8;
+			bindery.flags.nopick = true;
+			doRush = true;
 		}
 
 		if (moveCmd(c)) {
@@ -231,6 +247,11 @@ public class Webhack {
 
 		if (doWalk) {
 			doMove();
+			return;
+		} else if (doRush) {
+			bindery.flags.mv = true;
+			doMove();
+			return;
 		}
 	}
 
@@ -260,7 +281,6 @@ public class Webhack {
 		registerCommand(',', new DoPickup(bindery));
 		registerCommand('@', new DoTogglePickup(bindery));
 		registerCommand(':', new DoLook(bindery));
-
 	}
 
 	/**
@@ -269,6 +289,35 @@ public class Webhack {
 	private void bot() {
 		bindery.ui.updateStats();
 		bindery.flags.botl = bindery.flags.botlx = false;
+	}
+
+	/**
+	 * Find a path from the destination (u.tx,u.ty) back to (u.ux,u.uy). A
+	 * shortest path is returned. If guess is true, consider various
+	 * inaccessible locations as valid intermediate path points.
+	 * 
+	 * @return true if a path was found.
+	 */
+	private boolean findtravelpath(final boolean guess) {
+		/* if travel to adjacent, reachable location, use normal movement rules */
+		if (!guess && bindery.iflags.travel1
+				&& dungeon.dlevel.distmin(you.ux, you.uy, you.tx, you.ty) == 1) {
+			bindery.flags.run = 0;
+
+			// TODO(jeffbailey): Ditch this:
+			final int TEST_MOVE = 0;
+
+			if (dungeon.dlevel.testMove(you.ux, you.uy, you.tx - you.ux, you.ty
+					- you.uy, TEST_MOVE)) {
+				you.dx = you.tx - you.ux;
+				you.dy = you.ty - you.uy;
+				bindery.iflags.travelcc.x = bindery.iflags.travelcc.y = -1;
+				return true;
+			}
+			bindery.flags.run = 8;
+		}
+
+		return false;
 	}
 
 	/**
