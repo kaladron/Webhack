@@ -460,6 +460,12 @@ public class DungeonLevel implements LocationMap {
 		return true;
 	};
 
+	/** square of euclidean distance between pair of pts */
+	int dist2(final int x0, final int y0, final int x1, final int y1) {
+		final int dx = x0 - x1, dy = y0 - y1;
+		return dx * dx + dy * dy;
+	}
+
 	/** distance between two points, in moves */
 	int distmin(final int x0, final int y0, final int x1, final int y1) {
 		int dx = x0 - x1, dy = y0 - y1;

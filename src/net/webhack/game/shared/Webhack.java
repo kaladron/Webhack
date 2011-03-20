@@ -35,6 +35,14 @@ public class Webhack {
 		}
 	}
 
+	final String sdir = "hykulnjb><";
+	// final char ndir[] = {'4','7','8','9','6','3','2','1','>','<'}; /*
+	// number pad mode */
+	final int xdir[] = { -1, -1, 0, 1, 1, 1, 0, -1, 0, 0 };
+	final int ydir[] = { 0, -1, -1, -1, 0, 1, 1, 1, 0, 0 };
+
+	final int zdir[] = { 0, 0, 0, 0, 0, 0, 0, 0, 1, -1 };
+
 	public static final int CMD_TRAVEL = 0x90;
 
 	/** Number of columns in the dungeon. */
@@ -268,6 +276,15 @@ public class Webhack {
 
 	}
 
+	void nomul(final int nval) {
+		// if(multi < nval) return; /* This is a bug fix by ab@unido */
+		you.uinvulnerable = false; /* Kludge to avoid ctrl-C bug -dlc */
+		you.usleep = 0;
+		// multi = nval;
+		bindery.flags.travel = bindery.iflags.travel1 = bindery.flags.mv = false;
+		bindery.flags.run = 0;
+	}
+
 	/**
 	 * Registers the keyboard commands
 	 */
@@ -281,6 +298,11 @@ public class Webhack {
 		registerCommand(',', new DoPickup(bindery));
 		registerCommand('@', new DoTogglePickup(bindery));
 		registerCommand(':', new DoLook(bindery));
+	}
+
+	/** return the sign of a number: -1, 0, or 1 */
+	int sgn(final int n) {
+		return (n < 0) ? -1 : (n != 0 ? 1 : 0);
 	}
 
 	/**
@@ -299,13 +321,12 @@ public class Webhack {
 	 * @return true if a path was found.
 	 */
 	private boolean findtravelpath(final boolean guess) {
+		// TODO(jeffbailey): Ditch this:
+		final int TEST_MOVE = 0;
 		/* if travel to adjacent, reachable location, use normal movement rules */
 		if (!guess && bindery.iflags.travel1
 				&& dungeon.dlevel.distmin(you.ux, you.uy, you.tx, you.ty) == 1) {
 			bindery.flags.run = 0;
-
-			// TODO(jeffbailey): Ditch this:
-			final int TEST_MOVE = 0;
 
 			if (dungeon.dlevel.testMove(you.ux, you.uy, you.tx - you.ux, you.ty
 					- you.uy, TEST_MOVE)) {
@@ -317,6 +338,179 @@ public class Webhack {
 			bindery.flags.run = 8;
 		}
 
+		if (you.tx == you.ux && you.ty == you.uy) {
+			return findtravelpathcleanup();
+		}
+
+		final int[][] travel = new int[Webhack.COLNO][Webhack.ROWNO];
+		final int[][] travelstepx = new int[2][COLNO * ROWNO];
+		final int[][] travelstepy = new int[2][COLNO * ROWNO];
+		int tx, ty, ux, uy;
+		/*
+		 * If guessing, first find an "obvious" goal location. The obvious goal
+		 * is the position the player knows of, or might figure out (couldsee)
+		 * that is closest to the target on a straight path.
+		 */
+		if (guess) {
+			tx = you.ux;
+			ty = you.uy;
+			ux = you.tx;
+			uy = you.ty;
+		} else {
+			tx = you.tx;
+			ty = you.ty;
+			ux = you.ux;
+			uy = you.uy;
+		}
+
+		return findtravelpathloop(guess, travel, travelstepx, travelstepy, tx,
+				ty, ux, uy);
+	}
+
+	private boolean findtravelpathcleanup() {
+		you.dx = 0;
+		you.dy = 0;
+		nomul(0);
+		return false;
+
+	}
+
+	private boolean findtravelpathloop(final boolean guess,
+			final int[][] travel, final int[][] travelstepx,
+			final int[][] travelstepy, int tx, int ty, final int ux,
+			final int uy) {
+
+		// TODO(jeffbailey): Ditch this:
+		final int TEST_MOVE = 0;
+		final int TEST_TRAV = 1;
+
+		int n = 1; /* max offset in travelsteps */
+		int set = 0; /* two sets current and previous */
+		int radius = 1; /* search radius */
+
+		travelstepx[0][0] = tx;
+		travelstepy[0][0] = ty;
+
+		while (n != 0) {
+			int nn = 0;
+
+			for (int i = 0; i < n; i++) {
+				int dir;
+				final int x = travelstepx[set][i];
+				final int y = travelstepy[set][i];
+				final int ordered[] = { 0, 2, 4, 6, 1, 3, 5, 7 };
+				/* no diagonal movement for grid bugs */
+				final int dirmax = you.umonnum == PM.GRID_BUG ? 4 : 8;
+
+				for (dir = 0; dir < dirmax; ++dir) {
+					final int nx = x + xdir[ordered[dir]];
+					final int ny = y + ydir[ordered[dir]];
+
+					if (!dungeon.dlevel.isOk(nx, ny)) {
+						continue;
+					}
+					// TODO(jeffbailey):
+					// if ((!Passes_walls && !can_ooze(you.youmonst) &&
+					// closed_door(
+					// x, y))
+					// || dungeon.dlevel.locations[x][y]
+					// .sobj_at(ObjectName.BOULDER)) {
+					if (dungeon.dlevel.locations[x][y]
+							.sobj_at(ObjectName.BOULDER) != null) {
+						/*
+						 * closed doors and boulders usually cause a delay, so
+						 * prefer another path
+						 */
+						if (travel[x][y] > radius - 3) {
+							travelstepx[1 - set][nn] = x;
+							travelstepy[1 - set][nn] = y;
+							/* don't change travel matrix! */
+							nn++;
+							continue;
+						}
+					}
+					// TODO(jeffbailey): Fix this
+					// if (dungeon.dlevel.testMove(x, y, nx - x, ny - y,
+					// TEST_TRAV)
+					// && (dungeon.dlevel.locations[nx][ny].seenv || (!Blind
+					// && couldsee(
+					// nx, ny)))) {
+					if (dungeon.dlevel
+							.testMove(x, y, nx - x, ny - y, TEST_TRAV)) {
+						if (nx == ux && ny == uy) {
+							if (!guess) {
+								you.dx = x - ux;
+								you.dy = y - uy;
+								if (x == you.tx && y == you.ty) {
+									nomul(0);
+									/* reset run so domove run checks work */
+									bindery.flags.run = 8;
+									bindery.iflags.travelcc.x = bindery.iflags.travelcc.y = -1;
+								}
+								return true;
+							}
+						} else if (travel[nx][ny] == 0) {
+							travelstepx[1 - set][nn] = nx;
+							travelstepy[1 - set][nn] = ny;
+							travel[nx][ny] = radius;
+							nn++;
+						}
+					}
+				}
+			}
+
+			n = nn;
+			set = 1 - set;
+			radius++;
+		}
+
+		/* if guessing, find best location in travel matrix and go there */
+		if (guess) {
+			int px = tx, py = ty; /* pick location */
+			int dist, nxtdist, d2, nd2;
+			dist = dungeon.dlevel.distmin(ux, uy, tx, ty);
+			d2 = dungeon.dlevel.dist2(ux, uy, tx, ty);
+			for (tx = 1; tx < COLNO; ++tx) {
+				for (ty = 0; ty < ROWNO; ++ty) {
+					if (travel[tx][ty] != 0) {
+						nxtdist = dungeon.dlevel.distmin(ux, uy, tx, ty);
+						// TODO(jeffbailey): if (nxtdist == dist &&
+						// couldsee(tx, ty)) {
+						if (nxtdist == dist) {
+							nd2 = dungeon.dlevel.dist2(ux, uy, tx, ty);
+							if (nd2 < d2) {
+								/* prefer non-zigzag path */
+								px = tx;
+								py = ty;
+								d2 = nd2;
+							}
+							// TODO(jeffbailey): } else if (nxtdist < dist
+							// && couldsee(tx, ty)) {
+						} else if (nxtdist < dist) {
+							px = tx;
+							py = ty;
+							dist = nxtdist;
+							d2 = dungeon.dlevel.dist2(ux, uy, tx, ty);
+						}
+					}
+				}
+			}
+
+			if (px == you.ux && py == you.uy) {
+				/* no guesses, just go in the general direction */
+				you.dx = sgn(you.tx - you.ux);
+				you.dy = sgn(you.ty - you.uy);
+				if (dungeon.dlevel.testMove(you.ux, you.uy, you.dx, you.dy,
+						TEST_MOVE)) {
+					return true;
+				}
+				return findtravelpathcleanup();
+			}
+			tx = px;
+			ty = py;
+			return findtravelpathloop(false, travel, travelstepx, travelstepy,
+					tx, ty, you.ux, you.uy);
+		}
 		return false;
 	}
 
@@ -326,12 +520,6 @@ public class Webhack {
 	 * @param c
 	 */
 	private boolean moveCmd(final int c) {
-		final String sdir = "hykulnjb><";
-		// final char ndir[] = {'4','7','8','9','6','3','2','1','>','<'}; /*
-		// number pad mode */
-		final int xdir[] = { -1, -1, 0, 1, 1, 1, 0, -1, 0, 0 };
-		final int ydir[] = { 0, -1, -1, -1, 0, 1, 1, 1, 0, 0 };
-		final int zdir[] = { 0, 0, 0, 0, 0, 0, 0, 0, 1, -1 };
 
 		final int offset = sdir.indexOf(c);
 
