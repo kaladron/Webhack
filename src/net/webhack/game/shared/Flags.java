@@ -18,7 +18,8 @@ public class Flags {
 	boolean help; /* look in data file for info about stuff */
 	boolean ignintr; /* ignore interrupts */
 	boolean ins_chkpt; /* checkpoint as appropriate */
-	boolean invlet_constant; /* let objects keep their inventory symbol */
+	/** let objects keep their inventory symbol */
+	boolean invlet_constant = true;
 	boolean legacy; /* print game entry "story" */
 	boolean lit_corridor = false; /* show a dark corr as lit if it is in sight */
 	boolean made_amulet;

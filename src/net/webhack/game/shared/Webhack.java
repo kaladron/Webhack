@@ -103,8 +103,8 @@ public class Webhack {
 
 	@Stub
 	public void display_inventory() {
-		for (final Obj item : you.invent) {
-			bindery.ui.pline(item.doName());
+		for (final char item : you.invent.keySet()) {
+			bindery.ui.pline(item + " - " + you.invent.get(item).doName());
 		}
 
 	}

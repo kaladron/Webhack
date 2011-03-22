@@ -5,8 +5,7 @@
 package net.webhack.game.shared;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
 
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
@@ -233,7 +232,7 @@ public class You {
 	Monster youmonst;
 	private final Bindery bindery;
 
-	List<Obj> invent = new LinkedList<Obj>();
+	HashMap<Character, Obj> invent = new HashMap<Character, Obj>();
 
 	public You(final Role role, final Race race, final Gender gender,
 			final Bindery bindery) {
@@ -318,8 +317,18 @@ public class You {
 
 	@Stub
 	Obj addInv(final Obj obj) {
-		invent.add(obj);
+		// The implementation here is slightly different than NetHack
+		// because we have HashMaps.
+
+		if (bindery.flags.invlet_constant) {
+			assignInvlet(obj);
+		}
 		return obj;
+	}
+
+	@Stub
+	void assignInvlet(final Obj obj) {
+		invent.put('a', obj);
 	}
 
 	@Stub
