@@ -403,27 +403,43 @@ public enum ObjectName {
 			Property.PROT_FROM_SHAPE_CHANGERS, "shiny", 100, true, false, 5,
 			Material.IRON),
 
-	AMULET_OF_ESP,
+	AMULET_OF_ESP(new Amulet(), 178, "amulet of ESP", "circular",
+			Property.TELEPAT, 175),
 
-	AMULET_OF_LIFE_SAVING,
+	AMULET_OF_LIFE_SAVING(new Amulet(), 179, "amulet of life saving",
+			"spherical", Property.LIFESAVED, 75),
 
-	AMULET_OF_STRANGULATION,
+	AMULET_OF_STRANGULATION(new Amulet(), 180, "amulet of strangulation",
+			"oval", Property.STRANGLED, 135),
 
-	AMULET_OF_RESTFUL_SLEEP,
+	AMULET_OF_RESTFUL_SLEEP(new Amulet(), 181, "amulet of restful sleep",
+			"triangular", Property.SLEEPING, 135),
 
-	AMULET_VERSUS_POISON,
+	AMULET_VERSUS_POISON(new Amulet(), 182, "amulet versus poison",
+			"pyramidal", Property.POISON_RES, 165),
 
-	AMULET_OF_CHANGE,
+	AMULET_OF_CHANGE(new Amulet(), 183, "amulet of change", "square", null, 130),
 
-	AMULET_OF_UNCHANGING,
+	AMULET_OF_UNCHANGING(new Amulet(), 184, "amulet of unchanging", "concave",
+			Property.UNCHANGING, 45),
 
-	AMULET_OF_REFLECTION,
+	AMULET_OF_REFLECTION(new Amulet(), 185, "amulet of reflection",
+			"hexagonal", Property.REFLECTING, 75),
 
-	AMULET_OF_MAGICAL_BREATHING,
+	AMULET_OF_MAGICAL_BREATHING(new Amulet(), 186,
+			"amulet of magical breathing", "octagonal",
+			Property.MAGICAL_BREATHING, 65),
 
-	FAKE_AMULET_OF_YENDOR,
+	FAKE_AMULET_OF_YENDOR(187,
+			"cheap plastic imitation of the Amulet of Yendor",
+			"Amulet of Yendor", false, false, true, false, false, false, false,
+			false, false, false, 0, null, Material.PLASTIC, null,
+			ObjectClass.AMULET, 0, 0, 20, 0, 0, 0, 0, 0, 1),
 
-	AMULET_OF_YENDOR,
+	AMULET_OF_YENDOR(188, "Amulet of Yendor", /* note: description == name */
+	"Amulet of Yendor", false, false, true, false, true, false, true, true,
+			false, false, 0, null, Material.MITHRIL, null, ObjectClass.AMULET,
+			0, 0, 20, 30000, 0, 0, 0, 0, 20),
 
 	LARGE_BOX,
 
@@ -933,6 +949,9 @@ public enum ObjectName {
 
 	MAXSPELL;
 
+	private static class Amulet {
+	}
+
 	private class Bow {
 	}
 
@@ -957,11 +976,13 @@ public enum ObjectName {
 		final int prob = random.rnd(1000);
 
 		if (aClass == null) {
-			switch (random.rn2(2)) {
+			switch (random.rn2(3)) {
 			case 0:
 				return getRandom(ObjectClass.RING, random);
 			case 1:
 				return getRandom(ObjectClass.FOOD, random);
+			case 2:
+				return getRandom(ObjectClass.AMULET, random);
 			}
 		}
 
@@ -971,6 +992,8 @@ public enum ObjectName {
 		case RING:
 			return randomInRange(prob, RIN_ADORNMENT,
 					RIN_PROTECTION_FROM_SHAPE_CHAN);
+		case AMULET:
+			return randomInRange(prob, AMULET_OF_ESP, AMULET_OF_YENDOR);
 		}
 
 		return null;
@@ -1027,6 +1050,13 @@ public enum ObjectName {
 	final static int HARDGEM = 8;
 
 	ObjectName() {
+	}
+
+	ObjectName(final Amulet amulet, final int idx, final String name,
+			final String desc, final Property power, final int prob) {
+		this(idx, name, desc, false, false, false, false, true, false, false,
+				false, false, false, 0, Skills.NONE, Material.IRON, power,
+				ObjectClass.AMULET, prob, 0, 20, 150, 0, 0, 0, 0, 20);
 	}
 
 	ObjectName(final Bow bow, final int idx, final String name,
@@ -1135,5 +1165,4 @@ public enum ObjectName {
 				bi, false, typ, sub, metal, null, ObjectClass.WEAPON, prob, 0,
 				wt, cost, sdam, ldam, hitbon, 0, wt);
 	}
-
 }
