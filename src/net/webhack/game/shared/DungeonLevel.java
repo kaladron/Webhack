@@ -692,7 +692,7 @@ public class DungeonLevel implements LocationMap {
 	@Stub
 	Obj pick_obj(final Obj otmp) {
 		otmp.extract_self();
-		return you.addInv(otmp);
+		return you.invent.add(otmp);
 	}
 
 	void place_object(final Obj thing, final int x, final int y) {

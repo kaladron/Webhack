@@ -5,7 +5,6 @@
 package net.webhack.game.shared;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import net.webhack.game.shared.monsters.Monster;
 import net.webhack.game.shared.race.Race;
@@ -232,7 +231,7 @@ public class You {
 	Monster youmonst;
 	private final Bindery bindery;
 
-	HashMap<Character, Obj> invent = new HashMap<Character, Obj>();
+	final Inventory invent;
 
 	public You(final Role role, final Race race, final Gender gender,
 			final Bindery bindery) {
@@ -241,6 +240,8 @@ public class You {
 		this.gender = gender;
 		this.bindery = bindery;
 		bindery.registerYou(this);
+
+		invent = new Inventory(bindery);
 		// artifacts_init
 		// u_init
 
@@ -313,22 +314,6 @@ public class You {
 	public void xkilled(final Monster mon, final int dest) {
 		bindery.ui.pline("You kill it!");
 		mondead(mon);
-	}
-
-	@Stub
-	Obj addInv(final Obj obj) {
-		// The implementation here is slightly different than NetHack
-		// because we have HashMaps.
-
-		if (bindery.flags.invlet_constant) {
-			assignInvlet(obj);
-		}
-		return obj;
-	}
-
-	@Stub
-	void assignInvlet(final Obj obj) {
-		invent.put('a', obj);
 	}
 
 	@Stub

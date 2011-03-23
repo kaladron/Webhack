@@ -1,6 +1,8 @@
 package net.webhack.game.shared;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.webhack.game.shared.Display.WindowType;
@@ -103,8 +105,12 @@ public class Webhack {
 
 	@Stub
 	public void display_inventory() {
-		for (final char item : you.invent.keySet()) {
-			bindery.ui.pline(item + " - " + you.invent.get(item).doName());
+		final List<Character> keys = new ArrayList<Character>(
+				you.invent.items.keySet());
+		java.util.Collections.sort(keys);
+		for (final char item : keys) {
+			bindery.ui
+					.pline(item + " - " + you.invent.items.get(item).doName());
 		}
 
 	}
