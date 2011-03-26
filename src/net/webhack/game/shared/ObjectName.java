@@ -33,63 +33,119 @@ public enum ObjectName {
 
 	BOOMERANG,
 
-	SPEAR,
+	SPEAR(new Weapon(), 10, "spear", null, true, true, false, 50, 30, 3, 6, 8,
+			0, EnumSet.of(WeaponType.PIERCE), Skills.SPEAR, Material.IRON),
 
-	ELVEN_SPEAR,
+	ELVEN_SPEAR(new Weapon(), 11, "elven spear", "runed spear", false, true,
+			false, 10, 30, 3, 7, 8, 0, EnumSet.of(WeaponType.PIERCE),
+			Skills.SPEAR, Material.WOOD),
 
-	ORCISH_SPEAR,
+	ORCISH_SPEAR(new Weapon(), 12, "orcish spear", "crude spear", false, true,
+			false, 13, 30, 3, 5, 8, 0, EnumSet.of(WeaponType.PIERCE),
+			Skills.SPEAR, Material.IRON),
 
-	DWARVISH_SPEAR,
+	DWARVISH_SPEAR(new Weapon(), 13, "dwarvish spear", "stout spear", false,
+			true, false, 12, 35, 3, 8, 8, 0, EnumSet.of(WeaponType.PIERCE),
+			Skills.SPEAR, Material.IRON),
 
-	SILVER_SPEAR,
+	SILVER_SPEAR(new Weapon(), 14, "silver spear", null, true, true, false, 2,
+			36, 40, 6, 8, 0, EnumSet.of(WeaponType.PIERCE), Skills.SPEAR,
+			Material.SILVER),
 
-	JAVELIN,
+	JAVELIN(new Weapon(), 15, "javelin", "throwing spear", false, true, false,
+			10, 20, 3, 6, 6, 0, EnumSet.of(WeaponType.PIERCE), Skills.JAVELIN,
+			Material.IRON),
 
-	TRIDENT,
+	/* +1 small, +2d4 large */
+	TRIDENT(new Weapon(), 16, "trident", null, true, false, false, 8, 25, 5, 6,
+			4, 0, EnumSet.of(WeaponType.PIERCE), Skills.TRIDENT, Material.IRON),
 
-	DAGGER,
+	DAGGER(new Weapon(), 17, "dagger", null, true, true, false, 30, 10, 4, 4,
+			3, 2, EnumSet.of(WeaponType.PIERCE), Skills.DAGGER, Material.IRON),
 
-	ELVEN_DAGGER,
+	ELVEN_DAGGER(new Weapon(), 18, "elven dagger", "runed dagger", false, true,
+			false, 10, 10, 4, 5, 3, 2, EnumSet.of(WeaponType.PIERCE),
+			Skills.DAGGER, Material.WOOD),
 
-	ORCISH_DAGGER,
+	ORCISH_DAGGER(new Weapon(), 19, "orcish dagger", "crude dagger", false,
+			true, false, 12, 10, 4, 3, 3, 2, EnumSet.of(WeaponType.PIERCE),
+			Skills.DAGGER, Material.IRON),
 
-	SILVER_DAGGER,
+	SILVER_DAGGER(new Weapon(), 20, "silver dagger", null, true, true, false,
+			3, 12, 40, 4, 3, 2, EnumSet.of(WeaponType.PIERCE), Skills.DAGGER,
+			Material.SILVER),
 
-	ATHAME,
+	ATHAME(new Weapon(), 21, "athame", null, true, true, false, 0, 10, 4, 4, 3,
+			2, EnumSet.of(WeaponType.SLASH), Skills.DAGGER, Material.IRON),
 
-	SCALPEL,
+	SCALPEL(new Weapon(), 22, "scalpel", null, true, true, false, 0, 5, 6, 3,
+			3, 2, EnumSet.of(WeaponType.SLASH), Skills.KNIFE, Material.METAL),
 
-	KNIFE,
+	KNIFE(new Weapon(), 23, "knife", null, true, true, false, 20, 5, 4, 3, 2,
+			0, EnumSet.of(WeaponType.PIERCE, WeaponType.SLASH), Skills.KNIFE,
+			Material.IRON),
 
-	STILETTO,
+	STILETTO(new Weapon(), 24, "stiletto", null, true, true, false, 5, 5, 4, 3,
+			2, 0, EnumSet.of(WeaponType.PIERCE, WeaponType.SLASH),
+			Skills.KNIFE, Material.IRON),
 
-	WORM_TOOTH,
+	WORM_TOOTH(new Weapon(), 25, "worm tooth", null, true, false, false, 0, 20,
+			2, 2, 2, 0, null, Skills.KNIFE, null),
 
-	CRYSKNIFE,
+	CRYSKNIFE(new Weapon(), 26, "crysknife", null, true, false, false, 0, 20,
+			100, 10, 10, 3, EnumSet.of(WeaponType.PIERCE), Skills.KNIFE,
+			Material.MINERAL),
 
-	AXE,
+	AXE(new Weapon(), 27, "axe", null, true, false, false, 40, 60, 8, 6, 4, 0,
+			EnumSet.of(WeaponType.SLASH), Skills.AXE, Material.IRON),
 
-	BATTLE_AXE,
+	/* "double-bitted" ? */
+	BATTLE_AXE(new Weapon(), 28, "battle-axe", "double-headed axe", false,
+			false, true, 10, 120, 40, 8, 6, 0, EnumSet.of(WeaponType.SLASH),
+			Skills.AXE, Material.IRON),
 
-	SHORT_SWORD,
+	SHORT_SWORD(new Weapon(), 29, "short sword", null, true, false, false, 8,
+			30, 10, 6, 8, 0, EnumSet.of(WeaponType.PIERCE), Skills.SHORT_SWORD,
+			Material.IRON),
 
-	ELVEN_SHORT_SWORD,
+	ELVEN_SHORT_SWORD(new Weapon(), 30, "elven short sword",
+			"runed short sword", false, false, false, 2, 30, 10, 8, 8, 0,
+			EnumSet.of(WeaponType.PIERCE), Skills.SHORT_SWORD, Material.WOOD),
 
-	ORCISH_SHORT_SWORD,
+	ORCISH_SHORT_SWORD(new Weapon(), 31, "orcish short sword",
+			"crude short sword", false, false, false, 3, 30, 10, 5, 8, 0,
+			EnumSet.of(WeaponType.PIERCE), Skills.SHORT_SWORD, Material.IRON),
 
-	DWARVISH_SHORT_SWORD,
+	DWARVISH_SHORT_SWORD(new Weapon(), 32, "dwarvish short sword",
+			"broad short sword", false, false, false, 2, 30, 10, 7, 8, 0,
+			EnumSet.of(WeaponType.PIERCE), Skills.SHORT_SWORD, Material.IRON),
 
-	SCIMITAR,
+	SCIMITAR(new Weapon(), 33, "scimitar", "curved sword", false, false, false,
+			15, 40, 15, 8, 8, 0, EnumSet.of(WeaponType.SLASH), Skills.SCIMITAR,
+			Material.IRON),
 
-	SILVER_SABER,
+	SILVER_SABER(new Weapon(), 34, "silver saber", null, true, false, false, 6,
+			40, 75, 8, 8, 0, EnumSet.of(WeaponType.SLASH), Skills.SABER,
+			Material.SILVER),
 
-	BROADSWORD,
+	/* +d4 small, +1 large */
+	BROADSWORD(new Weapon(), 35, "broadsword", null, true, false, false, 8, 70,
+			10, 4, 6, 0, EnumSet.of(WeaponType.SLASH), Skills.BROAD_SWORD,
+			Material.IRON),
 
-	ELVEN_BROADSWORD,
+	/* +d4 small, +1 large */
+	ELVEN_BROADSWORD(new Weapon(), 36, "elven broadsword", "runed broadsword",
+			false, false, false, 4, 70, 10, 6, 6, 0, EnumSet
+					.of(WeaponType.SLASH), Skills.BROAD_SWORD, Material.WOOD),
 
-	LONG_SWORD,
+	LONG_SWORD(new Weapon(), 37, "long sword", null, true, false, false, 50,
+			40, 15, 8, 12, 0, EnumSet.of(WeaponType.SLASH), Skills.LONG_SWORD,
+			Material.IRON),
 
-	TWO_HANDED_SWORD,
+	/* +2d6 large */
+	TWO_HANDED_SWORD(new Weapon(), 38, "two-handed sword", null, true, false,
+			true, 22, 150, 50, 12, 6, 0, EnumSet.of(WeaponType.SLASH),
+			Skills.TWO_HANDED_SWORD, Material.IRON),
 
 	KATANA,
 
@@ -433,13 +489,13 @@ public enum ObjectName {
 	FAKE_AMULET_OF_YENDOR(187,
 			"cheap plastic imitation of the Amulet of Yendor",
 			"Amulet of Yendor", false, false, true, false, false, false, false,
-			false, false, false, 0, null, Material.PLASTIC, null,
+			false, false, false, 0, null, null, Material.PLASTIC, null,
 			ObjectClass.AMULET, 0, 0, 20, 0, 0, 0, 0, 0, 1),
 
 	AMULET_OF_YENDOR(188, "Amulet of Yendor", /* note: description == name */
 	"Amulet of Yendor", false, false, true, false, true, false, true, true,
-			false, false, 0, null, Material.MITHRIL, null, ObjectClass.AMULET,
-			0, 0, 20, 30000, 0, 0, 0, 0, 20),
+			false, false, 0, null, null, Material.MITHRIL, null,
+			ObjectClass.AMULET, 0, 0, 20, 30000, 0, 0, 0, 0, 20),
 
 	LARGE_BOX,
 
@@ -562,8 +618,8 @@ public enum ObjectName {
 	/* special case because it's not mergable */
 
 	MEAT_RING(245, "meat ring", null, true, false, false, false, false, false,
-			false, false, false, false, 0, Skills.NONE, Material.FLESH, null,
-			ObjectClass.FOOD, 0, 1, 5, 1, 0, 0, 0, 0, 5),
+			false, false, false, false, 0, null, Skills.NONE, Material.FLESH,
+			null, ObjectClass.FOOD, 0, 1, 5, 1, 0, 0, 0, 0, 5),
 
 	/* fruits & veggies */
 
@@ -932,8 +988,8 @@ public enum ObjectName {
 	ROCK,
 
 	BOULDER(427, "boulder", null, true, false, false, false, false, false,
-			false, false, true, false, 0, Skills.NONE, Material.MINERAL, null,
-			ObjectClass.ROCK, 100, 0, 6000, 0, 20, 20, 0, 0, 2000),
+			false, false, true, false, 0, null, Skills.NONE, Material.MINERAL,
+			null, ObjectClass.ROCK, 100, 0, 6000, 0, 20, 20, 0, 0, 2000),
 
 	STATUE,
 
@@ -967,7 +1023,7 @@ public enum ObjectName {
 	private static class Ring {
 	}
 
-	private class Weapon {
+	private static class Weapon {
 	}
 
 	@Stub
@@ -1026,6 +1082,7 @@ public enum ObjectName {
 	boolean isBig;
 	boolean isTough;
 	int dir;
+	EnumSet<WeaponType> weapontype;
 	Skills sub;
 	Material mtrl;
 	Property prp;
@@ -1055,8 +1112,8 @@ public enum ObjectName {
 	ObjectName(final Amulet amulet, final int idx, final String name,
 			final String desc, final Property power, final int prob) {
 		this(idx, name, desc, false, false, false, false, true, false, false,
-				false, false, false, 0, Skills.NONE, Material.IRON, power,
-				ObjectClass.AMULET, prob, 0, 20, 150, 0, 0, 0, 0, 20);
+				false, false, false, 0, null, Skills.NONE, Material.IRON,
+				power, ObjectClass.AMULET, prob, 0, 20, 150, 0, 0, 0, 0, 20);
 	}
 
 	ObjectName(final Bow bow, final int idx, final String name,
@@ -1064,8 +1121,8 @@ public enum ObjectName {
 			final int cost, final int hitbon, final Material metal,
 			final Skills sub) {
 		this(idx, name, app, kn, false, true, false, false, true, false, false,
-				false, false, 0, sub, metal, null, ObjectClass.WEAPON, prob, 0,
-				wt, cost, 2, 2, hitbon, 0, wt);
+				false, false, 0, null, sub, metal, null, ObjectClass.WEAPON,
+				prob, 0, wt, cost, 2, 2, hitbon, 0, wt);
 	}
 
 	/**
@@ -1081,7 +1138,7 @@ public enum ObjectName {
 	ObjectName(final Coin coin, final int idx, final String name,
 			final int prob, final Material metal, final int worth) {
 		this(idx, name, null, false, true, false, false, false, false, false,
-				false, false, false, 0, Skills.NONE, metal, null,
+				false, false, false, 0, null, Skills.NONE, metal, null,
 				ObjectClass.COIN, prob, 0, 1, worth, 0, 0, 0, 0, 0);
 	}
 
@@ -1089,7 +1146,7 @@ public enum ObjectName {
 			final int prob, final int delay, final int wt, final boolean unk,
 			final Material tin, final int nutrition) {
 		this(idx, name, null, true, true, unk, false, false, false, false,
-				false, false, false, 0, Skills.NONE, tin, null,
+				false, false, false, 0, null, Skills.NONE, tin, null,
 				ObjectClass.FOOD, prob, delay, wt, nutrition / 20 + 5, 0, 0, 0,
 				0, nutrition);
 	}
@@ -1098,7 +1155,8 @@ public enum ObjectName {
 			final boolean nmkn, final boolean mrg, final boolean uskn,
 			final boolean ctnr, final boolean mgc, final boolean chrg,
 			final boolean uniq, final boolean nwsh, final boolean big,
-			final boolean tuf, final int dir, final Skills sub,
+			final boolean tuf, final int dir,
+			final EnumSet<WeaponType> weapontype, final Skills sub,
 			final Material mtrl, final Property prp, final ObjectClass sym,
 			final int prob, final int dly, final int wt, final int cost,
 			final int sdam, final int ldam, final int oc1, final int oc2,
@@ -1118,6 +1176,7 @@ public enum ObjectName {
 		this.isBig = big;
 		this.isTough = tuf;
 		this.dir = dir;
+		this.weapontype = weapontype;
 		this.sub = sub;
 		this.mtrl = mtrl;
 		this.prp = prp;
@@ -1138,13 +1197,10 @@ public enum ObjectName {
 			final String app, final boolean kn, final int prob, final int wt,
 			final int cost, final int sdam, final int ldam, final int hitbon,
 			final Material metal, final Skills sub) {
-		// TODO(jeffbailey): Make this an Enum
-		// final int PIERCE = 1;
-
 		this(idx, name, app, kn, true, true, false, false, true, false, false,
-				false, false, 1 /* PIERCE */, sub, metal, null,
-				ObjectClass.WEAPON, prob, 0, wt, cost, sdam, ldam, hitbon, 0,
-				wt);
+				false, false, 0, EnumSet.of(WeaponType.PIERCE), sub, metal,
+				null, ObjectClass.WEAPON, prob, 0, wt, cost, sdam, ldam,
+				hitbon, 0, wt);
 	}
 
 	ObjectName(final Ring ring, final int idx, final String name,
@@ -1152,17 +1208,18 @@ public enum ObjectName {
 			final boolean mgc, final boolean spec, final int mohs,
 			final Material metal) {
 		this(idx, name, stone, false, false, spec, false, mgc, spec, false,
-				false, false, (mohs >= HARDGEM), 0, Skills.NONE, metal, power,
-				ObjectClass.RING, 0, 0, 3, cost, 0, 0, 0, 0, 15);
+				false, false, (mohs >= HARDGEM), 0, null, Skills.NONE, metal,
+				power, ObjectClass.RING, 0, 0, 3, cost, 0, 0, 0, 0, 15);
 	}
 
 	ObjectName(final Weapon weapon, final int idx, final String name,
 			final String app, final boolean kn, final boolean mg,
 			final boolean bi, final int prob, final int wt, final int cost,
-			final int sdam, final int ldam, final int hitbon, final int typ,
-			final Skills sub, final Material metal) {
+			final int sdam, final int ldam, final int hitbon,
+			final EnumSet<WeaponType> typ, final Skills sub,
+			final Material metal) {
 		this(idx, name, app, kn, mg, true, false, false, true, false, false,
-				bi, false, typ, sub, metal, null, ObjectClass.WEAPON, prob, 0,
-				wt, cost, sdam, ldam, hitbon, 0, wt);
+				bi, false, 0, typ, sub, metal, null, ObjectClass.WEAPON, prob,
+				0, wt, cost, sdam, ldam, hitbon, 0, wt);
 	}
 }
