@@ -204,7 +204,8 @@ public class You {
 	int ugifts; /* number of artifacts bestowed */
 	int ublessed, ublesscnt; /* blessing/duration from #pray */
 	long umoney0;
-	long uexp, urexp;
+	public long uexp;
+	long urexp;
 	long ucleansed; /* to record moves when player was cleansed */
 	long usleep; /* sleeping; monstermove you last started */
 	int uinvault;
@@ -311,14 +312,29 @@ public class You {
 	}
 
 	@Stub
-	public void xkilled(final Monster mon, final int dest) {
+	public void xkilled(final Monster mtmp, final int dest) {
 		bindery.ui.pline("You kill it!");
-		mondead(mon);
+		mondead(mtmp);
+
+		/* give experience points */
+		final int tmp = mtmp.experience();
+		more_experienced(tmp, 0);
+
 	}
 
 	@Stub
 	boolean inEndGame() {
 		return false;
+	}
+
+	void more_experienced(final int exp, final int rexp) {
+		uexp += exp;
+		urexp += 4 * exp + rexp;
+		if (exp != 0) {
+			bindery.flags.botl = true;
+			// if (urexp >= (Role_if(PM_WIZARD) ? 1000 : 2000))
+			// bindery.flags.beginner = false;
+		}
 	}
 
 	@Stub

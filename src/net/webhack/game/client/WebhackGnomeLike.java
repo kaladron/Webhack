@@ -673,6 +673,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler,
 		webhackGnome.setHitPoints(hitpoints);
 
 		webhackGnome.setGold(you.ugold);
+		webhackGnome.setXp(you.uexp);
 	}
 
 	public char ynFunction(final String question, final char[] choices,

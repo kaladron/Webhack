@@ -125,6 +125,70 @@ public class Monster {
 		mhpmax = mhp = bindery.random.d(mlevel, 8);
 	}
 
+	/** return # of exp points for mtmp after nk killed */
+	public int experience() {
+		final int tmp = 1;
+		// int i, tmp, tmp2;
+		//
+		// tmp = 1 + m_lev * m_lev;
+		//
+		// /* For higher ac values, give extra experience */
+		// if ((i = find_mac()) < 3) {
+		// tmp += (7 - i) * ((i < 0) ? 2 : 1);
+		// }
+		//
+		// /* For very fast monsters, give extra experience */
+		// if (data.mmove > NORMAL_SPEED) {
+		// tmp += (data.mmove > (3 * NORMAL_SPEED / 2)) ? 5 : 3;
+		// }
+		//
+		// /* For each "special" attack type give extra experience */
+		// for (i = 0; i < NATTK; i++) {
+		// tmp2 = data.mattk[i].aatyp;
+		// if (tmp2 > AT_BUTT) {
+		//
+		// if (tmp2 == AT_WEAP) {
+		// tmp += 5;
+		// } else if (tmp2 == AT_MAGC) {
+		// tmp += 10;
+		// } else {
+		// tmp += 3;
+		// }
+		// }
+		// }
+		//
+		// /* For each "special" damage type give extra experience */
+		// for (i = 0; i < NATTK; i++) {
+		// tmp2 = data.mattk[i].adtyp;
+		// if (tmp2 > AD_PHYS && tmp2 < AD_BLND) {
+		// tmp += 2 * m_lev;
+		// } else if ((tmp2 == AD_DRLI) || (tmp2 == AD_STON)
+		// || (tmp2 == AD_SLIM)) {
+		// tmp += 50;
+		// } else if (tmp != AD_PHYS) {
+		// tmp += m_lev;
+		// }
+		// /* extra heavy damage bonus */
+		// if ((int) (ptr.mattk[i].damd * ptr.mattk[i].damn) > 23) {
+		// tmp += m_lev;
+		// }
+		// if (tmp2 == AD_WRAP && mlet == S_EEL && !Amphibious) {
+		// tmp += 1000;
+		// }
+		// }
+		// /* For certain "extra nasty" monsters, give even more */
+		// if (extra_nasty(data)) {
+		// tmp += (7 * m_lev);
+		// }
+		//
+		// /* For higher level monsters, an additional bonus is given */
+		// if (m_lev > 8) {
+		// tmp += 50;
+		// }
+
+		return (tmp);
+	}
+
 	/**
 	 * Returns a list of possible directions the monster can move in.
 	 * 

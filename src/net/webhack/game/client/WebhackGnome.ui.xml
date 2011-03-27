@@ -96,7 +96,7 @@
 				<table>
 					<tr>
 						<td>Level: 1</td>
-						<td>Exp: 0</td>
+						<td>Exp: <span ui:field='xp'>0</span></td>
 					</tr>
 				</table>
 				<hr />

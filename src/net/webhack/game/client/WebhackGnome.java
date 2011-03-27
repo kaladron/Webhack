@@ -20,6 +20,9 @@ public class WebhackGnome extends Composite {
 	}
 
 	@UiField
+	SpanElement xp;
+
+	@UiField
 	SpanElement heading1;
 
 	@UiField
@@ -67,5 +70,9 @@ public class WebhackGnome extends Composite {
 
 	void setHitPoints(final String in) {
 		hitpoints.setInnerText(in);
+	}
+
+	void setXp(final Long in) {
+		xp.setInnerText(in.toString());
 	}
 }
