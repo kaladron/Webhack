@@ -147,57 +147,133 @@ public enum ObjectName {
 			true, 22, 150, 50, 12, 6, 0, EnumSet.of(WeaponType.SLASH),
 			Skills.TWO_HANDED_SWORD, Material.IRON),
 
-	KATANA,
+	KATANA(new Weapon(), 39, "katana", "samurai sword", false, false, false, 4,
+			40, 80, 10, 12, 1, EnumSet.of(WeaponType.SLASH), Skills.LONG_SWORD,
+			Material.IRON),
 
-	TSURUGI,
+	/* +2d6 large */
+	TSURUGI(new Weapon(), 40, "tsurugi", "long samurai sword", false, false,
+			true, 0, 60, 500, 16, 8, 2, EnumSet.of(WeaponType.SLASH),
+			Skills.TWO_HANDED_SWORD, Material.METAL),
 
-	RUNESWORD,
+	RUNESWORD(new Weapon(), 41, "runesword", "runed broadsword", false, false,
+			false, 0, 40, 300, 4, 6, 0, EnumSet.of(WeaponType.SLASH),
+			Skills.BROAD_SWORD, Material.IRON),
 
-	PARTISAN,
+	/* polearms */
+	/* spear-type */
 
-	RANSEUR,
+	/* +1 large */
+	PARTISAN(new Weapon(), 42, "partisan", "vulgar polearm", false, false,
+			true, 5, 80, 10, 6, 6, 0, EnumSet.of(WeaponType.PIERCE),
+			Skills.POLEARMS, Material.IRON),
 
-	SPETUM,
+	/* +d4 both */
+	RANSEUR(new Weapon(), 43, "ranseur", "hilted polearm", false, false, true,
+			5, 50, 6, 4, 4, 0, EnumSet.of(WeaponType.PIERCE), Skills.POLEARMS,
+			Material.IRON),
 
-	GLAIVE,
+	/* +1 small, +d6 large */
+	SPETUM(new Weapon(), 44, "spetum", "forked polearm", false, false, true, 5,
+			50, 5, 6, 6, 0, EnumSet.of(WeaponType.PIERCE), Skills.POLEARMS,
+			Material.IRON),
 
-	LANCE,
+	GLAIVE(new Weapon(), 45, "glaive", "single-edged polearm", false, false,
+			true, 8, 75, 6, 6, 10, 0, EnumSet.of(WeaponType.SLASH),
+			Skills.POLEARMS, Material.IRON),
 
-	HALBERD,
+	LANCE(new Weapon(), 46, "lance", null, true, false, false, 4, 180, 10, 6,
+			8, 0, EnumSet.of(WeaponType.PIERCE), Skills.LANCE, Material.IRON),
 
-	BARDICHE,
+	/* axe-type */
 
-	VOULGE,
+	/* +1d6 large */
+	HALBERD(new Weapon(), 47, "halberd", "angled poleaxe", false, false, true,
+			8, 150, 10, 10, 6, 0, EnumSet.of(WeaponType.PIERCE,
+					WeaponType.SLASH), Skills.POLEARMS, Material.IRON),
 
-	DWARVISH_MATTOCK,
+	/* +1d4 small, +2d4 large */
+	BARDICHE(new Weapon(), 48, "bardiche", "long poleaxe", false, false, true,
+			4, 120, 7, 4, 4, 0, EnumSet.of(WeaponType.SLASH), Skills.POLEARMS,
+			Material.IRON),
 
-	FAUCHARD,
+	/* +d4 both */
+	VOULGE(new Weapon(), 49, "voulge", "pole cleaver", false, false, true, 4,
+			125, 5, 4, 4, 0, EnumSet.of(WeaponType.SLASH), Skills.POLEARMS,
+			Material.IRON),
 
-	GUISARME,
+	DWARVISH_MATTOCK(new Weapon(), 50, "dwarvish mattock", "broad pick", false,
+			false, true, 13, 120, 50, 12, 8, -1, EnumSet
+					.of(WeaponType.BLUDGEON), Skills.PICK_AXE, Material.IRON),
 
-	BILL_GUISARME,
+	/* curved/hooked */
 
-	LUCERN_HAMMER,
+	FAUCHARD(new Weapon(), 51, "fauchard", "pole sickle", false, false, true,
+			6, 60, 5, 6, 8, 0, EnumSet.of(WeaponType.PIERCE, WeaponType.SLASH),
+			Skills.POLEARMS, Material.IRON),
 
-	BEC_DE_CORBIN,
+	/* +1d4 small */
+	GUISARME(new Weapon(), 52, "guisarme", "pruning hook", false, false, true,
+			6, 80, 5, 4, 8, 0, EnumSet.of(WeaponType.SLASH), Skills.POLEARMS,
+			Material.IRON),
 
-	MACE,
+	/* +1d4 small */
+	BILL_GUISARME(new Weapon(), 53, "bill-guisarme", "hooked polearm", false,
+			false, true, 4, 120, 7, 4, 10, 0, EnumSet.of(WeaponType.PIERCE,
+					WeaponType.SLASH), Skills.POLEARMS, Material.IRON),
 
-	MORNING_STAR,
+	/* other */
 
-	WAR_HAMMER,
+	/* +1d4 small */
+	LUCERN_HAMMER(new Weapon(), 54, "lucern hammer", "pronged polearm", false,
+			false, true, 5, 150, 7, 4, 6, 0, EnumSet.of(WeaponType.BLUDGEON,
+					WeaponType.PIERCE), Skills.POLEARMS, Material.IRON),
 
-	CLUB,
+	BEC_DE_CORBIN(new Weapon(), 55, "bec de corbin", "beaked polearm", false,
+			false, true, 4, 100, 8, 8, 6, 0, EnumSet.of(WeaponType.BLUDGEON,
+					WeaponType.PIERCE), Skills.POLEARMS, Material.IRON),
 
-	RUBBER_HOSE,
+	/* bludgeons */
 
-	QUARTERSTAFF,
+	/* +1 small */
+	MACE(new Weapon(), 56, "mace", null, true, false, false, 40, 30, 5, 6, 6,
+			0, EnumSet.of(WeaponType.BLUDGEON), Skills.MACE, Material.IRON),
 
-	AKLYS,
+	/* +d4 small, +1 large */
+	MORNING_STAR(new Weapon(), 57, "morning star", null, true, false, false,
+			12, 120, 10, 4, 6, 0, EnumSet.of(WeaponType.BLUDGEON),
+			Skills.MORNING_STAR, Material.IRON),
 
-	FLAIL,
+	/* +1 small */
+	WAR_HAMMER(new Weapon(), 58, "war hammer", null, true, false, false, 15,
+			50, 5, 4, 4, 0, EnumSet.of(WeaponType.BLUDGEON), Skills.HAMMER,
+			Material.IRON),
 
-	BULLWHIP,
+	CLUB(new Weapon(), 59, "club", null, true, false, false, 12, 30, 3, 6, 3,
+			0, EnumSet.of(WeaponType.BLUDGEON), Skills.CLUB, Material.WOOD),
+
+	RUBBER_HOSE(new Weapon(), 60, "rubber hose", null, true, false, false, 0,
+			20, 3, 4, 3, 0, EnumSet.of(WeaponType.BLUDGEON), Skills.WHIP,
+			Material.PLASTIC),
+
+	QUARTERSTAFF(new Weapon(), 61, "quarterstaff", "staff", false, false, true,
+			11, 40, 5, 6, 6, 0, EnumSet.of(WeaponType.BLUDGEON),
+			Skills.QUARTERSTAFF, Material.WOOD),
+
+	/* two-piece */
+
+	AKLYS(new Weapon(), 62, "aklys", "thonged club", false, false, false, 8,
+			15, 4, 6, 3, 0, EnumSet.of(WeaponType.BLUDGEON), Skills.CLUB,
+			Material.IRON),
+
+	/* +1 small, +1d4 large */
+	FLAIL(new Weapon(), 63, "flail", null, true, false, false, 40, 15, 4, 6, 4,
+			0, EnumSet.of(WeaponType.BLUDGEON), Skills.FLAIL, Material.IRON),
+
+	/* misc */
+
+	BULLWHIP(new Weapon(), 64, "bullwhip", null, true, false, false, 2, 20, 4,
+			2, 1, 0, null, Skills.WHIP, Material.LEATHER),
 
 	BOW,
 
