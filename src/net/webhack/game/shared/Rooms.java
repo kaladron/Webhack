@@ -25,6 +25,8 @@ public class Rooms {
 
 	private final LocationMap locMap;
 
+	private Room currentRoom;
+
 	public Rooms(final Rectangles rectangles, final WebhackRandom random,
 			final LocationMap lmap) {
 		this.rectangles = rectangles;
@@ -43,13 +45,14 @@ public class Rooms {
 	 * @param h
 	 * @param xal
 	 * @param yal
-	 * @param rtype
+	 * @param vault2
 	 *            Room type
 	 * @param rlit
 	 *            Is the room lit
 	 */
 	public boolean createRoom(final int x, final int y, final int w,
-			final int h, final int xal, final int yal, int rtype, Boolean rlit) {
+			final int h, final int xal, final int yal, RoomType vault2,
+			Boolean rlit) {
 		Rectangle r1 = null;
 		Rectangle r2 = null;
 		int trycnt = 0;
@@ -61,11 +64,11 @@ public class Rooms {
 		int xabs = -1;
 		int yabs = -1;
 
-		if (rtype == -1) {
-			rtype = Room.OROOM;
+		if (vault2 == null) {
+			vault2 = RoomType.OROOM;
 		}
 
-		if (rtype == Room.VAULT) {
+		if (vault2 == RoomType.VAULT) {
 			vault = true;
 			xlim++;
 			ylim++;
@@ -157,7 +160,7 @@ public class Rooms {
 
 		if (!vault) {
 			smeq[rooms.size()] = rooms.size();
-			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, rtype,
+			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, vault2,
 					false);
 		}
 		return true;
@@ -169,7 +172,7 @@ public class Rooms {
 	}
 
 	boolean createVault() {
-		return createRoom(-1, -1, 2, 2, -1, -1, Room.VAULT, true);
+		return createRoom(-1, -1, 2, 2, -1, -1, RoomType.VAULT, true);
 	}
 
 	/**
@@ -178,15 +181,16 @@ public class Rooms {
 	 * @param hix
 	 * @param hiy
 	 * @param lit
-	 * @param rtype
+	 * @param vault2
 	 * @param special
 	 */
 	private void addRoom(final int lowx, final int lowy, final int hix,
-			final int hiy, final boolean lit, final int rtype,
+			final int hiy, final boolean lit, final RoomType vault2,
 			final boolean special) {
-		final Room aRoom = new Room();
-		rooms.add(aRoom);
-		doRoomOrSubroom(aRoom, lowx, lowy, hix, hiy, lit, rtype, special, true);
+		currentRoom = new Room();
+		rooms.add(currentRoom);
+		doRoomOrSubroom(currentRoom, lowx, lowy, hix, hiy, lit, vault2,
+				special, true);
 	}
 
 	private boolean checkRoom(final int a, final int b, final int c,
@@ -196,8 +200,8 @@ public class Rooms {
 	}
 
 	private void doRoomOrSubroom(final Room croom, int lowx, int lowy, int hix,
-			int hiy, final boolean lit, final int rtype, final boolean special,
-			final boolean isRoom) {
+			int hiy, final boolean lit, final RoomType vault2,
+			final boolean special, final boolean isRoom) {
 		/* locations might bump level edges in wall-less rooms */
 		/* add/subtract 1 to allow for edge locations */
 		if (lowx == 0) {
@@ -228,7 +232,7 @@ public class Rooms {
 		croom.hx = hix;
 		croom.ly = lowy;
 		croom.hy = hiy;
-		croom.rtype = rtype;
+		croom.rtype = vault2;
 		croom.doorct = 0;
 		/*
 		 * if we're not making a vault, doorindex will still be 0 if we are,
@@ -291,10 +295,13 @@ public class Rooms {
 					&& (random.rn2(2) != 0) && !tried_vault) {
 				tried_vault = true;
 				if (createVault()) {
-					// TODO(jeffbailey): More vault processing.
+					// TODO(jeffbailey): Expose vault
+					// vault_x = currentRoom.lx;
+					// vault_y = currentRoom.ly;
+					// currentRoom.hx = -1;
 				}
 			} else {
-				if (!createRoom(-1, -1, -1, -1, -1, -1, Room.OROOM, null)) {
+				if (!createRoom(-1, -1, -1, -1, -1, -1, RoomType.OROOM, null)) {
 					return;
 				}
 			}
