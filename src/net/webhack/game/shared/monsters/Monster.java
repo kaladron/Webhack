@@ -5,9 +5,7 @@ import java.util.List;
 
 import net.webhack.game.shared.Bindery;
 import net.webhack.game.shared.Coordinate;
-import net.webhack.game.shared.DungeonLevel;
 import net.webhack.game.shared.Location;
-import net.webhack.game.shared.LocationMap;
 import net.webhack.game.shared.LocationType.Door;
 import net.webhack.game.shared.ObjectName;
 import net.webhack.game.shared.Stub;
@@ -198,7 +196,7 @@ public class Monster {
 	 * @return
 	 */
 	@Stub
-	public List<Coordinate> findPosition(final LocationMap map) {
+	public List<Coordinate> findPosition() {
 		final List<Coordinate> aList = new LinkedList<Coordinate>();
 
 		final int maxX = Math.min(mx + 1, Webhack.COLNO - 1);
@@ -210,7 +208,7 @@ public class Monster {
 					continue;
 				}
 
-				final Location loc = map.getLoc(nx, ny);
+				final Location loc = bindery.dlevel.getLoc(nx, ny);
 
 				if (loc.typ.isRock()) {
 					continue;
@@ -221,11 +219,11 @@ public class Monster {
 					continue;
 				}
 
-				if (map.youAt(nx, ny)) {
+				if (bindery.dlevel.youAt(nx, ny)) {
 					continue;
 				}
 
-				if (map.monAt(nx, ny)) {
+				if (bindery.dlevel.monAt(nx, ny)) {
 					continue;
 				}
 
@@ -252,11 +250,11 @@ public class Monster {
 	 *            TODO
 	 */
 	@Stub
-	public int move(final DungeonLevel dungeonLevel, final int after) {
+	public int move(final int after) {
 		final int omx = mx;
 		final int omy = my;
 
-		dungeonLevel.set_apparxy(this);
+		bindery.dlevel.set_apparxy(this);
 
 		final int gx = mux;
 		final int gy = muy;
@@ -264,7 +262,7 @@ public class Monster {
 		int nix = omx;
 		int niy = omy;
 
-		final List<Coordinate> moveOptions = findPosition(dungeonLevel);
+		final List<Coordinate> moveOptions = findPosition();
 		// pick one and move to it.
 		if (moveOptions.isEmpty()) {
 			return 0;
@@ -291,8 +289,8 @@ public class Monster {
 		}
 
 		if (mmoved) {
-			dungeonLevel.removeMonster(omx, omy);
-			dungeonLevel.placeMonster(this, nix, niy);
+			bindery.dlevel.removeMonster(omx, omy);
+			bindery.dlevel.placeMonster(this, nix, niy);
 
 			bindery.ui.newsym(omx, omy); /* update the old position */
 

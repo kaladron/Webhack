@@ -17,7 +17,7 @@ import net.webhack.game.shared.monsters.Monster;
  * @author Jeff Bailey <jeffbailey@google.com>
  * 
  */
-public class DungeonLevel implements LocationMap {
+public class DungeonLevel {
 	Location[][] locations = new Location[Webhack.COLNO][Webhack.ROWNO];
 	List<Monster> monlist = new LinkedList<Monster>();
 	/** number of fountains on level */
@@ -490,7 +490,7 @@ public class DungeonLevel implements LocationMap {
 	/** returns true if monster died moving, false otherwise */
 	@Stub
 	boolean doChug(final Monster monster) {
-		monster.move(this, 0);
+		monster.move(0);
 
 		return false;
 	}
