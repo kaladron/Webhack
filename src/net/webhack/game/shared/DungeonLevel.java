@@ -76,9 +76,14 @@ public class DungeonLevel implements LocationMap {
 
 	private final WebhackRandom random;
 	private final WebhackUI ui;
+	int vaultX;
 
 	public DungeonLevel(final Bindery bindery, final Dungeon dungeon) {
 		this.bindery = bindery;
+
+		// Self reference
+		bindery.dlevel = this;
+
 		this.rectangles = new Rectangles(bindery.random);
 		this.dungeon = dungeon;
 
@@ -807,6 +812,10 @@ public class DungeonLevel implements LocationMap {
 		add_door(x, y, aroom);
 	}
 
+	private boolean doVault() {
+		return vaultX != -1;
+	}
+
 	/** for each room: put things inside */
 	private void fillRooms() {
 
@@ -1003,12 +1012,16 @@ public class DungeonLevel implements LocationMap {
 	}
 
 	private void makeLevel() {
-		rooms = new Rooms(rectangles, random, this);
+		rooms = new Rooms(rectangles, bindery);
 		makeStairs();
 		makeCorridors();
 
 		/* for each room: put things inside */
 		fillRooms();
+
+		if (doVault()) {
+
+		}
 
 	}
 

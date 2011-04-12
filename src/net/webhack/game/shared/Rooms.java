@@ -21,17 +21,12 @@ public class Rooms {
 
 	private final int doorindex = 0;
 
-	private final WebhackRandom random;
-
-	private final LocationMap locMap;
-
 	private Room currentRoom;
+	private final Bindery bindery;
 
-	public Rooms(final Rectangles rectangles, final WebhackRandom random,
-			final LocationMap lmap) {
+	public Rooms(final Rectangles rectangles, final Bindery bindery) {
 		this.rectangles = rectangles;
-		this.random = random;
-		this.locMap = lmap;
+		this.bindery = bindery;
 
 		makeRooms();
 		sortRooms();
@@ -116,8 +111,8 @@ public class Rooms {
 				if (vault) {
 					dx = dy = 1;
 				} else {
-					dx = 2 + random.rn2((hx - lx > 28) ? 12 : 8);
-					dy = 2 + random.rn2(4);
+					dx = 2 + bindery.random.rn2((hx - lx > 28) ? 12 : 8);
+					dy = 2 + bindery.random.rn2(4);
 					if (dx * dy > 50) {
 						dy = (int) Math.floor(50 / dx);
 					}
@@ -130,14 +125,20 @@ public class Rooms {
 					r1 = null;
 					continue;
 				}
-				xabs = lx + (lx > 0 ? xlim : 3)
-						+ random.rn2(hx - (lx > 0 ? lx : 3) - dx - xborder + 1);
-				yabs = ly + (ly > 0 ? ylim : 2)
-						+ random.rn2(hy - (ly > 0 ? ly : 2) - dy - yborder + 1);
-				if (ly == 0 && hy >= (Webhack.ROWNO - 1)
-						&& (rooms.size() == 0 || random.rn2(rooms.size()) == 0)
+				xabs = lx
+						+ (lx > 0 ? xlim : 3)
+						+ bindery.random.rn2(hx - (lx > 0 ? lx : 3) - dx
+								- xborder + 1);
+				yabs = ly
+						+ (ly > 0 ? ylim : 2)
+						+ bindery.random.rn2(hy - (ly > 0 ? ly : 2) - dy
+								- yborder + 1);
+				if (ly == 0
+						&& hy >= (Webhack.ROWNO - 1)
+						&& (rooms.size() == 0 || bindery.random.rn2(rooms
+								.size()) == 0)
 						&& (yabs + dy > Webhack.ROWNO / 2)) {
-					yabs = random.rn1(3, 2);
+					yabs = bindery.random.rn1(3, 2);
 					if (rooms.size() < 4 && dy > 1) {
 						dy--;
 					}
@@ -220,7 +221,7 @@ public class Rooms {
 		if (lit) {
 			for (int x = lowx - 1; x <= hix + 1; x++) {
 				for (int y = lowy - 1; y <= hiy + 1; y++) {
-					locMap.getLoc(x, y).lit = true;
+					bindery.dlevel.getLoc(x, y).lit = true;
 				}
 			}
 			croom.rlit = true;
@@ -247,35 +248,35 @@ public class Rooms {
 		if (!special) {
 			for (int x = lowx - 1; x <= hix + 1; x++) {
 				for (int y = lowy - 1; y <= hiy + 1; y += (hiy - lowy + 2)) {
-					locMap.getLoc(x, y).typ = LocationType.HWALL;
+					bindery.dlevel.getLoc(x, y).typ = LocationType.HWALL;
 					/*
 					 * For open/secret doors.
 					 */
-					locMap.getLoc(x, y).horizontal = true;
+					bindery.dlevel.getLoc(x, y).horizontal = true;
 				}
 			}
 
 			for (int x = lowx - 1; x <= hix + 1; x += (hix - lowx + 2)) {
 				for (int y = lowy; y <= hiy; y++) {
-					locMap.getLoc(x, y).typ = LocationType.VWALL;
+					bindery.dlevel.getLoc(x, y).typ = LocationType.VWALL;
 					/*
 					 * For open/secret doors.
 					 */
-					locMap.getLoc(x, y).horizontal = false;
+					bindery.dlevel.getLoc(x, y).horizontal = false;
 				}
 			}
 
 			for (int x = lowx; x <= hix; x++) {
 				for (int y = lowy; y <= hiy; y++) {
-					locMap.getLoc(x, y).typ = LocationType.ROOM;
+					bindery.dlevel.getLoc(x, y).typ = LocationType.ROOM;
 				}
 			}
 
 			if (isRoom) {
-				locMap.getLoc(lowx - 1, lowy - 1).typ = LocationType.TLCORNER;
-				locMap.getLoc(hix + 1, lowy - 1).typ = LocationType.TRCORNER;
-				locMap.getLoc(lowx - 1, hiy + 1).typ = LocationType.BLCORNER;
-				locMap.getLoc(hix + 1, hiy + 1).typ = LocationType.BRCORNER;
+				bindery.dlevel.getLoc(lowx - 1, lowy - 1).typ = LocationType.TLCORNER;
+				bindery.dlevel.getLoc(hix + 1, lowy - 1).typ = LocationType.TRCORNER;
+				bindery.dlevel.getLoc(lowx - 1, hiy + 1).typ = LocationType.BLCORNER;
+				bindery.dlevel.getLoc(hix + 1, hiy + 1).typ = LocationType.BRCORNER;
 			} else { /* a subroom */
 				// wallification(lowx - 1, lowy - 1, hix + 1, hiy + 1);
 			}
@@ -292,11 +293,11 @@ public class Rooms {
 		while (rooms.size() < Webhack.MAXNROFROOMS
 				&& (rectangles.rndRect() != null)) {
 			if (rooms.size() >= (Webhack.MAXNROFROOMS / 6)
-					&& (random.rn2(2) != 0) && !tried_vault) {
+					&& (bindery.random.rn2(2) != 0) && !tried_vault) {
 				tried_vault = true;
 				if (createVault()) {
 					// TODO(jeffbailey): Expose vault
-					// vault_x = currentRoom.lx;
+					bindery.dlevel.vaultX = currentRoom.lx;
 					// vault_y = currentRoom.ly;
 					// currentRoom.hx = -1;
 				}
