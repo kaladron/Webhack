@@ -76,7 +76,9 @@ public class DungeonLevel {
 
 	private final WebhackRandom random;
 	private final WebhackUI ui;
-	int vaultX;
+	int vaultX = -1;
+	int vaultY;
+	int roomThreshold;
 
 	public DungeonLevel(final Bindery bindery, final Dungeon dungeon) {
 		this.bindery = bindery;
@@ -321,7 +323,9 @@ public class DungeonLevel {
 		return false;
 	}
 
+	@Stub
 	void add_door(final int x, final int y, final Room aroom) {
+		aroom.doorct++;
 	}
 
 	boolean byDoor(final int x, final int y) {
@@ -820,6 +824,9 @@ public class DungeonLevel {
 	private void fillRooms() {
 
 		for (final Room room : rooms.rooms) {
+			if (room.hx <= 0) {
+				continue;
+			}
 
 			// if(you.uhave.amulet || !rn2(3)) {
 			// x = somex(croom); y = somey(croom);
@@ -1014,13 +1021,22 @@ public class DungeonLevel {
 	private void makeLevel() {
 		rooms = new Rooms(rectangles, bindery);
 		makeStairs();
+
+		final boolean branchP = true; // branchp = Is_branchlev(&u.uz); /*
+										// possible
+		// dungeon branch */
+		roomThreshold = branchP ? 4 : 3; /*
+										 * minimum number of rooms needed to
+										 * allow a random special room
+										 */
+
 		makeCorridors();
 
 		/* for each room: put things inside */
 		fillRooms();
 
 		if (doVault()) {
-
+			rooms.makeVault();
 		}
 
 	}

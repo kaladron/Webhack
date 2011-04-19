@@ -40,13 +40,13 @@ public class Rooms {
 	 * @param h
 	 * @param xal
 	 * @param yal
-	 * @param vault2
+	 * @param rtype
 	 *            Room type
 	 * @param rlit
 	 *            Is the room lit
 	 */
 	public boolean createRoom(final int x, final int y, final int w,
-			final int h, final int xal, final int yal, RoomType vault2,
+			final int h, final int xal, final int yal, RoomType rtype,
 			Boolean rlit) {
 		Rectangle r1 = null;
 		Rectangle r2 = null;
@@ -59,11 +59,11 @@ public class Rooms {
 		int xabs = -1;
 		int yabs = -1;
 
-		if (vault2 == null) {
-			vault2 = RoomType.OROOM;
+		if (rtype == null) {
+			rtype = RoomType.OROOM;
 		}
 
-		if (vault2 == RoomType.VAULT) {
+		if (rtype == RoomType.VAULT) {
 			vault = true;
 			xlim++;
 			ylim++;
@@ -161,8 +161,11 @@ public class Rooms {
 
 		if (!vault) {
 			smeq[rooms.size()] = rooms.size();
-			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, vault2,
+			addRoom(xabs, yabs, xabs + wtmp - 1, yabs + htmp - 1, rlit, rtype,
 					false);
+		} else {
+			bindery.dlevel.vaultX = xabs;
+			bindery.dlevel.vaultY = yabs;
 		}
 		return true;
 
@@ -174,6 +177,23 @@ public class Rooms {
 
 	boolean createVault() {
 		return createRoom(-1, -1, 2, 2, -1, -1, RoomType.VAULT, true);
+	}
+
+	void makeVault() {
+		final int w = 1;
+		final int h = 1;
+		if (checkRoom(bindery.dlevel.vaultX, w, bindery.dlevel.vaultY, h, true)) {
+			fillVault(h, w);
+		} else if (rectangles.rndRect() != null && createVault()) {
+			bindery.dlevel.vaultX = currentRoom.lx;
+			bindery.dlevel.vaultY = currentRoom.ly;
+			if (checkRoom(bindery.dlevel.vaultX, w, bindery.dlevel.vaultY, h,
+					true)) {
+				fillVault(h, w);
+			} else {
+				currentRoom.hx = -1;
+			}
+		}
 	}
 
 	/**
@@ -194,9 +214,28 @@ public class Rooms {
 				special, true);
 	}
 
-	private boolean checkRoom(final int a, final int b, final int c,
-			final int d, final boolean e) {
-		// TODO(jeffbailey): Stub
+	@Stub
+	private boolean checkRoom(final int lowx, final int ddx, final int lowy,
+			final int ddy, final boolean vault) {
+
+		final int hix = lowx + ddx, hiy = lowy + ddy;
+
+		final int xlim = Webhack.XLIM + (vault ? 1 : 0);
+		final int ylim = Webhack.YLIM + (vault ? 1 : 0);
+
+		for (int x = lowx - xlim; x < hix + xlim; x++) {
+			for (int y = lowy - ylim; y < hiy + ylim; y++) {
+				if (x > Webhack.ROWNO || x < 0) {
+					continue;
+				}
+				if (y > Webhack.COLNO || y < 0) {
+					continue;
+				}
+				if (bindery.dlevel.locations[x][y].typ != LocationType.STONE) {
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
@@ -284,6 +323,19 @@ public class Rooms {
 
 	}
 
+	private void fillVault(final int h, final int w) {
+		addRoom(bindery.dlevel.vaultX, bindery.dlevel.vaultY,
+				bindery.dlevel.vaultX + w, bindery.dlevel.vaultY + h, true,
+				RoomType.VAULT, false);
+		// flags.has_vault = 1;
+		++bindery.dlevel.roomThreshold;
+		// fill_room(&rooms[nroom - 1], false);
+		// mk_knox_portal(vaultX+w, vaultY+h);
+		// if(!flags.noteleport && !rn2(3)) {
+		// makevtele();
+		// }
+	}
+
 	private void makeRooms() {
 		boolean tried_vault = false;
 
@@ -296,9 +348,11 @@ public class Rooms {
 					&& (bindery.random.rn2(2) != 0) && !tried_vault) {
 				tried_vault = true;
 				if (createVault()) {
-					// TODO(jeffbailey): Expose vault
-					bindery.dlevel.vaultX = currentRoom.lx;
-					// vault_y = currentRoom.ly;
+					// None of this is needed. We don't actually create the
+					// room,
+					// and we put the values directly in vaultX and vaultY
+					// bindery.dlevel.vaultX = currentRoom.lx;
+					// bindery.dlevel.vaultY = currentRoom.ly;
 					// currentRoom.hx = -1;
 				}
 			} else {
