@@ -22,7 +22,7 @@ public class WizMap extends Command {
 			// t->tseen = 1;
 			// map_trap(t, TRUE);
 			// }
-			bindery.webhack.dungeon.dlevel.doMapping();
+			bindery.dlevel.doMapping();
 			// HConfusion = save_Hconf;
 			// HHallucination = save_Hhallu;
 		} else {

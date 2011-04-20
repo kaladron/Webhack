@@ -10,24 +10,19 @@ package net.webhack.game.shared;
  */
 public class Dungeon {
 
-	public final DungeonLevel dlevel;
 	private final Bindery bindery;
 
 	public Dungeon(final Bindery bindery) {
 		this.bindery = bindery;
 		// TODO(jeffbailey): Figure out better bootstrapping
 		bindery.ui.init(this, bindery.you, bindery.flags);
-		dlevel = new DungeonLevel(bindery, this);
+		final DungeonLevel dlevel = new DungeonLevel(bindery, this);
 		dlevel.onUpstairs();
 	}
 
 	int depth(final DLevel level) {
 		// TODO(jeffbailey): STUB!
 		return level.dlevel;
-	}
-
-	DungeonLevel getLevel() {
-		return dlevel;
 	}
 
 	/**

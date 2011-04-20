@@ -128,11 +128,11 @@ public class Webhack {
 		final int x = you.ux + you.dx;
 		final int y = you.uy + you.dy;
 
-		if (!dungeon.dlevel.isOk(x, y)) {
+		if (!bindery.dlevel.isOk(x, y)) {
 			return;
 		}
 
-		final Monster mtmp = dungeon.dlevel.mAt(x, y);
+		final Monster mtmp = bindery.dlevel.mAt(x, y);
 
 		you.ux0 = you.ux;
 		you.uy0 = you.uy;
@@ -146,7 +146,7 @@ public class Webhack {
 			return;
 		}
 
-		if (!dungeon.dlevel.testMove(you.ux, you.uy, you.dx, you.dy, 1)) {
+		if (!bindery.dlevel.testMove(you.ux, you.uy, you.dx, you.dy, 1)) {
 			return;
 		}
 
@@ -192,7 +192,7 @@ public class Webhack {
 
 		rhack(c);
 
-		dungeon.dlevel.moveMon();
+		bindery.dlevel.moveMon();
 
 		/********************************/
 		/* once-per-turn things go here */
@@ -277,7 +277,7 @@ public class Webhack {
 	 */
 	public void spoteffects(final boolean pick) {
 		if (pick) {
-			dungeon.dlevel.pickup(1);
+			bindery.dlevel.pickup(1);
 		}
 
 	}
@@ -331,10 +331,10 @@ public class Webhack {
 		final int TEST_MOVE = 0;
 		/* if travel to adjacent, reachable location, use normal movement rules */
 		if (!guess && bindery.iflags.travel1
-				&& dungeon.dlevel.distmin(you.ux, you.uy, you.tx, you.ty) == 1) {
+				&& bindery.dlevel.distmin(you.ux, you.uy, you.tx, you.ty) == 1) {
 			bindery.flags.run = 0;
 
-			if (dungeon.dlevel.testMove(you.ux, you.uy, you.tx - you.ux, you.ty
+			if (bindery.dlevel.testMove(you.ux, you.uy, you.tx - you.ux, you.ty
 					- you.uy, TEST_MOVE)) {
 				you.dx = you.tx - you.ux;
 				you.dy = you.ty - you.uy;
@@ -412,16 +412,16 @@ public class Webhack {
 					final int nx = x + xdir[ordered[dir]];
 					final int ny = y + ydir[ordered[dir]];
 
-					if (!dungeon.dlevel.isOk(nx, ny)) {
+					if (!bindery.dlevel.isOk(nx, ny)) {
 						continue;
 					}
 					// TODO(jeffbailey):
 					// if ((!Passes_walls && !can_ooze(you.youmonst) &&
 					// closed_door(
 					// x, y))
-					// || dungeon.dlevel.locations[x][y]
+					// || bindery.dlevel.locations[x][y]
 					// .sobj_at(ObjectName.BOULDER)) {
-					if (dungeon.dlevel.locations[x][y]
+					if (bindery.dlevel.locations[x][y]
 							.sobj_at(ObjectName.BOULDER) != null) {
 						/*
 						 * closed doors and boulders usually cause a delay, so
@@ -436,12 +436,12 @@ public class Webhack {
 						}
 					}
 					// TODO(jeffbailey): Fix this
-					// if (dungeon.dlevel.testMove(x, y, nx - x, ny - y,
+					// if (bindery.dlevel.testMove(x, y, nx - x, ny - y,
 					// TEST_TRAV)
-					// && (dungeon.dlevel.locations[nx][ny].seenv || (!Blind
+					// && (bindery.dlevel.locations[nx][ny].seenv || (!Blind
 					// && couldsee(
 					// nx, ny)))) {
-					if (dungeon.dlevel
+					if (bindery.dlevel
 							.testMove(x, y, nx - x, ny - y, TEST_TRAV)) {
 						if (nx == ux && ny == uy) {
 							if (!guess) {
@@ -474,16 +474,16 @@ public class Webhack {
 		if (guess) {
 			int px = tx, py = ty; /* pick location */
 			int dist, nxtdist, d2, nd2;
-			dist = dungeon.dlevel.distmin(ux, uy, tx, ty);
-			d2 = dungeon.dlevel.dist2(ux, uy, tx, ty);
+			dist = bindery.dlevel.distmin(ux, uy, tx, ty);
+			d2 = bindery.dlevel.dist2(ux, uy, tx, ty);
 			for (tx = 1; tx < COLNO; ++tx) {
 				for (ty = 0; ty < ROWNO; ++ty) {
 					if (travel[tx][ty] != 0) {
-						nxtdist = dungeon.dlevel.distmin(ux, uy, tx, ty);
+						nxtdist = bindery.dlevel.distmin(ux, uy, tx, ty);
 						// TODO(jeffbailey): if (nxtdist == dist &&
 						// couldsee(tx, ty)) {
 						if (nxtdist == dist) {
-							nd2 = dungeon.dlevel.dist2(ux, uy, tx, ty);
+							nd2 = bindery.dlevel.dist2(ux, uy, tx, ty);
 							if (nd2 < d2) {
 								/* prefer non-zigzag path */
 								px = tx;
@@ -496,7 +496,7 @@ public class Webhack {
 							px = tx;
 							py = ty;
 							dist = nxtdist;
-							d2 = dungeon.dlevel.dist2(ux, uy, tx, ty);
+							d2 = bindery.dlevel.dist2(ux, uy, tx, ty);
 						}
 					}
 				}
@@ -506,7 +506,7 @@ public class Webhack {
 				/* no guesses, just go in the general direction */
 				you.dx = sgn(you.tx - you.ux);
 				you.dy = sgn(you.ty - you.uy);
-				if (dungeon.dlevel.testMove(you.ux, you.uy, you.dx, you.dy,
+				if (bindery.dlevel.testMove(you.ux, you.uy, you.dx, you.dy,
 						TEST_MOVE)) {
 					return true;
 				}

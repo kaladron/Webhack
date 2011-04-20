@@ -12,7 +12,7 @@ public class DoLook extends Command {
 
 	@Override
 	public void execute() {
-		bindery.webhack.dungeon.dlevel.lookHere(0, false);
+		bindery.dlevel.lookHere(0, false);
 	}
 
 }

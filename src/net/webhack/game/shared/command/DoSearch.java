@@ -12,7 +12,7 @@ public class DoSearch extends Command {
 
 	@Override
 	public void execute() {
-		bindery.webhack.dungeon.dlevel.search(false);
+		bindery.dlevel.search(false);
 	}
 
 }

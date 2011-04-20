@@ -12,13 +12,12 @@ public class DoPickup extends Command {
 
 	@Override
 	public void execute() {
-		if (!bindery.webhack.dungeon.dlevel.getLoc(bindery.you.ux,
-				bindery.you.uy).obj_at()) {
+		if (!bindery.dlevel.getLoc(bindery.you.ux, bindery.you.uy).obj_at()) {
 			bindery.ui.pline("There is nothing here to pick up.");
 			return;
 		}
 
-		bindery.webhack.dungeon.dlevel.pickup(0);
+		bindery.dlevel.pickup(0);
 		return;
 	}
 

@@ -28,14 +28,13 @@ public class DoKick extends Command {
 
 		bindery.ui.setCommand(null);
 
-		final Coordinate cc = bindery.webhack.dungeon.dlevel.getAdjacentLoc(
-				cmdKey, null, bindery.you.ux, bindery.you.uy);
+		final Coordinate cc = bindery.dlevel.getAdjacentLoc(cmdKey, null,
+				bindery.you.ux, bindery.you.uy);
 
 		if (cc == null) {
 			return true;
 		}
-		final Location mapLoc = bindery.webhack.dungeon.dlevel.getLoc(cc.x,
-				cc.y);
+		final Location mapLoc = bindery.dlevel.getLoc(cc.x, cc.y);
 
 		if (!mapLoc.typ.isDoor()) {
 			bindery.ui.pline("You see no door there.");

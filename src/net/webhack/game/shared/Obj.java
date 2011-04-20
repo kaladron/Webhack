@@ -41,7 +41,7 @@ public class Obj {
 	public void extract_self() {
 		switch (where) {
 		case FLOOR:
-			bindery.webhack.dungeon.dlevel.remove_object(this);
+			bindery.dlevel.remove_object(this);
 		}
 	}
 

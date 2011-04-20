@@ -27,14 +27,14 @@ public class DoOpen extends Command {
 	@Override
 	public boolean callback(final int cmdKey) {
 
-		final Coordinate cc = bindery.webhack.dungeon.dlevel.getAdjacentLoc(
-				cmdKey, null, bindery.you.ux, bindery.you.uy);
+		final Coordinate cc = bindery.dlevel.getAdjacentLoc(cmdKey, null,
+				bindery.you.ux, bindery.you.uy);
 
 		if (cc == null) {
 			bindery.ui.setCommand(null);
 			return true;
 		}
-		final Location door = bindery.webhack.dungeon.dlevel.getLoc(cc.x, cc.y);
+		final Location door = bindery.dlevel.getLoc(cc.x, cc.y);
 
 		if (!door.typ.isDoor()) {
 			bindery.ui.pline("You see no door there.");

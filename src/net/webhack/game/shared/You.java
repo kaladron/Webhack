@@ -341,8 +341,8 @@ public class You {
 	private void mondead(final Monster mtmp) {
 		// Should call m_detach, instead we do:
 
-		bindery.webhack.dungeon.dlevel.monlist.remove(mtmp);
-		bindery.webhack.dungeon.dlevel.removeMonster(mtmp.mx, mtmp.my);
+		bindery.dlevel.monlist.remove(mtmp);
+		bindery.dlevel.removeMonster(mtmp.mx, mtmp.my);
 		bindery.ui.newsym(mtmp.mx, mtmp.my);
 
 	}

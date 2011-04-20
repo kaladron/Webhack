@@ -312,7 +312,7 @@ public abstract class Display implements WebhackUI {
 		/* display memory */
 		for (int x = 1; x < Webhack.COLNO; x++) {
 			for (int y = 0; y < Webhack.ROWNO; y++) {
-				final Location ptr = dungeon.getLevel().getLoc(x, y);
+				final Location ptr = bindery.dlevel.getLoc(x, y);
 				if (ptr.glyph != cmap_to_glyph(S_stone)) {
 					show_glyph(x, y, ptr.glyph);
 				}
@@ -342,7 +342,7 @@ public abstract class Display implements WebhackUI {
 	 * @param y
 	 */
 	public void newsym(final int x, final int y) {
-		final Location ptr = dungeon.getLevel().getLoc(x, y);
+		final Location ptr = bindery.dlevel.getLoc(x, y);
 
 		if (bindery.vision.cansee(x, y)) {
 
@@ -407,7 +407,7 @@ public abstract class Display implements WebhackUI {
 		Location lev;
 
 		// if (Confusion && rn2(7)) return;
-		lev = dungeon.getLevel().getLoc(x, y);
+		lev = bindery.dlevel.getLoc(x, y);
 
 		lev.seenv = EnumSet.allOf(Display.SeenVector.class);
 
@@ -446,12 +446,12 @@ public abstract class Display implements WebhackUI {
 	 */
 	int back_to_glyph(final int x, final int y) {
 		int idx;
-		final Location ptr = dungeon.getLevel().getLoc(x, y);
+		final Location ptr = bindery.dlevel.getLoc(x, y);
 
 		switch (ptr.typ) {
 		case SCORR:
 		case STONE:
-			idx = dungeon.getLevel().arboreal ? S_tree : S_stone;
+			idx = bindery.dlevel.arboreal ? S_tree : S_stone;
 			break;
 		case ROOM:
 			idx = S_room;
@@ -610,7 +610,7 @@ public abstract class Display implements WebhackUI {
 	 */
 	void magic_map_background(final int x, final int y, final boolean show) {
 		int glyph = back_to_glyph(x, y); /* assumes hero can see x,y */
-		final Location lev = dungeon.getLevel().getLoc(x, y);
+		final Location lev = bindery.dlevel.getLoc(x, y);
 
 		/*
 		 * Correct for out of sight lit corridors and rooms that the hero
@@ -625,7 +625,7 @@ public abstract class Display implements WebhackUI {
 				glyph = cmap_to_glyph(S_corr);
 			}
 		}
-		if (dungeon.getLevel().hero_memory) {
+		if (bindery.dlevel.hero_memory) {
 			lev.glyph = glyph;
 		}
 		if (show) {
@@ -640,8 +640,8 @@ public abstract class Display implements WebhackUI {
 	void map_background(final int x, final int y, final boolean show) {
 		final int glyph = back_to_glyph(x, y);
 
-		if (dungeon.getLevel().hero_memory) {
-			dungeon.getLevel().getLoc(x, y).glyph = glyph;
+		if (bindery.dlevel.hero_memory) {
+			bindery.dlevel.getLoc(x, y).glyph = glyph;
 		}
 		if (show) {
 			show_glyph(x, y, glyph);
@@ -743,7 +743,7 @@ public abstract class Display implements WebhackUI {
 
 	Obj vobj_at(final int x, final int y) {
 		// TODO(jeffbailey): STUB, handle invisibility
-		final Location ptr = dungeon.getLevel().getLoc(x, y);
+		final Location ptr = bindery.dlevel.getLoc(x, y);
 
 		if (ptr.things.size() == 0) {
 			return null;
