@@ -14,6 +14,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.user.client.Command;
@@ -25,7 +27,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class WebhackGnomeLike extends Display implements KeyDownHandler,
-		ClickHandler {
+		ClickHandler, KeyPressHandler {
 
 	private final int glyph2tile[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 			12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29,
@@ -532,6 +534,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler,
 		focusPanel.add(webhackGnome);
 
 		focusPanel.addKeyDownHandler(this);
+		focusPanel.addKeyPressHandler(this);
 
 		basePanel.add(focusPanel);
 
@@ -554,7 +557,6 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler,
 		plineDiv = webhackGnome.plineContainer;
 
 		focusPanel.setFocus(true);
-
 	}
 
 	public void onClick(final ClickEvent event) {
@@ -575,7 +577,7 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler,
 
 		final int code = event.getNativeKeyCode();
 
-		int cmdKey;
+		int cmdKey = 0;
 
 		switch (code) {
 		case KeyCodes.KEY_LEFT:
@@ -590,65 +592,29 @@ public class WebhackGnomeLike extends Display implements KeyDownHandler,
 		case KeyCodes.KEY_DOWN:
 			cmdKey = 'j';
 			break;
-		// TODO(jeffbailey): Switch to a KeyPressEvent after we move to GWT 2.2
-		case 188:
-			cmdKey = ',';
-			break;
-		case 186:
-			cmdKey = ':';
-			break;
-		default:
-			if (event.isShiftKeyDown()) {
-				switch (code) {
-				// TODO(jeffbailey): This assumes a US keyboard
-				case '1':
-					cmdKey = '!';
-					break;
-				case '2':
-					cmdKey = '@';
-					break;
-				case '3':
-					cmdKey = '#';
-					break;
-				case '4':
-					cmdKey = '$';
-					break;
-				case '5':
-					cmdKey = '%';
-					break;
-				case '6':
-					cmdKey = '^';
-					break;
-				case '7':
-					cmdKey = '&';
-					break;
-				case '8':
-					cmdKey = '*';
-					break;
-				case '9':
-					cmdKey = '(';
-					break;
-				case '0':
-					cmdKey = '0';
-					break;
-				default:
-					cmdKey = code;
-				}
-			} else {
-				cmdKey = Character.toLowerCase((char) code);
-			}
 		}
 
 		if (event.isControlKeyDown()) {
+			cmdKey = Character.toLowerCase((char) code);
 			cmdKey &= 0x1F;
 		}
+
+		if (cmdKey != 0) {
+			if (!webhack.bindery.ui.command(cmdKey)) {
+				webhack.moveLoop(cmdKey);
+			}
+			event.stopPropagation();
+			event.preventDefault();
+		}
+
+	}
+
+	public void onKeyPress(final KeyPressEvent event) {
+		final char cmdKey = event.getCharCode();
 
 		if (!webhack.bindery.ui.command(cmdKey)) {
 			webhack.moveLoop(cmdKey);
 		}
-
-		event.stopPropagation();
-		event.preventDefault();
 
 	}
 
