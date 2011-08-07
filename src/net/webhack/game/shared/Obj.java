@@ -1,7 +1,6 @@
 package net.webhack.game.shared;
 
 public class Obj {
-
 	enum Position {
 		/** not on any list */
 		FREE,
